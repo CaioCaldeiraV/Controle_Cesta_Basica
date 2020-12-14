@@ -1,0 +1,31 @@
+class ProductModel {
+  int id;
+  String name;
+  double value;
+  int stock;
+  String brand;
+
+  ProductModel({
+    this.id,
+    this.name,
+    this.value,
+    this.stock,
+    this.brand,
+  });
+
+  Map<String, dynamic> toMap() => {
+        "id": id,
+        "name": name,
+        "value": value,
+        "stock": stock,
+        "brand": brand,
+      };
+
+  factory ProductModel.fromMap(Map<String, dynamic> json) => ProductModel(
+        id: json["id"],
+        name: json["name"],
+        value: json["value"].toDouble(),
+        stock: json["stock"],
+        brand: json["brand"],
+      );
+}
