@@ -1,39 +1,28 @@
-import 'package:cesta_basica/app/controllers/basicbasketproduct.controller.dart';
-import 'package:cesta_basica/app/controllers/product.controller.dart';
-import 'package:cesta_basica/app/models/basicbasket.model.dart';
-import 'package:cesta_basica/app/views/android/basic_masket/widgets/products.list.createbasicbasket.dart';
+import 'package:cesta_basica/app/controllers/basicbasket.controller.dart';
+import 'package:cesta_basica/app/controllers/request.controller.dart';
+import 'package:cesta_basica/app/models/request.model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
 import 'create.listbag.view.dart';
-import 'create.value.basicbasket.view.dart';
+import 'createstepthree.request.view.dart';
+import 'widgets/basicbasket.list.item.createrequest.dart';
 
-class CreateProductsBasicMasketView extends StatefulWidget {
-  final BasicBasketModel model;
+class CreateTwo extends StatefulWidget {
+  final RequestModel model;
+  final RequestController controller;
 
-  CreateProductsBasicMasketView({this.model});
+  const CreateTwo({Key key, this.model, this.controller}) : super(key: key);
 
   @override
-  _CreateProductsBasicMasketViewState createState() =>
-      _CreateProductsBasicMasketViewState();
+  _CreateTwoState createState() => _CreateTwoState();
 }
 
-class _CreateProductsBasicMasketViewState
-    extends State<CreateProductsBasicMasketView> {
-  final formatCurrency = NumberFormat.simpleCurrency();
+class _CreateTwoState extends State<CreateTwo> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  final ProductController controller = ProductController();
-  final BasicBasketProductController controllerBasicBasketProduct =
-      BasicBasketProductController();
+  final BasicBasketController controllerBasicBasket = BasicBasketController();
   final textController = TextEditingController();
-
-  @override
-  void initState() {
-    if (widget.model.id != 0) {
-      controllerBasicBasketProduct.carregaAmount(widget.model.id);
-    }
-    super.initState();
-  }
+  final formatCurrency = NumberFormat.simpleCurrency();
 
   @override
   Widget build(BuildContext context) {
@@ -87,14 +76,52 @@ class _CreateProductsBasicMasketViewState
             ),
           ),
           onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => CreateValueBasicBasketView(
-                  model: widget.model,
-                  controller: controllerBasicBasketProduct,
+            if (widget.controller.requestBasicBaskets.isEmpty) {
+              showDialog(
+                context: context,
+                builder: (ctx) => AlertDialog(
+                  title: Text(
+                    'Selecione uma Cesta Básica',
+                    style: TextStyle(
+                      color: Theme.of(context).accentColor,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  backgroundColor: Colors.red,
+                  content: Text(
+                    """
+Por favor, selecione pelo menos uma cesta básica para prosseguir com o pedido""",
+                    style: TextStyle(
+                      color: Theme.of(context).accentColor,
+                      fontSize: 14,
+                    ),
+                  ),
+                  actions: <Widget>[
+                    FlatButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text(
+                        'Ok',
+                        style: TextStyle(
+                          color: Theme.of(context).accentColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            );
+              );
+            } else {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => CreateThree(
+                    model: widget.model,
+                    controller: widget.controller,
+                  ),
+                ),
+              );
+            }
           },
         ),
       ),
@@ -128,7 +155,7 @@ class _CreateProductsBasicMasketViewState
                                   children: [
                                 TextSpan(
                                   text: """
-Seleção dos Produtos que compõe a Cesta Básica.""",
+Seleção das Cestas Básicas que compõem o pedido.""",
                                   style: TextStyle(
                                     color: Theme.of(context).primaryColor,
                                     fontSize: 15,
@@ -170,7 +197,8 @@ Seleção dos Produtos que compõe a Cesta Básica.""",
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Observer(
-                                  builder: (_) => controller.showSearch
+                                  builder: (_) => controllerBasicBasket
+                                          .showSearch
                                       ? SizedBox(
                                           width: MediaQuery.of(context)
                                                   .size
@@ -193,18 +221,20 @@ Seleção dos Produtos que compõe a Cesta Básica.""",
                                                 color: Theme.of(context)
                                                     .accentColor,
                                               ),
-                                              hintText: 'Pesquisar Produtos',
+                                              hintText:
+                                                  'Pesquisar Cesta Básica',
                                               hintStyle: TextStyle(
                                                 color: Theme.of(context)
                                                     .accentColor,
                                                 fontSize: 12,
                                               ),
                                             ),
-                                            onChanged: controller.search,
+                                            onChanged:
+                                                controllerBasicBasket.search,
                                           ),
                                         )
                                       : Text(
-                                          "Lista de Produtos",
+                                          "Lista de Cestas Básicas",
                                           style: TextStyle(
                                             color:
                                                 Theme.of(context).accentColor,
@@ -216,16 +246,17 @@ Seleção dos Produtos que compõe a Cesta Básica.""",
                                 Observer(
                                   builder: (_) => IconButton(
                                     icon: Icon(
-                                      controller.showSearch
+                                      controllerBasicBasket.showSearch
                                           ? Icons.close
                                           : Icons.search,
                                       color: Theme.of(context).accentColor,
                                     ),
                                     onPressed: () {
-                                      if (controller.showSearch) {
-                                        controller.getProducts();
+                                      if (controllerBasicBasket.showSearch) {
+                                        textController.text = "";
+                                        controllerBasicBasket.getBasicBaskets();
                                       }
-                                      controller.toggleSearch();
+                                      controllerBasicBasket.toggleSearch();
                                     },
                                   ),
                                 ),
@@ -241,8 +272,9 @@ Seleção dos Produtos que compõe a Cesta Básica.""",
                           color: Colors.grey[200],
                           child: FutureBuilder(
                             future: textController.text.isEmpty
-                                ? controller.getProducts()
-                                : controller.search(textController.text),
+                                ? controllerBasicBasket.getBasicBaskets()
+                                : controllerBasicBasket
+                                    .search(textController.text),
                             builder: (context, snapshot) {
                               if (snapshot.connectionState ==
                                   ConnectionState.done) {
@@ -273,17 +305,19 @@ Seleção dos Produtos que compõe a Cesta Básica.""",
                                   return Observer(
                                     builder: (_) {
                                       var listView = ListView.builder(
-                                        itemCount: controller.products.length,
+                                        itemCount: controllerBasicBasket
+                                            .basicBaskets.length,
                                         itemBuilder: (context, index) =>
-                                            ProductListItemCreateBasicBasket(
-                                          modelProduct:
-                                              controller.products[index],
-                                          controllerBasicBasketProduct:
-                                              controllerBasicBasketProduct,
-                                          modelBasicBasket: widget.model,
+                                            BasicBasketListItemCreateRequest(
+                                          modelBasicBasket:
+                                              controllerBasicBasket
+                                                  .basicBaskets[index],
+                                          controllerRequest: widget.controller,
+                                          modelRequest: widget.model,
                                         ),
                                       );
-                                      if (controller.products.isEmpty) {
+                                      if (controllerBasicBasket
+                                          .basicBaskets.isEmpty) {
                                         return Center(
                                             child: Column(
                                           mainAxisAlignment:
@@ -360,7 +394,7 @@ Seleção dos Produtos que compõe a Cesta Básica.""",
                       Row(
                         children: [
                           Text(
-                            "\nCusto Total: R\$ ",
+                            "\nValor Total: R\$ ",
                             style: TextStyle(
                               color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.bold,
@@ -371,7 +405,7 @@ Seleção dos Produtos que compõe a Cesta Básica.""",
                             builder: (_) {
                               return Text(
                                 // ignore: lines_longer_than_80_chars
-                                "\n${formatCurrency.format(controllerBasicBasketProduct.totalCust).substring(1)}",
+                                "\n${formatCurrency.format(widget.controller.totalValue).substring(1)}",
                                 style: TextStyle(
                                   color: Theme.of(context).primaryColor,
                                   fontWeight: FontWeight.bold,
@@ -419,8 +453,8 @@ Seleção dos Produtos que compõe a Cesta Básica.""",
                         onPressed: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => SearchCreateListBagView(
-                                controller: controllerBasicBasketProduct,
+                              builder: (context) => ListBagView(
+                                controller: widget.controller,
                               ),
                             ),
                           );
@@ -440,8 +474,7 @@ Seleção dos Produtos que compõe a Cesta Básica.""",
                         child: Center(
                           child: Observer(builder: (_) {
                             return Text(
-                              controllerBasicBasketProduct
-                                  .basicBasketsProducts.length
+                              widget.controller.requestBasicBaskets.length
                                   .toString(),
                               style: TextStyle(
                                 color: Theme.of(context).primaryColor,

@@ -1,28 +1,28 @@
-import 'package:cesta_basica/app/controllers/basicbasketproduct.controller.dart';
+import 'package:cesta_basica/app/controllers/request.controller.dart';
+import 'package:cesta_basica/app/views/android/request/widgets/create.listbag.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
-import 'widgets/basicbasketproduct.search.appbar.dart';
-import 'widgets/listbag.widget.dart';
 
-class SearchCreateListBagView extends StatefulWidget {
-  final BasicBasketProductController controller;
+import 'widgets/requestbasicbasket.searchappbar.widget.dart';
 
-  const SearchCreateListBagView({Key key, this.controller}) : super(key: key);
+class ListBagView extends StatefulWidget {
+  final RequestController controller;
+
+  const ListBagView({Key key, this.controller}) : super(key: key);
 
   @override
-  _SearchCreateListBagViewState createState() =>
-      _SearchCreateListBagViewState();
+  _ListBagViewState createState() => _ListBagViewState();
 }
 
-class _SearchCreateListBagViewState extends State<SearchCreateListBagView> {
+class _ListBagViewState extends State<ListBagView> {
   final formatCurrency = NumberFormat.simpleCurrency();
   final textController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        child: BasicBasketProductSearchAppBar(
+        child: RequestBasicBasketSearchAppBar(
           controller: widget.controller,
           textController: textController,
         ),
@@ -32,7 +32,7 @@ class _SearchCreateListBagViewState extends State<SearchCreateListBagView> {
         children: [
           FutureBuilder(
             future: textController.text.isEmpty
-                ? widget.controller.getBasicBasketProducts()
+                ? widget.controller.getRequestBasicBasket()
                 : widget.controller.search(textController.text),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
@@ -64,14 +64,14 @@ class _SearchCreateListBagViewState extends State<SearchCreateListBagView> {
                     builder: (_) {
                       var listView = ListView.builder(
                         itemCount:
-                            widget.controller.basicBasketsProductsAux.length,
+                            widget.controller.requestBasicBasketsAux.length,
                         itemBuilder: (ctx, i) {
                           return ListBagWidget(
                               model:
-                                  widget.controller.basicBasketsProductsAux[i]);
+                                  widget.controller.requestBasicBasketsAux[i]);
                         },
                       );
-                      if (widget.controller.basicBasketsProductsAux.isEmpty) {
+                      if (widget.controller.requestBasicBasketsAux.isEmpty) {
                         return Center(
                             child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -154,7 +154,7 @@ class _SearchCreateListBagViewState extends State<SearchCreateListBagView> {
               child: Center(
                 child: Text(
                   // ignore: lines_longer_than_80_chars
-                  "Custo Total: R\$ ${formatCurrency.format(widget.controller.totalCust).substring(1)}",
+                  "Valor Total: R\$ ${formatCurrency.format(widget.controller.totalValue).substring(1)}",
                   style: TextStyle(
                     color: Theme.of(context).accentColor,
                     fontWeight: FontWeight.bold,

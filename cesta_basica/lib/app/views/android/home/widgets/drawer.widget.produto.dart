@@ -3,7 +3,7 @@ import 'package:cesta_basica/app/models/product.model.dart';
 import 'package:cesta_basica/app/views/android/product/search.product.view.dart';
 import 'package:flutter/material.dart';
 
-class DrawerProduct extends StatelessWidget {
+class DrawerProduto extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(

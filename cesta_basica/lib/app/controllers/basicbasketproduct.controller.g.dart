@@ -117,14 +117,6 @@ mixin _$BasicBasketProductController on _BasicBasketProductController, Store {
         .run(() => super.decreaseBasicBasketProduct(model));
   }
 
-  final _$carregaAmountAsyncAction =
-      AsyncAction('_BasicBasketProductController.carregaAmount');
-
-  @override
-  Future<void> carregaAmount(int id) {
-    return _$carregaAmountAsyncAction.run(() => super.carregaAmount(id));
-  }
-
   final _$_BasicBasketProductControllerActionController =
       ActionController(name: '_BasicBasketProductController');
 

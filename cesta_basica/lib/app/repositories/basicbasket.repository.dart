@@ -103,4 +103,28 @@ class BasicBasketRepository {
       return;
     }
   }
+
+  Future<double> getBasicBasketValue(int id) async {
+    try {
+      final db = await _getDatabase();
+      final maps = await db
+          .query(basicbasketTableName, where: "id = ?", whereArgs: [id]);
+      return BasicBasketModel.fromMap(maps[0]).value;
+    } catch (ex) {
+      print(ex);
+      return 0;
+    }
+  }
+
+  Future<String> getBasicBasketName(int id) async {
+    try {
+      final db = await _getDatabase();
+      final maps = await db
+          .query(basicbasketTableName, where: "id = ?", whereArgs: [id]);
+      return BasicBasketModel.fromMap(maps[0]).name;
+    } catch (ex) {
+      print(ex);
+      return "";
+    }
+  }
 }

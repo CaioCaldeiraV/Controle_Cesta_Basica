@@ -1,12 +1,12 @@
-import 'package:cesta_basica/app/controllers/basicbasketproduct.controller.dart';
+import 'package:cesta_basica/app/controllers/request.controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
-class BasicBasketProductSearchAppBar extends StatelessWidget {
-  final BasicBasketProductController controller;
+class RequestBasicBasketSearchAppBar extends StatelessWidget {
+  final RequestController controller;
   final TextEditingController textController;
 
-  const BasicBasketProductSearchAppBar(
+  const RequestBasicBasketSearchAppBar(
       {Key key, this.controller, this.textController})
       : super(key: key);
 
@@ -50,7 +50,7 @@ class BasicBasketProductSearchAppBar extends StatelessWidget {
                     Icons.search,
                     color: Theme.of(context).accentColor,
                   ),
-                  labelText: 'Pesquisar Produtos',
+                  labelText: 'Pesquisar Cestas Básicas',
                   labelStyle: TextStyle(
                     color: Theme.of(context).accentColor,
                   ),
@@ -58,7 +58,7 @@ class BasicBasketProductSearchAppBar extends StatelessWidget {
                 onChanged: controller.search,
               )
             : Text(
-                'Produtos da Cesta',
+                'Cestas Básicas',
                 style: TextStyle(
                   color: Theme.of(context).accentColor,
                 ),
@@ -71,7 +71,7 @@ class BasicBasketProductSearchAppBar extends StatelessWidget {
               controller.showSearch ? Icons.close : Icons.search,
             ),
             onPressed: () {
-              if (controller.showSearch) controller.getBasicBasketProducts();
+              if (controller.showSearch) controller.getRequestBasicBasket();
               controller.toggleSearch();
             },
           ),
