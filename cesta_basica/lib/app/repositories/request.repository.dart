@@ -1,9 +1,9 @@
-import 'package:cesta_basica/app/models/client.model.dart';
+import 'package:cesta_basica/app/models/request.model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import '../../settings.dart';
 
-class ClientRepository {
+class RequestRepository {
   Future<Database> _getDatabase() async {
     return openDatabase(
       join(await getDatabasesPath(), databaseName),
@@ -22,67 +22,50 @@ class ClientRepository {
     );
   }
 
-  Future create(ClientModel model) async {
+  Future<int> create(RequestModel model) async {
     try {
       final db = await _getDatabase();
-      await db.insert(
-        clientTableName,
+      var id = await db.insert(
+        requestTableName,
         model.toMap(),
       );
+      return id;
     } catch (ex) {
-      print(ex);
-      return ex;
+      throw ("some arbitrary error");
     }
   }
 
-  Future<List<ClientModel>> getClients() async {
+  Future<List<RequestModel>> getRequests() async {
     try {
       final db = await _getDatabase();
-      final maps = await db.query(clientTableName, orderBy: "name");
+      final maps = await db.query(requestTableName);
       return List.generate(maps.length, (i) {
-        return ClientModel.fromMap(maps[i]);
+        return RequestModel.fromMap(maps[i]);
       });
     } catch (ex) {
       print(ex);
-      return <ClientModel>[];
+      return <RequestModel>[];
     }
   }
 
-  Future<List<ClientModel>> search(String term) async {
+  Future<RequestModel> getRequest(int id) async {
     try {
       final db = await _getDatabase();
-      final maps = await db.query(clientTableName,
-          where: "name LIKE ?",
-          whereArgs: [
-            '%$term%',
-          ],
-          orderBy: "name");
-      return List.generate(maps.length, (i) {
-        return ClientModel.fromMap(maps[i]);
-      });
-    } catch (ex) {
-      print(ex);
-      return <ClientModel>[];
-    }
-  }
-
-  Future<ClientModel> getClient(int id) async {
-    try {
-      final db = await _getDatabase();
-      final maps = await db.query(clientTableName, where: "id = ?", whereArgs: [
+      final maps =
+          await db.query(requestTableName, where: "id = ?", whereArgs: [
         [id],
       ]);
-      return ClientModel.fromMap(maps[0]);
+      return RequestModel.fromMap(maps[0]);
     } catch (ex) {
       print(ex);
-      return ClientModel();
+      return RequestModel();
     }
   }
 
-  Future update(ClientModel model) async {
+  Future update(RequestModel model) async {
     try {
       final db = await _getDatabase();
-      await db.update(clientTableName, model.toMap(),
+      await db.update(requestTableName, model.toMap(),
           where: "id = ?", whereArgs: [model.id]);
     } catch (ex) {
       print(ex);
@@ -94,7 +77,7 @@ class ClientRepository {
     try {
       final db = await _getDatabase();
       await db.delete(
-        clientTableName,
+        requestTableName,
         where: "id = ?",
         whereArgs: [id],
       );

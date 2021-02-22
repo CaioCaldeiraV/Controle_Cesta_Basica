@@ -1,6 +1,7 @@
 import 'package:cesta_basica/app/models/basicbasket.model.dart';
 import 'package:cesta_basica/app/models/requestbasicbasket.model.dart';
 import 'package:cesta_basica/app/repositories/basicbasket.repository.dart';
+import 'package:cesta_basica/app/repositories/request.basicbasket.repository.dart';
 import 'package:mobx/mobx.dart';
 part 'request.controller.g.dart';
 
@@ -8,6 +9,7 @@ class RequestController = _RequestController with _$RequestController;
 
 abstract class _RequestController with Store {
   final BasicBasketRepository repositoryBasicBasket = BasicBasketRepository();
+  final repository = RequestBasicBasketRepository();
 
   @observable
   ObservableList<int> selected = ObservableList<int>();
@@ -103,5 +105,31 @@ abstract class _RequestController with Store {
       }
     }
     return -1;
+  }
+
+  Future<void> create(int id) async {
+    for (var i = 0; i < requestBasicBaskets.length; i++) {
+      requestBasicBaskets[i].basicbasketsId = id;
+      await repository.create(requestBasicBaskets[i]);
+    }
+  }
+
+  Future<void> update(int id) async {
+    var aux;
+    var data = await repository.searchIdinRequest(id);
+    for (var i = 0; i < requestBasicBaskets.length; i++) {
+      aux = 0;
+      for (var j = 0; j < data.length; j++) {
+        if (requestBasicBaskets[i].basicbasketsId == data[j].basicbasketsId) {
+          data[j].amount = requestBasicBaskets[i].amount;
+          repository.update(data[j]);
+          aux = 1;
+        }
+      }
+      if (aux == 0) {
+        requestBasicBaskets[i].basicbasketsId = id;
+        await repository.create(requestBasicBaskets[i]);
+      }
+    }
   }
 }

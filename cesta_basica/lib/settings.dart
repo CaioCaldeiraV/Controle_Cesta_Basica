@@ -4,6 +4,7 @@ const String productTableName = "products";
 const String basicbasketTableName = "basicbaskets";
 const String basicbasketsproductsTableName = "basicbasketsproducts";
 const String requestTableName = "requests";
+const String requestBasicBasketTableName = "requestsbasicbasket";
 const String installmentTableName = "installments";
 const String debtTableName = "debts";
 
@@ -22,3 +23,11 @@ const String createBasicBasketsTableScript =
 const String createBasicBasketsProductsTableScript =
     // ignore: lines_longer_than_80_chars
     "CREATE TABLE basicbasketsproducts(id INTEGER PRIMARY KEY, amount int, productsId INTEGER NOT NULL, basicbasketsId INTEGER NOT NULL, FOREIGN KEY (productsId) REFERENCES products(id) ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY (basicbasketsId) REFERENCES basicbaskets(id) ON DELETE CASCADE ON UPDATE CASCADE)";
+
+const String createRequestTableScript =
+    // ignore: lines_longer_than_80_chars
+    "CREATE TABLE requests(id INTEGER PRIMARY KEY, status TEXT, totalValue TEXT, deliveryDate TEXT, dateRequest TEXT, comments TEXT, clientsId INTEGER NOT NULL, FOREIGN KEY (clientsId) REFERENCES clients(id) ON DELETE CASCADE ON UPDATE CASCADE)";
+
+const String createRequestBasicBasketsTableScript =
+    // ignore: lines_longer_than_80_chars
+    "CREATE TABLE requestsbasicbasket(id INTEGER PRIMARY KEY, amount int, requestId INTEGER NOT NULL, basicbasketsId INTEGER NOT NULL, FOREIGN KEY (requestId) REFERENCES requests(id) ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY (basicbasketsId) REFERENCES basicbaskets(id) ON DELETE CASCADE ON UPDATE CASCADE)";

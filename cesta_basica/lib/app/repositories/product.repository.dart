@@ -15,6 +15,8 @@ class ProductRepository {
         db.execute(createBasicBasketsTableScript);
         db.execute(createProductTableScript);
         db.execute(createBasicBasketsProductsTableScript);
+        db.execute(createRequestTableScript);
+        db.execute(createRequestBasicBasketsTableScript);
       },
       version: 1,
     );

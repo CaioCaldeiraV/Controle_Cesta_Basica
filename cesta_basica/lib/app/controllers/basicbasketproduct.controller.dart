@@ -109,15 +109,14 @@ abstract class _BasicBasketProductController with Store {
   }
 
   Future<void> update(int id) async {
-    var _repository = BasicBasketProductRepository();
     var aux;
-    var data = await _repository.searchIdinBasicBaskets(id);
+    var data = await repository.searchIdinBasicBaskets(id);
     for (var i = 0; i < basicBasketsProducts.length; i++) {
       aux = 0;
       for (var j = 0; j < data.length; j++) {
         if (basicBasketsProducts[i].productsId == data[j].productsId) {
           data[j].amount = basicBasketsProducts[i].amount;
-          _repository.update(data[j]);
+          repository.update(data[j]);
           aux = 1;
         }
       }

@@ -1,5 +1,6 @@
 import 'package:cesta_basica/app/controllers/request.controller.dart';
 import 'package:cesta_basica/app/models/request.model.dart';
+import 'package:cesta_basica/app/repositories/request.repository.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -19,6 +20,7 @@ class _CreateThreeState extends State<CreateThree> {
   DateTime _selectedDate = DateTime.now();
   final TextEditingController _date = TextEditingController();
   final formatCurrency = NumberFormat.simpleCurrency();
+  final _repository = RequestRepository();
 
   void _onSubmit() {
     if (!_formKey.currentState.validate()) {
@@ -31,8 +33,9 @@ class _CreateThreeState extends State<CreateThree> {
   Future<void> _create() async {
     widget.model.id = null;
     widget.model.totalValue = widget.controller.totalValue;
-    widget.model.status = "";
-    widget.model.dateRequest = "";
+    widget.model.status = "Pendente";
+    widget.model.dateRequest = "21/02/2021";
+
     var id = await _repository.create(widget.model).catchError((_) {
       _onError();
     });
@@ -42,7 +45,7 @@ class _CreateThreeState extends State<CreateThree> {
         context: context,
         builder: (ctx) => AlertDialog(
           title: Text(
-            'Cesta Básica Cadastrada',
+            'Pedido Cadastrado',
             style: TextStyle(
               color: Theme.of(context).accentColor,
               fontWeight: FontWeight.bold,
@@ -50,7 +53,7 @@ class _CreateThreeState extends State<CreateThree> {
           ),
           content: Text(
             """
-A Cesta básica '${widget.model.name}' foi cadastrada com sucesso.""",
+O Pedido foi cadastrada com sucesso.""",
             style: TextStyle(
               color: Theme.of(context).accentColor,
               fontSize: 14,
@@ -89,7 +92,7 @@ A Cesta básica '${widget.model.name}' foi cadastrada com sucesso.""",
         context: context,
         builder: (ctx) => AlertDialog(
           title: Text(
-            'Cesta Básica Editada',
+            'Pedido Editado',
             style: TextStyle(
               color: Theme.of(context).accentColor,
               fontWeight: FontWeight.bold,
@@ -97,7 +100,7 @@ A Cesta básica '${widget.model.name}' foi cadastrada com sucesso.""",
           ),
           content: Text(
             """
-A Cesta básica '${widget.model.name}' foi editada com sucesso.""",
+O Pedido foi editada com sucesso.""",
             style: TextStyle(
               color: Theme.of(context).accentColor,
               fontSize: 14,
