@@ -1,4 +1,4 @@
-import 'package:cesta_basica/app/controllers/basicbasketproduct.controller.dart';
+import 'package:cesta_basica/app/controllers/basicbasket/basicbasketproduct.controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 

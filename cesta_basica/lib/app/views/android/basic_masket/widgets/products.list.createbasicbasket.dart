@@ -1,4 +1,4 @@
-import 'package:cesta_basica/app/controllers/basicbasketproduct.controller.dart';
+import 'package:cesta_basica/app/controllers/basicbasket/basicbasketproduct.controller.dart';
 import 'package:cesta_basica/app/models/basicbasketproduct.model.dart';
 import 'package:cesta_basica/app/models/basicbasket.model.dart';
 import 'package:cesta_basica/app/models/product.model.dart';

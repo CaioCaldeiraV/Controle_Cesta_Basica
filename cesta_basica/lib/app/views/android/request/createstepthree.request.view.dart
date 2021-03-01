@@ -1,4 +1,4 @@
-import 'package:cesta_basica/app/controllers/request.controller.dart';
+import 'package:cesta_basica/app/controllers/request/request.controller.dart';
 import 'package:cesta_basica/app/models/request.model.dart';
 import 'package:cesta_basica/app/repositories/request.repository.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +21,14 @@ class _CreateThreeState extends State<CreateThree> {
   final TextEditingController _date = TextEditingController();
   final formatCurrency = NumberFormat.simpleCurrency();
   final _repository = RequestRepository();
+
+  @override
+  void initState() {
+    if (widget.model.id != 0) {
+      _date.text = widget.model.deliveryDate;
+    }
+    super.initState();
+  }
 
   void _onSubmit() {
     if (!_formKey.currentState.validate()) {
@@ -135,11 +143,43 @@ O Pedido foi editada com sucesso.""",
     Navigator.of(context).pop();
   }
 
-  void _onError() {
-    final snackBar = SnackBar(
-      content: Text('Ops, algo deu errado!'),
+  Future<void> _onError() async {
+    await showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(
+          'Ops! Algo deu errado',
+          style: TextStyle(
+            color: Theme.of(context).accentColor,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        content: Text(
+          """
+Ocorreu um erro ao cadastrar o pedido no sistema.""",
+          style: TextStyle(
+            color: Theme.of(context).accentColor,
+            fontSize: 14,
+          ),
+        ),
+        backgroundColor: Colors.red,
+        actions: <Widget>[
+          FlatButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text(
+              'ok',
+              style: TextStyle(
+                color: Theme.of(context).accentColor,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
-    _scaffoldKey.currentState.showSnackBar(snackBar);
+    _onSuccess();
   }
 
   Future<Null> _selectDate(BuildContext context) async {
@@ -306,7 +346,7 @@ O Pedido foi editada com sucesso.""",
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
                             maxLines: 3,
-                            textCapitalization: TextCapitalization.words,
+                            textCapitalization: TextCapitalization.sentences,
                             onSaved: (newValue) =>
                                 widget.model.comments = newValue,
                             initialValue: widget.model?.comments,

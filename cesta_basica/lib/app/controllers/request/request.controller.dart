@@ -62,7 +62,7 @@ abstract class _RequestController with Store {
   }
 
   @action
-  Future<void> incrementBasicBasketProduct(
+  Future<void> incrementRequestBasicBasket(
       RequestBasicBasketModel model) async {
     model.amount++;
     if (model.amount == 1) {
@@ -75,7 +75,7 @@ abstract class _RequestController with Store {
   }
 
   @action
-  Future<void> decreaseBasicBasketProduct(RequestBasicBasketModel model) async {
+  Future<void> decreaseRequestBasicBasket(RequestBasicBasketModel model) async {
     if (model.amount != 0) {
       model.amount--;
       if (model.amount == 0) {
@@ -98,7 +98,9 @@ abstract class _RequestController with Store {
     }
   }
 
-  int rewriteAmount(int id) {
+  Future<int> rewriteAmount(int id) async {
+    var data = await repository.searchIdinRequest(id);
+    requestBasicBaskets.addAll(data);
     for (var i = 0; i < requestBasicBaskets.length; i++) {
       if (id == requestBasicBaskets[i].basicbasketsId) {
         return i;
@@ -109,7 +111,7 @@ abstract class _RequestController with Store {
 
   Future<void> create(int id) async {
     for (var i = 0; i < requestBasicBaskets.length; i++) {
-      requestBasicBaskets[i].basicbasketsId = id;
+      requestBasicBaskets[i].requestId = id;
       await repository.create(requestBasicBaskets[i]);
     }
   }

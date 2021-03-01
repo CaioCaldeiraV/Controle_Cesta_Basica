@@ -121,4 +121,20 @@ class BasicBasketProductRepository {
       return <BasicBasketProductModel>[];
     }
   }
+
+  Future<List<BasicBasketProductModel>> productsInBasicBasket(int id) async {
+    try {
+      final db = await _getDatabase();
+      final maps = await db.query(
+        basicbasketsproductsTableName,
+        where: "basicbasketsId = ?",
+        whereArgs: [id],
+      );
+      return List.generate(maps.length, (i) {
+        return BasicBasketProductModel.fromMap(maps[i]);
+      });
+    } catch (ex) {
+      throw ("Erro ao buscar produtos de uma cesta básica");
+    }
+  }
 }

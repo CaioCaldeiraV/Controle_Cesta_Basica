@@ -31,7 +31,7 @@ class RequestRepository {
       );
       return id;
     } catch (ex) {
-      throw ("some arbitrary error");
+      throw ("Erro ao cadastrar o pedido.");
     }
   }
 
@@ -43,8 +43,7 @@ class RequestRepository {
         return RequestModel.fromMap(maps[i]);
       });
     } catch (ex) {
-      print(ex);
-      return <RequestModel>[];
+      throw ("Erro ao listar o pedido.");
     }
   }
 

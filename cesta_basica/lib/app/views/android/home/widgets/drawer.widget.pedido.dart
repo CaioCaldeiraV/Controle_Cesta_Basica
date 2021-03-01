@@ -1,5 +1,6 @@
 import 'package:cesta_basica/app/models/request.model.dart';
 import 'package:cesta_basica/app/views/android/request/create.request.view.dart';
+import 'package:cesta_basica/app/views/android/request/search.request.view.dart';
 import 'package:flutter/material.dart';
 
 class DrawerPedido extends StatelessWidget {
@@ -70,7 +71,14 @@ class DrawerPedido extends StatelessWidget {
                 fontSize: 15,
               ),
             ),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pop();
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => SearchRequestView(),
+                ),
+              );
+            },
           ),
         ),
       ],

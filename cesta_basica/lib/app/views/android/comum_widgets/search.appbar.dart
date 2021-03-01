@@ -1,6 +1,7 @@
-import 'package:cesta_basica/app/controllers/basicbasket.controller.dart';
-import 'package:cesta_basica/app/controllers/client.controller.dart';
-import 'package:cesta_basica/app/controllers/product.controller.dart';
+import 'package:cesta_basica/app/controllers/basicbasket/basicbasket.controller.dart';
+import 'package:cesta_basica/app/controllers/client/client.controller.dart';
+import 'package:cesta_basica/app/controllers/product/product.controller.dart';
+import 'package:cesta_basica/app/controllers/request/request.search.controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -10,13 +11,15 @@ class SearchAppbar extends StatelessWidget {
   final ClientController controllerClient;
   final ProductController controllerProduct;
   final BasicBasketController controllerBasicBasket;
-  const SearchAppbar(
-      {Key key,
-      this.choose,
-      this.controllerClient,
-      this.controllerProduct,
-      this.controllerBasicBasket})
-      : super(key: key);
+  final SearchRequestController controllerRequest;
+  const SearchAppbar({
+    Key key,
+    this.choose,
+    this.controllerClient,
+    this.controllerProduct,
+    this.controllerBasicBasket,
+    this.controllerRequest,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -49,8 +52,15 @@ class SearchAppbar extends StatelessWidget {
                   onPressed: () => Navigator.of(context).pop(),
                 )
               : Container();
-        } else {
+        } else if (choose == 2) {
           return !controllerBasicBasket.showSearch
+              ? IconButton(
+                  icon: Icon(Icons.arrow_back),
+                  onPressed: () => Navigator.of(context).pop(),
+                )
+              : Container();
+        } else {
+          return !controllerRequest.showSearch
               ? IconButton(
                   icon: Icon(Icons.arrow_back),
                   onPressed: () => Navigator.of(context).pop(),
@@ -114,7 +124,7 @@ class SearchAppbar extends StatelessWidget {
                     color: Theme.of(context).accentColor,
                   ),
                 );
-        } else {
+        } else if (choose == 2) {
           return controllerBasicBasket.showSearch
               ? TextField(
                   autofocus: true,
@@ -137,6 +147,33 @@ class SearchAppbar extends StatelessWidget {
                 )
               : Text(
                   'Cestas Básicas',
+                  style: TextStyle(
+                    color: Theme.of(context).accentColor,
+                  ),
+                );
+        } else {
+          return controllerRequest.showSearch
+              ? TextField(
+                  autofocus: true,
+                  textCapitalization: TextCapitalization.words,
+                  style: TextStyle(
+                    color: Theme.of(context).accentColor,
+                  ),
+                  cursorColor: Theme.of(context).accentColor,
+                  decoration: InputDecoration(
+                    icon: Icon(
+                      Icons.search,
+                      color: Theme.of(context).accentColor,
+                    ),
+                    labelText: 'Pesquisar pedido por nome do cliente',
+                    labelStyle: TextStyle(
+                      color: Theme.of(context).accentColor,
+                    ),
+                  ),
+                  onChanged: controllerRequest.search,
+                )
+              : Text(
+                  'Pedidos',
                   style: TextStyle(
                     color: Theme.of(context).accentColor,
                   ),
@@ -167,7 +204,7 @@ class SearchAppbar extends StatelessWidget {
                 controllerProduct.toggleSearch();
               },
             );
-          } else {
+          } else if (choose == 2) {
             return IconButton(
               icon: Icon(
                 controllerBasicBasket.showSearch ? Icons.close : Icons.search,
@@ -177,6 +214,18 @@ class SearchAppbar extends StatelessWidget {
                   controllerBasicBasket.search("");
                 }
                 controllerBasicBasket.toggleSearch();
+              },
+            );
+          } else {
+            return IconButton(
+              icon: Icon(
+                controllerRequest.showSearch ? Icons.close : Icons.search,
+              ),
+              onPressed: () {
+                if (controllerRequest.showSearch) {
+                  controllerRequest.search("");
+                }
+                controllerRequest.toggleSearch();
               },
             );
           }

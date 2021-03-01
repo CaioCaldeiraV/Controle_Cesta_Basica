@@ -1,5 +1,5 @@
-import 'package:cesta_basica/app/controllers/basicbasket.controller.dart';
-import 'package:cesta_basica/app/controllers/request.controller.dart';
+import 'package:cesta_basica/app/controllers/basicbasket/basicbasket.controller.dart';
+import 'package:cesta_basica/app/controllers/request/request.controller.dart';
 import 'package:cesta_basica/app/models/request.model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';

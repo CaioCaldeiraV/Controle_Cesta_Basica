@@ -31,7 +31,7 @@ class RequestBasicBasketRepository {
       );
     } catch (ex) {
       print(ex);
-      return ex;
+      throw ("Erro ao cadastrar o pedido.");
     }
   }
 

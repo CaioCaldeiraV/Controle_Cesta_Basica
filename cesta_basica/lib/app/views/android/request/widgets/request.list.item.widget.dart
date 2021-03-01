@@ -1,55 +1,36 @@
-import 'package:cesta_basica/app/models/basicbasket.model.dart';
-import 'package:cesta_basica/app/repositories/basicbasket.repository.dart';
+import 'package:cesta_basica/app/models/request.model.dart';
+import 'package:cesta_basica/app/repositories/request.repository.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import '../create.basicbasket.view.dart';
-import '../detail.basicbasket.view.dart';
-import '../search.basicbasket.view.dart';
 
-class BasicBasketListItem extends StatefulWidget {
-  final BasicBasketModel model;
-  const BasicBasketListItem({Key key, this.model}) : super(key: key);
+import '../create.request.view.dart';
+import '../search.request.view.dart';
+
+class RequestListItem extends StatefulWidget {
+  final RequestModel model;
+  final String clientName;
+
+  const RequestListItem({Key key, this.model, this.clientName})
+      : super(key: key);
 
   @override
-  _BasicBasketListItemState createState() => _BasicBasketListItemState();
+  _RequestListItemState createState() => _RequestListItemState();
 }
 
-class _BasicBasketListItemState extends State<BasicBasketListItem> {
-  final _repository = BasicBasketRepository();
-  final formatCurrency = NumberFormat.simpleCurrency();
-
+class _RequestListItemState extends State<RequestListItem> {
+  final _repository = RequestRepository();
   @override
   Widget build(BuildContext context) {
     return ListTile(
       leading: CircleAvatar(
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Colors.transparent,
         child: Image.asset(
-          "assets/images/shopping_car.png",
+          "assets/images/profilepicture.png",
+          color: Theme.of(context).primaryColor,
         ),
       ),
-      title: Text(
-        widget.model.name,
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      subtitle: Text(
-        """
-Valor: R\$ ${formatCurrency.format(widget.model.value).substring(1)}""",
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => DetailBasicBasketView(
-              model: widget.model,
-            ),
-          ),
-        );
-      },
+      title: Text("${widget.clientName} E OQ MALUCO"),
+      subtitle: Text("${widget.model.status}"),
+      onTap: () {},
       trailing: SizedBox(
         width: 100,
         child: Row(
@@ -65,7 +46,7 @@ Valor: R\$ ${formatCurrency.format(widget.model.value).substring(1)}""",
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                CreateBasicBasketView(model: widget.model)))
+                                CreateRequestView(model: widget.model)))
                     .then((value) => setState(() {}));
               },
             ),
@@ -79,7 +60,7 @@ Valor: R\$ ${formatCurrency.format(widget.model.value).substring(1)}""",
                   context: context,
                   builder: (ctx) => AlertDialog(
                     title: Text(
-                      'Excluir Cesta Básica',
+                      'Excluir Pedido',
                       style: TextStyle(
                         color: Theme.of(context).accentColor,
                         fontWeight: FontWeight.bold,
@@ -88,7 +69,7 @@ Valor: R\$ ${formatCurrency.format(widget.model.value).substring(1)}""",
                     backgroundColor: Colors.red,
                     content: Text(
                       """
-Você tem certeza que deseja deletar a cesta básica: '${widget.model.name}'?""",
+Você tem certeza que deseja deletar o pedido do: ${widget.clientName}?""",
                       style: TextStyle(
                         color: Theme.of(context).accentColor,
                         fontSize: 14,
@@ -115,7 +96,7 @@ Você tem certeza que deseja deletar a cesta básica: '${widget.model.name}'?"""
                             context: context,
                             builder: (ctx) => AlertDialog(
                               title: Text(
-                                'Cesta Básica Removido',
+                                'Pedido Removido',
                                 style: TextStyle(
                                   color: Theme.of(context).accentColor,
                                   fontWeight: FontWeight.bold,
@@ -123,7 +104,7 @@ Você tem certeza que deseja deletar a cesta básica: '${widget.model.name}'?"""
                               ),
                               content: Text(
                                 """
-A cesta básica '${widget.model.name}' foi removida com sucesso.""",
+O pedido do cliente "${widget.clientName}" foi removido com sucesso.""",
                                 style: TextStyle(
                                   color: Theme.of(context).accentColor,
                                   fontSize: 14,
@@ -149,8 +130,7 @@ A cesta básica '${widget.model.name}' foi removida com sucesso.""",
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      SearchBasicBasketView()));
+                                  builder: (context) => SearchRequestView()));
                         },
                         child: Text(
                           'Sim',

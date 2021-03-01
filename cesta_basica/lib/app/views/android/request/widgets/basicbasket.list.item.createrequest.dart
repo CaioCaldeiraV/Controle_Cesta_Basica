@@ -1,4 +1,4 @@
-import 'package:cesta_basica/app/controllers/request.controller.dart';
+import 'package:cesta_basica/app/controllers/request/request.controller.dart';
 import 'package:cesta_basica/app/models/basicbasket.model.dart';
 import 'package:cesta_basica/app/models/request.model.dart';
 import 'package:cesta_basica/app/models/requestbasicbasket.model.dart';
@@ -29,9 +29,9 @@ class _BasicBasketListItemCreateRequestState
   RequestBasicBasketModel modelRequestBasicBasket = RequestBasicBasketModel();
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
     var index =
-        widget.controllerRequest.rewriteAmount(widget.modelBasicBasket.id);
+        await widget.controllerRequest.rewriteAmount(widget.modelRequest.id);
     if (index >= 0) {
       modelRequestBasicBasket =
           widget.controllerRequest.requestBasicBaskets[index];
@@ -40,6 +40,11 @@ class _BasicBasketListItemCreateRequestState
       modelRequestBasicBasket.basicbasketsId = widget.modelBasicBasket.id;
       modelRequestBasicBasket.amount = 0;
     }
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return ListTile(
       leading: CircleAvatar(
         backgroundColor: Colors.white,
@@ -77,7 +82,7 @@ Valor: R\$ ${formatCurrency.format(widget.modelBasicBasket.value).substring(1)}"
                 ),
                 onPressed: () {
                   widget.controllerRequest
-                      .decreaseBasicBasketProduct(modelRequestBasicBasket);
+                      .decreaseRequestBasicBasket(modelRequestBasicBasket);
                 },
               ),
             ),
@@ -117,7 +122,7 @@ Valor: R\$ ${formatCurrency.format(widget.modelBasicBasket.value).substring(1)}"
                 ),
                 onPressed: () {
                   widget.controllerRequest
-                      .incrementBasicBasketProduct(modelRequestBasicBasket);
+                      .incrementRequestBasicBasket(modelRequestBasicBasket);
                 },
               ),
             ),

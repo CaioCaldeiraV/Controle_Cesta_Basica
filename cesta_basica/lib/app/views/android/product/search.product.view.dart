@@ -1,4 +1,4 @@
-import 'package:cesta_basica/app/controllers/product.controller.dart';
+import 'package:cesta_basica/app/controllers/product/product.controller.dart';
 import 'package:cesta_basica/app/models/product.model.dart';
 import 'package:cesta_basica/app/views/android/comum_widgets/search.appbar.dart';
 import 'package:flutter/material.dart';

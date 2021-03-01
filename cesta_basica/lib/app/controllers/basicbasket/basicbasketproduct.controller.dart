@@ -90,6 +90,7 @@ abstract class _BasicBasketProductController with Store {
     var _repository = BasicBasketProductRepository();
     var data = await _repository.searchIdinBasicBaskets(id);
     basicBasketsProducts.addAll(data);
+    await sumAmountValue();
   }
 
   int rewriteAmount(int id) {

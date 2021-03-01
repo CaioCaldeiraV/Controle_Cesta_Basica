@@ -1,5 +1,5 @@
-import 'package:cesta_basica/app/controllers/client.controller.dart';
-import 'package:cesta_basica/app/controllers/request.controller.dart';
+import 'package:cesta_basica/app/controllers/client/client.controller.dart';
+import 'package:cesta_basica/app/controllers/request/request.controller.dart';
 import 'package:cesta_basica/app/models/request.model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -20,6 +20,14 @@ class _CreateRequestViewState extends State<CreateRequestView> {
   final ClientController controller = ClientController();
   final RequestController controllerRequest = RequestController();
   final textController = TextEditingController();
+
+  @override
+  void initState() {
+    if (widget.model.id != 0) {
+      controllerRequest.toggleSelected(widget.model.clientsId);
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

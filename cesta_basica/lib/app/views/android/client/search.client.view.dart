@@ -1,4 +1,4 @@
-import 'package:cesta_basica/app/controllers/client.controller.dart';
+import 'package:cesta_basica/app/controllers/client/client.controller.dart';
 import 'package:cesta_basica/app/models/client.model.dart';
 import 'package:cesta_basica/app/views/android/client/widgets/client.list.item.widget.dart';
 import 'package:cesta_basica/app/views/android/comum_widgets/search.appbar.dart';

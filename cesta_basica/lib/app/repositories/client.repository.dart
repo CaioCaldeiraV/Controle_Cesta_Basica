@@ -69,13 +69,16 @@ class ClientRepository {
   Future<ClientModel> getClient(int id) async {
     try {
       final db = await _getDatabase();
-      final maps = await db.query(clientTableName, where: "id = ?", whereArgs: [
-        [id],
-      ]);
+      final maps = await db.query(
+        clientTableName,
+        where: "id = ?",
+        whereArgs: [id],
+      );
+      maps.length;
       return ClientModel.fromMap(maps[0]);
     } catch (ex) {
       print(ex);
-      return ClientModel();
+      throw ("Erro ao buscar Cliente");
     }
   }
 

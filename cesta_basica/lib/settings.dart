@@ -26,7 +26,7 @@ const String createBasicBasketsProductsTableScript =
 
 const String createRequestTableScript =
     // ignore: lines_longer_than_80_chars
-    "CREATE TABLE requests(id INTEGER PRIMARY KEY, status TEXT, totalValue TEXT, deliveryDate TEXT, dateRequest TEXT, comments TEXT, clientsId INTEGER NOT NULL, FOREIGN KEY (clientsId) REFERENCES clients(id) ON DELETE CASCADE ON UPDATE CASCADE)";
+    "CREATE TABLE requests(id INTEGER PRIMARY KEY, status TEXT, totalValue REAL, deliveryDate TEXT, dateRequest TEXT, comments TEXT, clientsId INTEGER NOT NULL, FOREIGN KEY (clientsId) REFERENCES clients(id) ON DELETE CASCADE ON UPDATE CASCADE)";
 
 const String createRequestBasicBasketsTableScript =
     // ignore: lines_longer_than_80_chars

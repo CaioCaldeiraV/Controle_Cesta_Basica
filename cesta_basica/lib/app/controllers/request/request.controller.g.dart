@@ -118,22 +118,22 @@ mixin _$RequestController on _RequestController, Store {
     return _$searchAsyncAction.run(() => super.search(term));
   }
 
-  final _$incrementBasicBasketProductAsyncAction =
-      AsyncAction('_RequestController.incrementBasicBasketProduct');
+  final _$incrementRequestBasicBasketAsyncAction =
+      AsyncAction('_RequestController.incrementRequestBasicBasket');
 
   @override
-  Future<void> incrementBasicBasketProduct(RequestBasicBasketModel model) {
-    return _$incrementBasicBasketProductAsyncAction
-        .run(() => super.incrementBasicBasketProduct(model));
+  Future<void> incrementRequestBasicBasket(RequestBasicBasketModel model) {
+    return _$incrementRequestBasicBasketAsyncAction
+        .run(() => super.incrementRequestBasicBasket(model));
   }
 
-  final _$decreaseBasicBasketProductAsyncAction =
-      AsyncAction('_RequestController.decreaseBasicBasketProduct');
+  final _$decreaseRequestBasicBasketAsyncAction =
+      AsyncAction('_RequestController.decreaseRequestBasicBasket');
 
   @override
-  Future<void> decreaseBasicBasketProduct(RequestBasicBasketModel model) {
-    return _$decreaseBasicBasketProductAsyncAction
-        .run(() => super.decreaseBasicBasketProduct(model));
+  Future<void> decreaseRequestBasicBasket(RequestBasicBasketModel model) {
+    return _$decreaseRequestBasicBasketAsyncAction
+        .run(() => super.decreaseRequestBasicBasket(model));
   }
 
   final _$sumAmountValueAsyncAction =
