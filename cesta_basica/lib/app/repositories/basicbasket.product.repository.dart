@@ -1,30 +1,13 @@
 import 'package:cesta_basica/app/models/basicbasketproduct.model.dart';
-import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
+import 'package:cesta_basica/app/repositories/database.repository.dart';
 import '../../settings.dart';
 
 class BasicBasketProductRepository {
-  Future<Database> _getDatabase() async {
-    return openDatabase(
-      join(await getDatabasesPath(), databaseName),
-      onConfigure: (db) {
-        db.execute('PRAGMA foreign_keys = ON');
-      },
-      onCreate: (db, version) {
-        db.execute(createClientTableScript);
-        db.execute(createBasicBasketsTableScript);
-        db.execute(createProductTableScript);
-        db.execute(createBasicBasketsProductsTableScript);
-        db.execute(createRequestTableScript);
-        db.execute(createRequestBasicBasketsTableScript);
-      },
-      version: 1,
-    );
-  }
+  DataBaseRepository dbr = DataBaseRepository();
 
   Future create(BasicBasketProductModel model) async {
     try {
-      final db = await _getDatabase();
+      final db = await dbr.getDatabase();
       await db.insert(
         basicbasketsproductsTableName,
         model.toMap(),
@@ -37,7 +20,7 @@ class BasicBasketProductRepository {
 
   Future<List<BasicBasketProductModel>> getBasicBasketsProducts() async {
     try {
-      final db = await _getDatabase();
+      final db = await dbr.getDatabase();
       final maps =
           await db.query(basicbasketsproductsTableName, orderBy: "name");
       return List.generate(maps.length, (i) {
@@ -51,7 +34,7 @@ class BasicBasketProductRepository {
 
   Future<List<BasicBasketProductModel>> search(int id) async {
     try {
-      final db = await _getDatabase();
+      final db = await dbr.getDatabase();
       final maps = await db.query(
         basicbasketsproductsTableName,
         where: "productsId = ?",
@@ -70,7 +53,7 @@ class BasicBasketProductRepository {
 
   Future<BasicBasketProductModel> getBasicBasketsProduct(int id) async {
     try {
-      final db = await _getDatabase();
+      final db = await dbr.getDatabase();
       final maps = await db.query(basicbasketsproductsTableName,
           where: "id = ?", whereArgs: [id]);
       return BasicBasketProductModel.fromMap(maps[0]);
@@ -82,7 +65,7 @@ class BasicBasketProductRepository {
 
   Future update(BasicBasketProductModel model) async {
     try {
-      final db = await _getDatabase();
+      final db = await dbr.getDatabase();
       await db.update(basicbasketsproductsTableName, model.toMap(),
           where: "id = ?", whereArgs: [model.id]);
     } catch (ex) {
@@ -93,7 +76,7 @@ class BasicBasketProductRepository {
 
   Future delete(int id) async {
     try {
-      final db = await _getDatabase();
+      final db = await dbr.getDatabase();
       await db.delete(
         basicbasketsproductsTableName,
         where: "id = ?",
@@ -107,7 +90,7 @@ class BasicBasketProductRepository {
 
   Future<List<BasicBasketProductModel>> searchIdinBasicBaskets(int id) async {
     try {
-      final db = await _getDatabase();
+      final db = await dbr.getDatabase();
       final maps = await db.query(
         basicbasketsproductsTableName,
         where: "basicbasketsId = ?",
@@ -124,7 +107,7 @@ class BasicBasketProductRepository {
 
   Future<List<BasicBasketProductModel>> productsInBasicBasket(int id) async {
     try {
-      final db = await _getDatabase();
+      final db = await dbr.getDatabase();
       final maps = await db.query(
         basicbasketsproductsTableName,
         where: "basicbasketsId = ?",

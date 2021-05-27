@@ -88,7 +88,7 @@ Você tem certeza que deseja deletar o cliente: ${widget.model.name}?""",
                       ),
                     ),
                     actions: <Widget>[
-                      FlatButton(
+                      TextButton(
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
@@ -100,7 +100,7 @@ Você tem certeza que deseja deletar o cliente: ${widget.model.name}?""",
                           ),
                         ),
                       ),
-                      FlatButton(
+                      TextButton(
                         onPressed: () async {
                           _repository.delete(widget.model.id);
                           Navigator.of(context).pop();
@@ -124,7 +124,7 @@ O cliente ${widget.model.name} foi removido com sucesso.""",
                               ),
                               backgroundColor: Colors.green,
                               actions: <Widget>[
-                                FlatButton(
+                                TextButton(
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                   },

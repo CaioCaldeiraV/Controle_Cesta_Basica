@@ -28,7 +28,6 @@ abstract class _ClientController with Store {
 
   @action
   Future<void> getClients() async {
-    await Future.delayed(Duration(seconds: 1));
     clients = ObservableList<ClientModel>();
     var data = await repository.getClients();
     clients.addAll(data);

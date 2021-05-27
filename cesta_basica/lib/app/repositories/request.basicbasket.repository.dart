@@ -1,30 +1,13 @@
 import 'package:cesta_basica/app/models/requestbasicbasket.model.dart';
-import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
+import 'package:cesta_basica/app/repositories/database.repository.dart';
 import '../../settings.dart';
 
 class RequestBasicBasketRepository {
-  Future<Database> _getDatabase() async {
-    return openDatabase(
-      join(await getDatabasesPath(), databaseName),
-      onConfigure: (db) {
-        db.execute('PRAGMA foreign_keys = ON');
-      },
-      onCreate: (db, version) {
-        db.execute(createClientTableScript);
-        db.execute(createBasicBasketsTableScript);
-        db.execute(createProductTableScript);
-        db.execute(createBasicBasketsProductsTableScript);
-        db.execute(createRequestTableScript);
-        db.execute(createRequestBasicBasketsTableScript);
-      },
-      version: 1,
-    );
-  }
+  DataBaseRepository dbr = DataBaseRepository();
 
   Future create(RequestBasicBasketModel model) async {
     try {
-      final db = await _getDatabase();
+      final db = await dbr.getDatabase();
       await db.insert(
         requestBasicBasketTableName,
         model.toMap(),
@@ -37,7 +20,7 @@ class RequestBasicBasketRepository {
 
   Future<List<RequestBasicBasketModel>> getRequestBasicBasket() async {
     try {
-      final db = await _getDatabase();
+      final db = await dbr.getDatabase();
       final maps = await db.query(requestBasicBasketTableName);
       return List.generate(maps.length, (i) {
         return RequestBasicBasketModel.fromMap(maps[i]);
@@ -50,7 +33,7 @@ class RequestBasicBasketRepository {
 
   Future update(RequestBasicBasketModel model) async {
     try {
-      final db = await _getDatabase();
+      final db = await dbr.getDatabase();
       await db.update(requestBasicBasketTableName, model.toMap(),
           where: "id = ?", whereArgs: [model.id]);
     } catch (ex) {
@@ -61,7 +44,7 @@ class RequestBasicBasketRepository {
 
   Future delete(int id) async {
     try {
-      final db = await _getDatabase();
+      final db = await dbr.getDatabase();
       await db.delete(
         requestBasicBasketTableName,
         where: "id = ?",
@@ -75,7 +58,7 @@ class RequestBasicBasketRepository {
 
   Future<List<RequestBasicBasketModel>> searchIdinRequest(int id) async {
     try {
-      final db = await _getDatabase();
+      final db = await dbr.getDatabase();
       final maps = await db.query(
         requestBasicBasketTableName,
         where: "requestId = ?",

@@ -59,7 +59,7 @@ A Cesta básica '${widget.model.name}' foi cadastrada com sucesso.""",
           ),
           backgroundColor: Colors.green,
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -106,7 +106,7 @@ A Cesta básica '${widget.model.name}' foi editada com sucesso.""",
           ),
           backgroundColor: Colors.green,
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -134,10 +134,11 @@ A Cesta básica '${widget.model.name}' foi editada com sucesso.""",
   }
 
   void _onError() {
-    final snackBar = SnackBar(
-      content: Text('Ops, algo deu errado!'),
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Ops, algo deu errado!'),
+      ),
     );
-    _scaffoldKey.currentState.showSnackBar(snackBar);
   }
 
   @override
@@ -272,7 +273,7 @@ A Cesta básica '${widget.model.name}' foi editada com sucesso.""",
                               .replaceAll(".", "")
                               .replaceAll(",", ".")) <
                           widget.controller.totalCust) {
-                        return 'O valor não pode ser menos que o custo.';
+                        return 'O valor não pode ser menor que o custo.';
                       }
                       return null;
                     },

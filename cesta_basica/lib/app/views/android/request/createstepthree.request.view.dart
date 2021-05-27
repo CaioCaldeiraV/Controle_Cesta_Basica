@@ -1,8 +1,14 @@
 import 'package:cesta_basica/app/controllers/request/request.controller.dart';
+import 'package:cesta_basica/app/models/debts.model.dart';
+import 'package:cesta_basica/app/models/installments.model.dart';
 import 'package:cesta_basica/app/models/request.model.dart';
+import 'package:cesta_basica/app/repositories/debts.repository.dart';
+import 'package:cesta_basica/app/repositories/installments.repository.dart';
 import 'package:cesta_basica/app/repositories/request.repository.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import '../../../repositories/basicbasket.product.repository.dart';
+import '../../../repositories/product.repository.dart';
 
 class CreateThree extends StatefulWidget {
   final RequestModel model;
@@ -21,9 +27,11 @@ class _CreateThreeState extends State<CreateThree> {
   final TextEditingController _date = TextEditingController();
   final formatCurrency = NumberFormat.simpleCurrency();
   final _repository = RequestRepository();
+  String dropdownValue;
 
   @override
   void initState() {
+    dropdownValue = widget.model.typePayment ?? "À vista";
     if (widget.model.id != 0) {
       _date.text = widget.model.deliveryDate;
     }
@@ -41,12 +49,44 @@ class _CreateThreeState extends State<CreateThree> {
   Future<void> _create() async {
     widget.model.id = null;
     widget.model.totalValue = widget.controller.totalValue;
-    widget.model.status = "Pendente";
-    widget.model.dateRequest = "21/02/2021";
+    widget.model.statusDelivery = "Pendente";
+    widget.model.dateRequest = DateTime.now().toString();
+    widget.model.typePayment = dropdownValue;
+    if (await _verifyAmountProducts()) {
+      _decreaseProducts();
+    } else {
+      await _onErrorInStockProducts();
+      return;
+    }
 
     var id = await _repository.create(widget.model).catchError((_) {
       _onError();
     });
+
+    if (returnQuantityInstallments() > 0) {
+      var _repositoryDebts = DebtsRepository();
+      var modelDebts = DebtsModel(
+        requestId: id,
+        status: "Pendente",
+        quantityInstallments: returnQuantityInstallments(),
+      );
+      var idDebts = await _repositoryDebts.create(modelDebts).catchError((_) {
+        _onError();
+      });
+
+      var _repositoryInstallments = InstallmentsRepository();
+      for (var i = 0; i < returnQuantityInstallments(); i++) {
+        var modelInstallments = InstallmentsModel(
+          debtsId: idDebts,
+          status: "Pendente",
+          value: widget.model.totalValue / returnQuantityInstallments(),
+          datePayment: returnDatePaymentInstallments(i),
+        );
+        await _repositoryInstallments.create(modelInstallments).catchError((_) {
+          _onError();
+        });
+      }
+    }
 
     await widget.controller.create(id).then((_) async {
       await showDialog(
@@ -69,7 +109,7 @@ O Pedido foi cadastrada com sucesso.""",
           ),
           backgroundColor: Colors.green,
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -90,10 +130,112 @@ O Pedido foi cadastrada com sucesso.""",
     });
   }
 
-  void _update() {
+  int returnQuantityInstallments() {
+    if (dropdownValue == "À vista") {
+      return 0;
+    } else if (dropdownValue ==
+        // ignore: lines_longer_than_80_chars
+        '1x R\$ ${formatCurrency.format(widget.controller.totalValue).substring(1)} (30 dias)') {
+      return 1;
+    } else {
+      return 2;
+    }
+  }
+
+  String returnDatePaymentInstallments(int index) {
+    var format = DateFormat('dd/MM/yyyy');
+    if (dropdownValue == "À vista") {
+      return format.format(DateTime.now());
+    } else if (dropdownValue ==
+        // ignore: lines_longer_than_80_chars
+        '1x R\$ ${formatCurrency.format(widget.controller.totalValue).substring(1)} (30 dias)') {
+      return format.format(DateTime.now().add(Duration(days: 30)));
+    } else {
+      if (index == 0) {
+        return format.format(DateTime.now().add(Duration(days: 30)));
+      } else {
+        return format.format(DateTime.now().add(Duration(days: 60)));
+      }
+    }
+  }
+
+  Future<bool> _verifyAmountProducts() async {
+    var _repositoryBasicBasketProduct = BasicBasketProductRepository();
+    var _repositoryProduct = ProductRepository();
+    for (var i = 0; i < widget.controller.requestBasicBaskets.length; i++) {
+      var list = await _repositoryBasicBasketProduct.searchIdinBasicBaskets(
+          widget.controller.requestBasicBaskets[i].basicbasketsId);
+
+      for (var j = 0; j < list.length; j++) {
+        var model = await _repositoryProduct.getProduct(list[j].productsId);
+        if (model.stock >=
+            widget.controller.requestBasicBaskets[i].amount * list[j].amount) {
+          break;
+        } else {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  void _decreaseProducts() async {
+    var _repositoryBasicBasketProduct = BasicBasketProductRepository();
+    var _repositoryProduct = ProductRepository();
+    for (var i = 0; i < widget.controller.requestBasicBaskets.length; i++) {
+      var list = await _repositoryBasicBasketProduct.searchIdinBasicBaskets(
+          widget.controller.requestBasicBaskets[i].basicbasketsId);
+
+      for (var j = 0; j < list.length; j++) {
+        var model = await _repositoryProduct.getProduct(list[j].productsId);
+        model.stock = model.stock -
+            (widget.controller.requestBasicBaskets[i].amount * list[j].amount);
+        await _repositoryProduct.update(model);
+      }
+    }
+  }
+
+  void _update() async {
+    if (await _verifyAmountProducts()) {
+      _decreaseProducts();
+    } else {
+      await _onErrorInStockProducts();
+      return;
+    }
+    print(widget.model.statusDelivery);
+    widget.model.totalValue = widget.controller.totalValue;
+    widget.model.typePayment = dropdownValue;
     _repository.update(widget.model).then((_) async {}).catchError((_) {
       _onError();
     });
+
+    var _repositoryDebts = DebtsRepository();
+    var listDebts = await _repositoryDebts.searchRequestId(widget.model.id);
+    if (listDebts.isNotEmpty) {
+      _repositoryDebts.delete(listDebts[0].id);
+    }
+
+    if (returnQuantityInstallments() > 0) {
+      var modelDebts = DebtsModel(
+        requestId: widget.model.id,
+        status: "Pendente",
+        quantityInstallments: returnQuantityInstallments(),
+      );
+      var idDebts = await _repositoryDebts.create(modelDebts).catchError((_) {
+        _onError();
+      });
+
+      var _repositoryInstallments = InstallmentsRepository();
+      for (var i = 0; i < returnQuantityInstallments(); i++) {
+        var modelInstallments = InstallmentsModel(
+          debtsId: idDebts,
+          status: "Pendente",
+          value: widget.model.totalValue / returnQuantityInstallments(),
+          datePayment: returnDatePaymentInstallments(i),
+        );
+        await _repositoryInstallments.create(modelInstallments);
+      }
+    }
 
     widget.controller.update(widget.model.id).then((_) async {
       await showDialog(
@@ -116,7 +258,7 @@ O Pedido foi editada com sucesso.""",
           ),
           backgroundColor: Colors.green,
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -164,7 +306,7 @@ Ocorreu um erro ao cadastrar o pedido no sistema.""",
         ),
         backgroundColor: Colors.red,
         actions: <Widget>[
-          FlatButton(
+          TextButton(
             onPressed: () {
               Navigator.of(context).pop();
             },
@@ -180,6 +322,45 @@ Ocorreu um erro ao cadastrar o pedido no sistema.""",
       ),
     );
     _onSuccess();
+  }
+
+  Future<void> _onErrorInStockProducts() async {
+    await showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(
+          'Ops! Algo deu errado',
+          style: TextStyle(
+            color: Theme.of(context).accentColor,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        content: Text(
+          """
+Uma ou mais cesta básicas selecionadas não possui estoque suficiente de produtos que a compõem.""",
+          style: TextStyle(
+            color: Theme.of(context).accentColor,
+            fontSize: 14,
+          ),
+        ),
+        backgroundColor: Colors.red,
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text(
+              'ok',
+              style: TextStyle(
+                color: Theme.of(context).accentColor,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+    Navigator.of(context).pop();
   }
 
   Future<Null> _selectDate(BuildContext context) async {
@@ -359,6 +540,38 @@ Ocorreu um erro ao cadastrar o pedido no sistema.""",
                               hintText:
                                   // ignore: lines_longer_than_80_chars
                                   'Digite uma observação, caso achar necessário.',
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        child: Card(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: DropdownButton(
+                              isExpanded: true,
+                              onChanged: (newValue) {
+                                setState(() {
+                                  dropdownValue = newValue;
+                                });
+                              },
+                              items: <String>[
+                                'À vista',
+                                // ignore: lines_longer_than_80_chars
+                                '1x R\$ ${formatCurrency.format(widget.controller.totalValue).substring(1)} (30 dias)',
+                                // ignore: lines_longer_than_80_chars
+                                '2x R\$ ${formatCurrency.format(widget.controller.totalValue / 2).substring(1)} (30 e 60 dias)',
+                              ].map<DropdownMenuItem<String>>((value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                              value: dropdownValue,
                             ),
                           ),
                         ),

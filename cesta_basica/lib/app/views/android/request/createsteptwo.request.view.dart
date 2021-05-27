@@ -25,6 +25,14 @@ class _CreateTwoState extends State<CreateTwo> {
   final formatCurrency = NumberFormat.simpleCurrency();
 
   @override
+  void initState() {
+    if (widget.model.id != 0) {
+      widget.controller.carregaAmount(widget.model.id);
+    }
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
@@ -97,7 +105,7 @@ Por favor, selecione pelo menos uma cesta básica para prosseguir com o pedido""
                     ),
                   ),
                   actions: <Widget>[
-                    FlatButton(
+                    TextButton(
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
@@ -197,51 +205,52 @@ Seleção das Cestas Básicas que compõem o pedido.""",
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Observer(
-                                  builder: (_) => controllerBasicBasket
-                                          .showSearch
-                                      ? SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width -
-                                              (125),
-                                          height: 150,
-                                          child: TextField(
-                                            controller: textController,
-                                            autofocus: true,
-                                            textCapitalization:
-                                                TextCapitalization.words,
-                                            style: TextStyle(
-                                              color:
-                                                  Theme.of(context).accentColor,
-                                            ),
-                                            cursorColor: Colors.white,
-                                            decoration: InputDecoration(
-                                              icon: Icon(
-                                                Icons.search,
+                                  builder: (_) =>
+                                      controllerBasicBasket.showSearch
+                                          ? SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width -
+                                                  (125),
+                                              height: 150,
+                                              child: TextField(
+                                                  controller: textController,
+                                                  autofocus: true,
+                                                  textCapitalization:
+                                                      TextCapitalization.words,
+                                                  style: TextStyle(
+                                                    color: Theme.of(context)
+                                                        .accentColor,
+                                                  ),
+                                                  cursorColor: Colors.white,
+                                                  decoration: InputDecoration(
+                                                    icon: Icon(
+                                                      Icons.search,
+                                                      color: Theme.of(context)
+                                                          .accentColor,
+                                                    ),
+                                                    hintText: """
+Pesquisar Cesta Básica""",
+                                                    hintStyle: TextStyle(
+                                                      color: Theme.of(context)
+                                                          .accentColor,
+                                                      fontSize: 12,
+                                                    ),
+                                                  ),
+                                                  onChanged: (value) async {
+                                                    await controllerBasicBasket
+                                                        .search(value);
+                                                  }),
+                                            )
+                                          : Text(
+                                              "Lista de Cestas Básicas",
+                                              style: TextStyle(
                                                 color: Theme.of(context)
                                                     .accentColor,
-                                              ),
-                                              hintText:
-                                                  'Pesquisar Cesta Básica',
-                                              hintStyle: TextStyle(
-                                                color: Theme.of(context)
-                                                    .accentColor,
-                                                fontSize: 12,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 18,
                                               ),
                                             ),
-                                            onChanged:
-                                                controllerBasicBasket.search,
-                                          ),
-                                        )
-                                      : Text(
-                                          "Lista de Cestas Básicas",
-                                          style: TextStyle(
-                                            color:
-                                                Theme.of(context).accentColor,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 18,
-                                          ),
-                                        ),
                                 ),
                                 Observer(
                                   builder: (_) => IconButton(
@@ -251,10 +260,11 @@ Seleção das Cestas Básicas que compõem o pedido.""",
                                           : Icons.search,
                                       color: Theme.of(context).accentColor,
                                     ),
-                                    onPressed: () {
+                                    onPressed: () async {
                                       if (controllerBasicBasket.showSearch) {
                                         textController.text = "";
-                                        controllerBasicBasket.getBasicBaskets();
+                                        await controllerBasicBasket
+                                            .getBasicBaskets();
                                       }
                                       controllerBasicBasket.toggleSearch();
                                     },

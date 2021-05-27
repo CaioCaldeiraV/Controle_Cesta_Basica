@@ -1,30 +1,13 @@
 import 'package:cesta_basica/app/models/request.model.dart';
-import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
+import 'package:cesta_basica/app/repositories/database.repository.dart';
 import '../../settings.dart';
 
 class RequestRepository {
-  Future<Database> _getDatabase() async {
-    return openDatabase(
-      join(await getDatabasesPath(), databaseName),
-      onConfigure: (db) {
-        db.execute('PRAGMA foreign_keys = ON');
-      },
-      onCreate: (db, version) {
-        db.execute(createClientTableScript);
-        db.execute(createBasicBasketsTableScript);
-        db.execute(createProductTableScript);
-        db.execute(createBasicBasketsProductsTableScript);
-        db.execute(createRequestTableScript);
-        db.execute(createRequestBasicBasketsTableScript);
-      },
-      version: 1,
-    );
-  }
+  DataBaseRepository dbr = DataBaseRepository();
 
   Future<int> create(RequestModel model) async {
     try {
-      final db = await _getDatabase();
+      final db = await dbr.getDatabase();
       var id = await db.insert(
         requestTableName,
         model.toMap(),
@@ -37,7 +20,7 @@ class RequestRepository {
 
   Future<List<RequestModel>> getRequests() async {
     try {
-      final db = await _getDatabase();
+      final db = await dbr.getDatabase();
       final maps = await db.query(requestTableName);
       return List.generate(maps.length, (i) {
         return RequestModel.fromMap(maps[i]);
@@ -49,7 +32,7 @@ class RequestRepository {
 
   Future<RequestModel> getRequest(int id) async {
     try {
-      final db = await _getDatabase();
+      final db = await dbr.getDatabase();
       final maps =
           await db.query(requestTableName, where: "id = ?", whereArgs: [
         [id],
@@ -63,7 +46,7 @@ class RequestRepository {
 
   Future update(RequestModel model) async {
     try {
-      final db = await _getDatabase();
+      final db = await dbr.getDatabase();
       await db.update(requestTableName, model.toMap(),
           where: "id = ?", whereArgs: [model.id]);
     } catch (ex) {
@@ -74,7 +57,7 @@ class RequestRepository {
 
   Future delete(int id) async {
     try {
-      final db = await _getDatabase();
+      final db = await dbr.getDatabase();
       await db.delete(
         requestTableName,
         where: "id = ?",

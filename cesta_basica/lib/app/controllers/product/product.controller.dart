@@ -28,7 +28,6 @@ abstract class _ProductController with Store {
 
   @action
   Future<void> getProducts() async {
-    await Future.delayed(Duration(seconds: 1));
     products = ObservableList<ProductModel>();
     var data = await repository.getProducts();
     products.addAll(data);

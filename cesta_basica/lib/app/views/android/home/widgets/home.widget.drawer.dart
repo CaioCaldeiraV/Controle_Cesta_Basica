@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'drawer.widget.cestabasica.dart';
 import 'drawer.widget.cliente.dart';
 import 'drawer.widget.produto.dart';
+import 'drawer.widget.relatorio.extrato.dart';
 
 class HomeDrawer extends StatelessWidget {
   @override
@@ -84,6 +85,40 @@ class HomeDrawer extends StatelessWidget {
                 ),
               ),
             ),
+          ),
+          DrawerRelatorioExtrato(),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: 10,
+            ),
+            child: Center(
+              child: Text(
+                "Sobre",
+                style: TextStyle(
+                  color: Colors.green,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+          ListTile(
+            contentPadding: EdgeInsets.only(
+              left: 20,
+            ),
+            leading: Icon(
+              Icons.info,
+              color: Colors.black,
+              size: 25,
+            ),
+            title: Text(
+              'Sobre nós',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 15,
+              ),
+            ),
+            onTap: () {},
           ),
         ],
       ),

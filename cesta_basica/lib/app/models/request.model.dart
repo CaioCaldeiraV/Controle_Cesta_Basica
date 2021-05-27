@@ -1,39 +1,43 @@
 class RequestModel {
   int id;
-  String status;
+  String statusDelivery;
   double totalValue;
   String deliveryDate;
   String dateRequest;
   String comments;
   int clientsId;
+  String typePayment;
 
   RequestModel({
     this.id,
-    this.status,
+    this.statusDelivery,
     this.totalValue,
     this.deliveryDate,
     this.comments,
     this.clientsId,
     this.dateRequest,
+    this.typePayment,
   });
 
   Map<String, dynamic> toMap() => {
         "id": id,
-        "status": status,
+        "statusDelivery": statusDelivery,
         "totalValue": totalValue,
         "deliveryDate": deliveryDate,
         "comments": comments,
         "clientsId": clientsId,
         "dateRequest": dateRequest,
+        "typePayment": typePayment,
       };
 
   factory RequestModel.fromMap(Map<String, dynamic> json) => RequestModel(
         id: json["id"],
-        status: json["status"],
+        statusDelivery: json["statusDelivery"],
         totalValue: json["totalValue"].toDouble(),
         deliveryDate: json["deliveryDate"],
         comments: json["comments"],
         clientsId: json["clientsId"],
         dateRequest: json["dateRequest"],
+        typePayment: json["typePayment"],
       );
 }

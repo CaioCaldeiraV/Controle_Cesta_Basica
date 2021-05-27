@@ -102,7 +102,7 @@ Por favor, selecione um cliente para prosseguir com o pedido""",
                     ),
                   ),
                   actions: <Widget>[
-                    FlatButton(
+                    TextButton(
                       onPressed: () {
                         Navigator.of(context).pop();
                       },

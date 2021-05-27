@@ -167,53 +167,7 @@ Data de Nascimento: ${model.dateOfBirth.replaceAll(' ', '')}""",
                   height: 210,
                   padding: EdgeInsets.all(20),
                   child: ListView(
-                    children: [
-                      Text(
-                        "Nome: ${model.name}",
-                        style: TextStyle(fontSize: 15, color: Colors.black),
-                      ),
-                      Text(
-                        "RG: ${model.rg}",
-                        style: TextStyle(fontSize: 15, color: Colors.black),
-                      ),
-                      Text(
-                        "CPF: ${model.cpf}",
-                        style: TextStyle(fontSize: 15, color: Colors.black),
-                      ),
-                      Text(
-                        "Telefone: ${model.phone}",
-                        style: TextStyle(fontSize: 15, color: Colors.black),
-                      ),
-                      Text(
-                        """
-Data de Nascimento: ${model.dateOfBirth.replaceAll(' ', '')}""",
-                        style: TextStyle(fontSize: 15, color: Colors.black),
-                      ),
-                      Text(
-                        "Sexo: ${model.gender}",
-                        style: TextStyle(fontSize: 15, color: Colors.black),
-                      ),
-                      Text(
-                        "Estado: ${model.state}",
-                        style: TextStyle(fontSize: 15, color: Colors.black),
-                      ),
-                      Text(
-                        "Cidade: ${model.city}",
-                        style: TextStyle(fontSize: 15, color: Colors.black),
-                      ),
-                      Text(
-                        "Bairro: ${model.neighborhood}",
-                        style: TextStyle(fontSize: 15, color: Colors.black),
-                      ),
-                      Text(
-                        "Rua: ${model.street}",
-                        style: TextStyle(fontSize: 15, color: Colors.black),
-                      ),
-                      Text(
-                        "Número: ${model.number}",
-                        style: TextStyle(fontSize: 15, color: Colors.black),
-                      ),
-                    ],
+                    children: [],
                   ),
                 )
               ],
@@ -270,53 +224,7 @@ Data de Nascimento: ${model.dateOfBirth.replaceAll(' ', '')}""",
                   height: 210,
                   padding: EdgeInsets.all(20),
                   child: ListView(
-                    children: [
-                      Text(
-                        "Nome: ${model.name}",
-                        style: TextStyle(fontSize: 15, color: Colors.black),
-                      ),
-                      Text(
-                        "RG: ${model.rg}",
-                        style: TextStyle(fontSize: 15, color: Colors.black),
-                      ),
-                      Text(
-                        "CPF: ${model.cpf}",
-                        style: TextStyle(fontSize: 15, color: Colors.black),
-                      ),
-                      Text(
-                        "Telefone: ${model.phone}",
-                        style: TextStyle(fontSize: 15, color: Colors.black),
-                      ),
-                      Text(
-                        """
-Data de Nascimento: ${model.dateOfBirth.replaceAll(' ', '')}""",
-                        style: TextStyle(fontSize: 15, color: Colors.black),
-                      ),
-                      Text(
-                        "Sexo: ${model.gender}",
-                        style: TextStyle(fontSize: 15, color: Colors.black),
-                      ),
-                      Text(
-                        "Estado: ${model.state}",
-                        style: TextStyle(fontSize: 15, color: Colors.black),
-                      ),
-                      Text(
-                        "Cidade: ${model.city}",
-                        style: TextStyle(fontSize: 15, color: Colors.black),
-                      ),
-                      Text(
-                        "Bairro: ${model.neighborhood}",
-                        style: TextStyle(fontSize: 15, color: Colors.black),
-                      ),
-                      Text(
-                        "Rua: ${model.street}",
-                        style: TextStyle(fontSize: 15, color: Colors.black),
-                      ),
-                      Text(
-                        "Número: ${model.number}",
-                        style: TextStyle(fontSize: 15, color: Colors.black),
-                      ),
-                    ],
+                    children: [],
                   ),
                 )
               ],

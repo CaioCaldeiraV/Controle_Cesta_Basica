@@ -60,7 +60,7 @@ class _CreateClientViewState extends State<CreateClientView> {
           ),
           backgroundColor: Colors.green,
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -76,8 +76,9 @@ class _CreateClientViewState extends State<CreateClientView> {
         ),
       );
       onSuccess();
-    }).catchError((_) {
-      onError();
+    }).catchError((error, stackTrace) {
+      widget.model.id = 0;
+      onError(error);
     });
   }
 
@@ -103,7 +104,7 @@ class _CreateClientViewState extends State<CreateClientView> {
           ),
           backgroundColor: Colors.green,
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -119,8 +120,8 @@ class _CreateClientViewState extends State<CreateClientView> {
         ),
       );
       onSuccess();
-    }).catchError((_) {
-      onError();
+    }).catchError((error, stackTrace) {
+      onError(error);
     });
   }
 
@@ -128,11 +129,13 @@ class _CreateClientViewState extends State<CreateClientView> {
     Navigator.pop(context);
   }
 
-  void onError() {
-    final snackBar = SnackBar(
-      content: Text('Ops, algo deu errado!'),
+  void onError(String error) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: Colors.red,
+        content: Text('Ops, algo deu errado!\n$error'),
+      ),
     );
-    _scaffoldKey.currentState.showSnackBar(snackBar);
   }
 
   Future<Null> _selectDate(BuildContext context) async {
@@ -600,12 +603,13 @@ class _CreateClientViewState extends State<CreateClientView> {
                 ],
               ),
               SizedBox(height: 60),
-              RaisedButton(
+              ElevatedButton(
                 onPressed: onSubmit,
-                padding: EdgeInsets.all(0.0),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(45.0),
-                ),
+                style: ButtonStyle(
+                    padding: MaterialStateProperty.all(EdgeInsets.all(0)),
+                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(45.0),
+                    ))),
                 child: Container(
                   height: 48,
                   width: MediaQuery.of(context).size.width / 1.2,

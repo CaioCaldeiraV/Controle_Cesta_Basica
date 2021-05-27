@@ -26,25 +26,23 @@ class BasicBasketListItemCreateRequest extends StatefulWidget {
 class _BasicBasketListItemCreateRequestState
     extends State<BasicBasketListItemCreateRequest> {
   final formatCurrency = NumberFormat.simpleCurrency();
-  RequestBasicBasketModel modelRequestBasicBasket = RequestBasicBasketModel();
+  RequestBasicBasketModel modelRequestBasicBasket;
 
   @override
   void initState() {
-    var index =
-        await widget.controllerRequest.rewriteAmount(widget.modelRequest.id);
-    if (index >= 0) {
-      modelRequestBasicBasket =
-          widget.controllerRequest.requestBasicBaskets[index];
-    } else {
-      modelRequestBasicBasket.requestId = 0;
-      modelRequestBasicBasket.basicbasketsId = widget.modelBasicBasket.id;
-      modelRequestBasicBasket.amount = 0;
-    }
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    var modelRequestBasicBasket =
+        widget.controllerRequest.rewriteAmount(widget.modelBasicBasket.id);
+    if (modelRequestBasicBasket == null) {
+      modelRequestBasicBasket = RequestBasicBasketModel();
+      modelRequestBasicBasket.requestId = 0;
+      modelRequestBasicBasket.basicbasketsId = widget.modelBasicBasket.id;
+      modelRequestBasicBasket.amount = 0;
+    }
     return ListTile(
       leading: CircleAvatar(
         backgroundColor: Colors.white,
@@ -121,6 +119,7 @@ Valor: R\$ ${formatCurrency.format(widget.modelBasicBasket.value).substring(1)}"
                   size: 18,
                 ),
                 onPressed: () {
+                  print(modelRequestBasicBasket.amount);
                   widget.controllerRequest
                       .incrementRequestBasicBasket(modelRequestBasicBasket);
                 },

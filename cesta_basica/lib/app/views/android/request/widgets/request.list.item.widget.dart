@@ -1,5 +1,6 @@
 import 'package:cesta_basica/app/models/request.model.dart';
 import 'package:cesta_basica/app/repositories/request.repository.dart';
+import 'package:cesta_basica/app/views/android/request/detail.request.view.dart';
 import 'package:flutter/material.dart';
 
 import '../create.request.view.dart';
@@ -22,15 +23,22 @@ class _RequestListItemState extends State<RequestListItem> {
   Widget build(BuildContext context) {
     return ListTile(
       leading: CircleAvatar(
-        backgroundColor: Colors.transparent,
-        child: Image.asset(
-          "assets/images/profilepicture.png",
-          color: Theme.of(context).primaryColor,
-        ),
-      ),
-      title: Text("${widget.clientName} E OQ MALUCO"),
-      subtitle: Text("${widget.model.status}"),
-      onTap: () {},
+          backgroundColor: Colors.transparent,
+          child: Icon(
+            Icons.assignment_outlined,
+            color: Theme.of(context).primaryColor,
+            size: 35,
+          )),
+      title: Text("${widget.clientName}"),
+      subtitle: Text("${widget.model.statusDelivery}"),
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => DetailRequestView(
+                      model: widget.model,
+                    )));
+      },
       trailing: SizedBox(
         width: 100,
         child: Row(
@@ -76,7 +84,7 @@ Você tem certeza que deseja deletar o pedido do: ${widget.clientName}?""",
                       ),
                     ),
                     actions: <Widget>[
-                      FlatButton(
+                      TextButton(
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
@@ -88,7 +96,7 @@ Você tem certeza que deseja deletar o pedido do: ${widget.clientName}?""",
                           ),
                         ),
                       ),
-                      FlatButton(
+                      TextButton(
                         onPressed: () async {
                           _repository.delete(widget.model.id);
                           Navigator.of(context).pop();
@@ -112,7 +120,7 @@ O pedido do cliente "${widget.clientName}" foi removido com sucesso.""",
                               ),
                               backgroundColor: Colors.green,
                               actions: <Widget>[
-                                FlatButton(
+                                TextButton(
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                   },

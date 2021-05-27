@@ -1,43 +1,25 @@
 import 'package:cesta_basica/app/models/client.model.dart';
-import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
+import 'package:cesta_basica/app/repositories/database.repository.dart';
 import '../../settings.dart';
 
 class ClientRepository {
-  Future<Database> _getDatabase() async {
-    return openDatabase(
-      join(await getDatabasesPath(), databaseName),
-      onConfigure: (db) {
-        db.execute('PRAGMA foreign_keys = ON');
-      },
-      onCreate: (db, version) {
-        db.execute(createClientTableScript);
-        db.execute(createBasicBasketsTableScript);
-        db.execute(createProductTableScript);
-        db.execute(createBasicBasketsProductsTableScript);
-        db.execute(createRequestTableScript);
-        db.execute(createRequestBasicBasketsTableScript);
-      },
-      version: 1,
-    );
-  }
+  DataBaseRepository dbr = DataBaseRepository();
 
   Future create(ClientModel model) async {
     try {
-      final db = await _getDatabase();
+      final db = await dbr.getDatabase();
       await db.insert(
         clientTableName,
         model.toMap(),
       );
-    } catch (ex) {
-      print(ex);
-      return ex;
+    } catch (_) {
+      throw ("Não foi possível cadastrar o cliente ${model.name}.");
     }
   }
 
   Future<List<ClientModel>> getClients() async {
     try {
-      final db = await _getDatabase();
+      final db = await dbr.getDatabase();
       final maps = await db.query(clientTableName, orderBy: "name");
       return List.generate(maps.length, (i) {
         return ClientModel.fromMap(maps[i]);
@@ -50,7 +32,7 @@ class ClientRepository {
 
   Future<List<ClientModel>> search(String term) async {
     try {
-      final db = await _getDatabase();
+      final db = await dbr.getDatabase();
       final maps = await db.query(clientTableName,
           where: "name LIKE ?",
           whereArgs: [
@@ -68,7 +50,7 @@ class ClientRepository {
 
   Future<ClientModel> getClient(int id) async {
     try {
-      final db = await _getDatabase();
+      final db = await dbr.getDatabase();
       final maps = await db.query(
         clientTableName,
         where: "id = ?",
@@ -84,7 +66,7 @@ class ClientRepository {
 
   Future update(ClientModel model) async {
     try {
-      final db = await _getDatabase();
+      final db = await dbr.getDatabase();
       await db.update(clientTableName, model.toMap(),
           where: "id = ?", whereArgs: [model.id]);
     } catch (ex) {
@@ -95,7 +77,7 @@ class ClientRepository {
 
   Future delete(int id) async {
     try {
-      final db = await _getDatabase();
+      final db = await dbr.getDatabase();
       await db.delete(
         clientTableName,
         where: "id = ?",

@@ -28,31 +28,33 @@ abstract class _SearchRequestController with Store {
   Future<void> getRequests() async {
     requests = ObservableList<RequestModel>();
     var data = await _repositoryRequest.getRequests();
+    await completeClientNames(data);
     requests.addAll(data);
-    await completeClientNames();
   }
 
   @action
   Future<void> search(String clientName) async {
-    requests = ObservableList<RequestModel>();
+    var requestsAux = <RequestModel>[];
     var clients = await _repositoryClient.search(clientName);
     var allRequests = await _repositoryRequest.getRequests();
     for (var i = 0; i < clients.length; i++) {
       for (var j = 0; j < allRequests.length; j++) {
         if (clients[i].id == allRequests[j].clientsId) {
-          requests.add(allRequests[j]);
+          requestsAux.add(allRequests[j]);
           break;
         }
       }
     }
-    await completeClientNames();
+    await completeClientNames(requestsAux);
+    requests.clear();
+    requests.addAll(requestsAux);
   }
 
-  void completeClientNames() async {
+  void completeClientNames(List<RequestModel> requestsAux) async {
     clientNames = <String>[];
-    for (var i = 0; i < requests.length; i++) {
+    for (var i = 0; i < requestsAux.length; i++) {
       var client =
-          await _repositoryClient.getClient(requests.elementAt(i).clientsId);
+          await _repositoryClient.getClient(requestsAux.elementAt(i).clientsId);
       clientNames.add(client.name);
     }
   }

@@ -31,9 +31,13 @@ class _LoginViewState extends State<LoginView> {
                 Container(
                   width: MediaQuery.of(context).size.width / 1.2,
                   alignment: Alignment.centerRight,
-                  child: FlatButton(
+                  child: TextButton(
                     onPressed: () {},
-                    padding: EdgeInsets.only(right: 0.0),
+                    style: ButtonStyle(
+                      padding: MaterialStateProperty.all(
+                        EdgeInsets.only(right: 0.0),
+                      ),
+                    ),
                     child: Text(
                       'Esqueceu a senha?',
                       style: TextStyle(
@@ -46,7 +50,7 @@ class _LoginViewState extends State<LoginView> {
                   ),
                 ),
                 SizedBox(height: 50),
-                RaisedButton(
+                ElevatedButton(
                   onPressed: () {
                     Navigator.pushReplacement(
                       context,
@@ -55,10 +59,11 @@ class _LoginViewState extends State<LoginView> {
                       ),
                     );
                   },
-                  padding: EdgeInsets.all(0.0),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(45.0),
-                  ),
+                  style: ButtonStyle(
+                      padding: MaterialStateProperty.all(EdgeInsets.all(0)),
+                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(45.0),
+                      ))),
                   child: Container(
                     height: 55,
                     width: MediaQuery.of(context).size.width / 1.2,
@@ -108,7 +113,7 @@ class _LoginViewState extends State<LoginView> {
                         fontWeight: FontWeight.w900,
                       ),
                     ),
-                    FlatButton(
+                    TextButton(
                       onPressed: () {},
                       child: Text(
                         'Cadastre-se',

@@ -87,7 +87,7 @@ Você tem certeza que deseja deletar:\nProduto: ${widget.model.name}\nMarca: ${w
                       ),
                     ),
                     actions: <Widget>[
-                      FlatButton(
+                      TextButton(
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
@@ -99,7 +99,7 @@ Você tem certeza que deseja deletar:\nProduto: ${widget.model.name}\nMarca: ${w
                           ),
                         ),
                       ),
-                      FlatButton(
+                      TextButton(
                         onPressed: () async {
                           _repository.delete(widget.model.id);
                           Navigator.of(context).pop();
@@ -123,7 +123,7 @@ O produto ${widget.model.name} foi removido com sucesso.""",
                               ),
                               backgroundColor: Colors.green,
                               actions: <Widget>[
-                                FlatButton(
+                                TextButton(
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                   },

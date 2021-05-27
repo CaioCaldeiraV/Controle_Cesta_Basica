@@ -95,7 +95,7 @@ Você tem certeza que deseja deletar a cesta básica: '${widget.model.name}'?"""
                       ),
                     ),
                     actions: <Widget>[
-                      FlatButton(
+                      TextButton(
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
@@ -107,7 +107,7 @@ Você tem certeza que deseja deletar a cesta básica: '${widget.model.name}'?"""
                           ),
                         ),
                       ),
-                      FlatButton(
+                      TextButton(
                         onPressed: () async {
                           _repository.delete(widget.model.id);
                           Navigator.of(context).pop();
@@ -131,7 +131,7 @@ A cesta básica '${widget.model.name}' foi removida com sucesso.""",
                               ),
                               backgroundColor: Colors.green,
                               actions: <Widget>[
-                                FlatButton(
+                                TextButton(
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                   },

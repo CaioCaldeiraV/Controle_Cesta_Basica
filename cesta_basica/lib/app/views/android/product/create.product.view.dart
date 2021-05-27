@@ -54,7 +54,7 @@ Produto: ${widget.model.name}\nMarca: ${widget.model.brand}\nEste produto foi ca
           ),
           backgroundColor: Colors.green,
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -97,7 +97,7 @@ Produto: ${widget.model.name}\nMarca: ${widget.model.brand}\nEste produto foi ed
           ),
           backgroundColor: Colors.green,
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -123,10 +123,11 @@ Produto: ${widget.model.name}\nMarca: ${widget.model.brand}\nEste produto foi ed
   }
 
   void onError() {
-    final snackBar = SnackBar(
-      content: Text('Ops, algo deu errado!'),
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Ops, algo deu errado!'),
+      ),
     );
-    _scaffoldKey.currentState.showSnackBar(snackBar);
   }
 
   @override
@@ -292,12 +293,13 @@ Produto: ${widget.model.name}\nMarca: ${widget.model.brand}\nEste produto foi ed
                 },
               ),
               SizedBox(height: 60),
-              RaisedButton(
+              ElevatedButton(
                 onPressed: onSubmit,
-                padding: EdgeInsets.all(0.0),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(45.0),
-                ),
+                style: ButtonStyle(
+                    padding: MaterialStateProperty.all(EdgeInsets.all(0)),
+                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(45.0),
+                    ))),
                 child: Container(
                   height: 48,
                   width: MediaQuery.of(context).size.width / 1.2,

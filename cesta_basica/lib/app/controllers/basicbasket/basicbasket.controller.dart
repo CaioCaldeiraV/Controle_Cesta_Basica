@@ -29,7 +29,6 @@ abstract class _BasicBasketController with Store {
 
   @action
   Future<void> getBasicBaskets() async {
-    await Future.delayed(Duration(seconds: 1));
     basicBaskets = ObservableList<BasicBasketModel>();
     var data = await repository.getBasicBaskets();
     basicBaskets.addAll(data);

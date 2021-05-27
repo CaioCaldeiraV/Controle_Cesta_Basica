@@ -10,6 +10,7 @@ class RequestController = _RequestController with _$RequestController;
 abstract class _RequestController with Store {
   final BasicBasketRepository repositoryBasicBasket = BasicBasketRepository();
   final repository = RequestBasicBasketRepository();
+  List<BasicBasketModel> listBasicBasketName;
 
   @observable
   ObservableList<int> selected = ObservableList<int>();
@@ -68,8 +69,12 @@ abstract class _RequestController with Store {
     if (model.amount == 1) {
       requestBasicBaskets.add(model);
     } else {
-      requestBasicBaskets.remove(model);
-      requestBasicBaskets.add(model);
+      for (var i = 0; i < requestBasicBaskets.length; i++) {
+        if (model.basicbasketsId == requestBasicBaskets[i].basicbasketsId) {
+          requestBasicBaskets.removeAt(i);
+          requestBasicBaskets.add(model);
+        }
+      }
     }
     sumAmountValue();
   }
@@ -98,15 +103,13 @@ abstract class _RequestController with Store {
     }
   }
 
-  Future<int> rewriteAmount(int id) async {
-    var data = await repository.searchIdinRequest(id);
-    requestBasicBaskets.addAll(data);
+  RequestBasicBasketModel rewriteAmount(int id) {
     for (var i = 0; i < requestBasicBaskets.length; i++) {
       if (id == requestBasicBaskets[i].basicbasketsId) {
-        return i;
+        return requestBasicBaskets[i];
       }
     }
-    return -1;
+    return null;
   }
 
   Future<void> create(int id) async {
@@ -129,9 +132,38 @@ abstract class _RequestController with Store {
         }
       }
       if (aux == 0) {
-        requestBasicBaskets[i].basicbasketsId = id;
+        requestBasicBaskets[i].requestId = id;
         await repository.create(requestBasicBaskets[i]);
       }
     }
+    for (var i = 0; i < data.length; i++) {
+      aux = 0;
+      for (var j = 0; j < requestBasicBaskets.length; j++) {
+        if (data[i].basicbasketsId == requestBasicBaskets[j].basicbasketsId) {
+          aux = 1;
+        }
+      }
+      if (aux == 0) {
+        await repository.delete(data[i].id);
+      }
+    }
+  }
+
+  Future<void> carregaAmount(int id) async {
+    var data = await repository.searchIdinRequest(id);
+    requestBasicBaskets.addAll(data);
+    await sumAmountValue();
+  }
+
+  Future<List<RequestBasicBasketModel>> basicBasketsInRequest(
+      int requestId) async {
+    var list =
+        await RequestBasicBasketRepository().searchIdinRequest(requestId);
+    listBasicBasketName = <BasicBasketModel>[];
+    for (var i = 0; i < list.length; i++) {
+      listBasicBasketName.add(
+          await BasicBasketRepository().getBasicBasket(list[i].basicbasketsId));
+    }
+    return list;
   }
 }
