@@ -1,9 +1,11 @@
+import 'dart:io';
 import 'package:cesta_basica/app/models/product.model.dart';
 import 'package:cesta_basica/app/repositories/product.repository.dart';
 import 'package:cesta_basica/app/views/android/client/widgets/client.linear.gradient.mask.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
+import 'package:image_picker/image_picker.dart';
 
 class CreateProductView extends StatefulWidget {
   final ProductModel model;
@@ -18,6 +20,15 @@ class _CreateProductViewState extends State<CreateProductView> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
   final _repository = ProductRepository();
+  final imagePicker = ImagePicker();
+  File file;
+
+  void imageSelect() async {
+    final image = await imagePicker.getImage(source: ImageSource.camera);
+    setState(() {
+      file = File(image.path);
+    });
+  }
 
   void onSubmit() {
     if (!_formKey.currentState.validate()) {
@@ -203,7 +214,48 @@ Produto: ${widget.model.name}\nMarca: ${widget.model.brand}\nEste produto foi ed
                   )
                 ],
               ),
-              SizedBox(height: 30),
+              SizedBox(height: 20),
+              Container(
+                height: MediaQuery.of(context).size.width / 2 + 5,
+                width: MediaQuery.of(context).size.width / 2 + 5,
+                child: CircleAvatar(
+                  backgroundColor:
+                      Theme.of(context).primaryColor.withOpacity(0.4),
+                  child: Container(
+                    height: MediaQuery.of(context).size.width / 2,
+                    width: MediaQuery.of(context).size.width / 2,
+                    child: GestureDetector(
+                      onTap: () {
+                        imageSelect();
+                      },
+                      child: file == null
+                          ? CircleAvatar(
+                              backgroundColor: Theme.of(context)
+                                  .primaryColor
+                                  .withOpacity(0.4),
+                              child: Center(
+                                child: Icon(
+                                  Icons.add_a_photo,
+                                  size: 50,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            )
+                          : CircleAvatar(
+                              backgroundImage: Image.file(file).image,
+                              child: Center(
+                                child: Icon(
+                                  Icons.add_a_photo,
+                                  size: 50,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 10),
               TextFormField(
                 textCapitalization: TextCapitalization.words,
                 onSaved: (newValue) => widget.model.name = newValue,

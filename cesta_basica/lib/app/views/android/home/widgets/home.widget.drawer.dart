@@ -1,4 +1,5 @@
 import 'package:cesta_basica/app/views/android/home/widgets/drawer.widget.estoque.dart';
+import 'package:cesta_basica/app/views/android/home/widgets/drawer.widget.pagamento.dart';
 import 'package:cesta_basica/app/views/android/home/widgets/drawer.widget.pedido.dart';
 import 'package:flutter/material.dart';
 import 'drawer.widget.cestabasica.dart';
@@ -70,6 +71,7 @@ class HomeDrawer extends StatelessWidget {
           ),
           DrawerPedido(),
           DrawerEstoque(),
+          DrawerPagamento(),
           Divider(),
           Padding(
             padding: const EdgeInsets.symmetric(
@@ -108,14 +110,12 @@ class HomeDrawer extends StatelessWidget {
             ),
             leading: Icon(
               Icons.info,
-              color: Colors.black,
-              size: 25,
+              size: 30,
             ),
             title: Text(
               'Sobre nós',
               style: TextStyle(
-                color: Colors.black,
-                fontSize: 15,
+                fontSize: 17,
               ),
             ),
             onTap: () {},

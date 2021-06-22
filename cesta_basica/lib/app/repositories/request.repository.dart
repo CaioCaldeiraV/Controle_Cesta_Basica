@@ -30,12 +30,25 @@ class RequestRepository {
     }
   }
 
+  Future<List<RequestModel>> getRequestsClientId(int clientId) async {
+    try {
+      final db = await dbr.getDatabase();
+      final maps = await db.query(requestTableName,
+          where: "clientsId = ?", whereArgs: [clientId]);
+      return List.generate(maps.length, (i) {
+        return RequestModel.fromMap(maps[i]);
+      });
+    } catch (ex) {
+      throw ("Erro ao listar o pedido.");
+    }
+  }
+
   Future<RequestModel> getRequest(int id) async {
     try {
       final db = await dbr.getDatabase();
       final maps =
           await db.query(requestTableName, where: "id = ?", whereArgs: [
-        [id],
+        id,
       ]);
       return RequestModel.fromMap(maps[0]);
     } catch (ex) {

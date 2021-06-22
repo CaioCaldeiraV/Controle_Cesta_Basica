@@ -1,6 +1,9 @@
 import 'package:cesta_basica/app/models/basicbasket.model.dart';
+import 'package:cesta_basica/app/models/installments.model.dart';
 import 'package:cesta_basica/app/models/requestbasicbasket.model.dart';
 import 'package:cesta_basica/app/repositories/basicbasket.repository.dart';
+import 'package:cesta_basica/app/repositories/debts.repository.dart';
+import 'package:cesta_basica/app/repositories/installments.repository.dart';
 import 'package:cesta_basica/app/repositories/request.basicbasket.repository.dart';
 import 'package:mobx/mobx.dart';
 part 'request.controller.g.dart';
@@ -165,5 +168,15 @@ abstract class _RequestController with Store {
           await BasicBasketRepository().getBasicBasket(list[i].basicbasketsId));
     }
     return list;
+  }
+
+  Future<List<InstallmentsModel>> installmentsForRequest(int requestId) async {
+    var listDebts = await DebtsRepository().searchRequestId(requestId);
+    if (listDebts.isNotEmpty) {
+      var listInstallments =
+          await InstallmentsRepository().searchDebtsId(listDebts[0].id);
+      return listInstallments;
+    }
+    return null;
   }
 }

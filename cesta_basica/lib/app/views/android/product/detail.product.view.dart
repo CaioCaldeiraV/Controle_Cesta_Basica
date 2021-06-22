@@ -23,7 +23,7 @@ class _DetailProductViewState extends State<DetailProductView> {
   Color getColor(int index) {
     if (index == _currentIndex) {
       if (_currentIndex == 0) {
-        return Colors.green;
+        return Colors.blueGrey;
       } else {
         return Colors.yellow;
       }

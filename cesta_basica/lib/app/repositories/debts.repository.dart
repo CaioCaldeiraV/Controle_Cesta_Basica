@@ -35,6 +35,34 @@ class DebtsRepository {
     }
   }
 
+  Future<List<DebtsModel>> searchDebt(int id) async {
+    try {
+      final db = await dbr.getDatabase();
+      final maps = await db.query(
+        debtsTableName,
+        where: "id = ?",
+        whereArgs: [id],
+      );
+      return List.generate(maps.length, (i) {
+        return DebtsModel.fromMap(maps[i]);
+      });
+    } catch (ex) {
+      print(ex);
+      return <DebtsModel>[];
+    }
+  }
+
+  Future update(DebtsModel model) async {
+    try {
+      final db = await dbr.getDatabase();
+      await db.update(debtsTableName, model.toMap(),
+          where: "id = ?", whereArgs: [model.id]);
+    } catch (ex) {
+      print(ex);
+      return;
+    }
+  }
+
   Future delete(int id) async {
     try {
       final db = await dbr.getDatabase();

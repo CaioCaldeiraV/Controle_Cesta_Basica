@@ -35,6 +35,9 @@ dependencies:
   mobx:
   flutter_mobx:
   flutter_masked_text: ^0.8.0
+  url_launcher: ^6.0.4
+  rxdart: ^0.20.0
+  image_picker: ^0.8.0+3
 
 dev_dependencies:
   flutter_test:

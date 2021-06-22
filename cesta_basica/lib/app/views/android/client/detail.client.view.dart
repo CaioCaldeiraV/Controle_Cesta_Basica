@@ -4,6 +4,7 @@ import 'package:cesta_basica/app/views/android/client/widgets/client.card.detail
 import 'package:cesta_basica/app/views/android/client/widgets/client.card.prefer.widget.dart';
 import 'package:cesta_basica/app/views/android/client/widgets/client.list.popupmenubutton.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'create.client.view.dart';
 import 'search.client.view.dart';
 
@@ -23,7 +24,7 @@ class _DetailClientViewState extends State<DetailClientView> {
   Color getColor(int index) {
     if (index == _currentIndex) {
       if (_currentIndex == 0) {
-        return Colors.green;
+        return Colors.blueGrey;
       } else if (_currentIndex == 1) {
         return Colors.yellow;
       } else {
@@ -362,7 +363,47 @@ O cliente ${widget.model.name} foi removido com sucesso.""",
                       size: 30,
                       color: Theme.of(context).accentColor,
                     ),
-                    onPressed: () {},
+                    onPressed: () async {
+                      if (await canLaunch("tel: ${widget.model.phone}")) {
+                        launch("tel: ${widget.model.phone}");
+                      } else {
+                        await showDialog(
+                          context: context,
+                          builder: (ctx) => AlertDialog(
+                            title: Text(
+                              'Erro',
+                              style: TextStyle(
+                                color: Theme.of(context).accentColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            content: Text(
+                              """
+Não foi possível localizar o aplicativo para ligações ou número inválido.""",
+                              style: TextStyle(
+                                color: Theme.of(context).accentColor,
+                                fontSize: 14,
+                              ),
+                            ),
+                            backgroundColor: Colors.red,
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text(
+                                  'ok',
+                                  style: TextStyle(
+                                    color: Theme.of(context).accentColor,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                    },
                   ),
                   IconButton(
                     icon: Icon(
@@ -370,12 +411,94 @@ O cliente ${widget.model.name} foi removido com sucesso.""",
                       size: 30,
                       color: Theme.of(context).accentColor,
                     ),
-                    onPressed: () {},
+                    onPressed: () async {
+                      if (await canLaunch("sms: ${widget.model.phone}")) {
+                        launch("sms: ${widget.model.phone}");
+                      } else {
+                        await showDialog(
+                          context: context,
+                          builder: (ctx) => AlertDialog(
+                            title: Text(
+                              'Erro',
+                              style: TextStyle(
+                                color: Theme.of(context).accentColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            content: Text(
+                              """
+Não foi possível localizar o aplicativo de mensagens ou número inválido.""",
+                              style: TextStyle(
+                                color: Theme.of(context).accentColor,
+                                fontSize: 14,
+                              ),
+                            ),
+                            backgroundColor: Colors.red,
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text(
+                                  'ok',
+                                  style: TextStyle(
+                                    color: Theme.of(context).accentColor,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                    },
                   ),
                   IconButton(
                     icon: Image.asset('assets/images/wpp.png',
                         color: Theme.of(context).accentColor),
-                    onPressed: () {},
+                    onPressed: () async {
+                      if (await canLaunch(
+                          "https://wa.me/55${widget.model.phone.replaceAll('(', '').replaceAll(')', '').replaceAll(' ', '')}")) {
+                        launch(
+                            "https://wa.me/55${widget.model.phone.replaceAll('(', '').replaceAll(')', '').replaceAll(' ', '')}");
+                      } else {
+                        await showDialog(
+                          context: context,
+                          builder: (ctx) => AlertDialog(
+                            title: Text(
+                              'Erro',
+                              style: TextStyle(
+                                color: Theme.of(context).accentColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            content: Text(
+                              """
+Não foi possível localizaar o whatsapp ou o número do cliente é inválido.""",
+                              style: TextStyle(
+                                color: Theme.of(context).accentColor,
+                                fontSize: 14,
+                              ),
+                            ),
+                            backgroundColor: Colors.red,
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text(
+                                  'ok',
+                                  style: TextStyle(
+                                    color: Theme.of(context).accentColor,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                    },
                   ),
                 ],
               ),

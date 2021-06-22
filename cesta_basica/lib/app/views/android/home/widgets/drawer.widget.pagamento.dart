@@ -1,19 +1,19 @@
-import 'package:cesta_basica/app/views/android/stock/buy.stock.view.dart';
+import 'package:cesta_basica/app/views/android/payment/payment.registrar.view.dart';
 import 'package:flutter/material.dart';
 
-class DrawerEstoque extends StatelessWidget {
+class DrawerPagamento extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
       title: Text(
-        'Estoque',
+        'Pagamentos',
         style: TextStyle(
           fontSize: 17,
         ),
       ),
       backgroundColor: Theme.of(context).primaryColor,
       leading: Icon(
-        Icons.build_rounded,
+        Icons.monetization_on,
         size: 30,
       ),
       children: <Widget>[
@@ -26,18 +26,25 @@ class DrawerEstoque extends StatelessWidget {
               left: 35,
             ),
             leading: Icon(
-              Icons.strikethrough_s_outlined,
+              Icons.receipt,
               color: Colors.black,
               size: 25,
             ),
             title: Text(
-              'Retirada de Produtos',
+              'Registrar Pagamento',
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 15,
               ),
             ),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PaymentRegistrarView(),
+                ),
+              );
+            },
           ),
         ),
         Container(
@@ -49,25 +56,18 @@ class DrawerEstoque extends StatelessWidget {
               left: 35,
             ),
             leading: Icon(
-              Icons.add_business,
+              Icons.search,
               color: Colors.black,
               size: 25,
             ),
             title: Text(
-              'Compra de Produtos',
+              'Buscar parcelas',
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 15,
               ),
             ),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => BuyStockView(),
-                ),
-              );
-            },
+            onTap: () {},
           ),
         ),
       ],

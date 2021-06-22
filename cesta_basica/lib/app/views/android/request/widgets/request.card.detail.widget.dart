@@ -1,5 +1,6 @@
 import 'package:cesta_basica/app/controllers/request/request.controller.dart';
 import 'package:cesta_basica/app/models/client.model.dart';
+import 'package:cesta_basica/app/models/installments.model.dart';
 import 'package:cesta_basica/app/models/request.model.dart';
 import 'package:cesta_basica/app/models/requestbasicbasket.model.dart';
 import 'package:cesta_basica/app/repositories/client.repository.dart';
@@ -82,42 +83,88 @@ class RequestCardDetailWidget extends StatelessWidget {
                     child: ListView(
                       children: [
                         Text(
-                          "Data do Pedido: ${returnDateRequest()}",
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: Theme.of(context).primaryColor),
+                          "Data do Pedido:\n    - ${returnDateRequest()}",
+                          style:
+                              TextStyle(fontSize: 20, color: Colors.blueGrey),
+                        ),
+                        SizedBox(
+                          height: 10,
                         ),
                         Text(
                           // ignore: lines_longer_than_80_chars
-                          "Data Agendada para Entrega: ${model.deliveryDate}",
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: Theme.of(context).primaryColor),
+                          "Data Agendada para Entrega:\n    - ${model.deliveryDate}",
+                          style:
+                              TextStyle(fontSize: 20, color: Colors.blueGrey),
+                        ),
+                        SizedBox(
+                          height: 10,
                         ),
                         Text(
-                          "Status da Entrega: ${model.statusDelivery}",
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: Theme.of(context).primaryColor),
+                          "Status da Entrega:\n    - ${model.statusDelivery}",
+                          style:
+                              TextStyle(fontSize: 20, color: Colors.blueGrey),
                         ),
-                        Text(
-                          "Observações: ${model.comments}",
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: Theme.of(context).primaryColor),
+                        SizedBox(
+                          height: 10,
                         ),
                         Text(
                           """
-Valor Total: R\$ ${formatCurrency.format(model.totalValue).substring(1)}""",
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: Theme.of(context).primaryColor),
+Valor Total:\n    - R\$ ${formatCurrency.format(model.totalValue).substring(1)}""",
+                          style:
+                              TextStyle(fontSize: 20, color: Colors.blueGrey),
+                        ),
+                        SizedBox(
+                          height: 10,
                         ),
                         Text(
-                          "Forma de Pagamento: ${model.typePayment}",
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: Theme.of(context).primaryColor),
+                          "Forma de Pagamento:\n    - ${model.typePayment}",
+                          style:
+                              TextStyle(fontSize: 20, color: Colors.blueGrey),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        FutureBuilder<List<InstallmentsModel>>(
+                          future: _controller.installmentsForRequest(model.id),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.done) {
+                              if (snapshot.data == null) {
+                                return Container();
+                              } else {
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    for (var i = 0;
+                                        i < snapshot.data.length;
+                                        i++)
+                                      Text(
+                                        // ignore: lines_longer_than_80_chars
+                                        "Parcela ${i + 1}:\n    - R\$ ${formatCurrency.format(snapshot.data[i].value).substring(1)}\n    - ${snapshot.data[i].datePayment}\n    - ${snapshot.data[i].status}",
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            color: Colors.blueGrey),
+                                      ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                  ],
+                                );
+                              }
+                            } else {
+                              return Center(
+                                child: CircularProgressIndicator(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              );
+                            }
+                          },
+                        ),
+                        Text(
+                          "Observações:\n    - ${model.comments}",
+                          style:
+                              TextStyle(fontSize: 20, color: Colors.blueGrey),
                         ),
                       ],
                     ),
@@ -199,59 +246,59 @@ Valor Total: R\$ ${formatCurrency.format(model.totalValue).substring(1)}""",
                           children: [
                             Text(
                               "Nome: ${snapshot.data.name}",
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.black),
+                              style: TextStyle(
+                                  fontSize: 18, color: Colors.blueGrey),
                             ),
                             Text(
                               "RG: ${snapshot.data.rg}",
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.black),
+                              style: TextStyle(
+                                  fontSize: 18, color: Colors.blueGrey),
                             ),
                             Text(
                               "CPF: ${snapshot.data.cpf}",
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.black),
+                              style: TextStyle(
+                                  fontSize: 18, color: Colors.blueGrey),
                             ),
                             Text(
                               "Telefone: ${snapshot.data.phone}",
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.black),
+                              style: TextStyle(
+                                  fontSize: 18, color: Colors.blueGrey),
                             ),
                             Text(
                               """
 Data de Nascimento: ${snapshot.data.dateOfBirth.replaceAll(' ', '')}""",
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.black),
+                              style: TextStyle(
+                                  fontSize: 18, color: Colors.blueGrey),
                             ),
                             Text(
                               "Sexo: ${snapshot.data.gender}",
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.black),
+                              style: TextStyle(
+                                  fontSize: 18, color: Colors.blueGrey),
                             ),
                             Text(
                               "Estado: ${snapshot.data.state}",
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.black),
+                              style: TextStyle(
+                                  fontSize: 18, color: Colors.blueGrey),
                             ),
                             Text(
                               "Cidade: ${snapshot.data.city}",
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.black),
+                              style: TextStyle(
+                                  fontSize: 18, color: Colors.blueGrey),
                             ),
                             Text(
                               "Bairro: ${snapshot.data.neighborhood}",
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.black),
+                              style: TextStyle(
+                                  fontSize: 18, color: Colors.blueGrey),
                             ),
                             Text(
                               "Rua: ${snapshot.data.street}",
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.black),
+                              style: TextStyle(
+                                  fontSize: 18, color: Colors.blueGrey),
                             ),
                             Text(
                               "Número: ${snapshot.data.number}",
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.black),
+                              style: TextStyle(
+                                  fontSize: 18, color: Colors.blueGrey),
                             ),
                           ],
                         );

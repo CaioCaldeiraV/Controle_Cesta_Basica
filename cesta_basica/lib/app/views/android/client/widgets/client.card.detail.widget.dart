@@ -31,7 +31,7 @@ class ClientCardDetailWidget extends StatelessWidget {
                       topLeft: Radius.circular(5),
                       topRight: Radius.circular(5),
                     ),
-                    color: Colors.green,
+                    color: Colors.blueGrey,
                     boxShadow: [
                       BoxShadow(
                         color: Colors.grey,
