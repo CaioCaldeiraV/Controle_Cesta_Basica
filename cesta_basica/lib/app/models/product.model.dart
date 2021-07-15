@@ -4,6 +4,7 @@ class ProductModel {
   double value;
   int stock;
   String brand;
+  String image;
 
   ProductModel({
     this.id,
@@ -11,6 +12,7 @@ class ProductModel {
     this.value,
     this.stock,
     this.brand,
+    this.image,
   });
 
   Map<String, dynamic> toMap() => {
@@ -19,6 +21,7 @@ class ProductModel {
         "value": value,
         "stock": stock,
         "brand": brand,
+        "image": image,
       };
 
   factory ProductModel.fromMap(Map<String, dynamic> json) => ProductModel(
@@ -27,5 +30,6 @@ class ProductModel {
         value: json["value"].toDouble(),
         stock: json["stock"],
         brand: json["brand"],
+        image: json["image"],
       );
 }

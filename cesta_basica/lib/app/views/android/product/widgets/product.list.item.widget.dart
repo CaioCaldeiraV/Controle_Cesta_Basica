@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cesta_basica/app/models/product.model.dart';
 import 'package:cesta_basica/app/repositories/product.repository.dart';
 import 'package:flutter/material.dart';
@@ -20,15 +22,35 @@ class ProductListItem extends StatefulWidget {
 class _ProductListItemState extends State<ProductListItem> {
   final _repository = ProductRepository();
   final formatCurrency = NumberFormat.simpleCurrency();
+  File file;
+  bool _isErrorImage = false;
+
+  @override
+  void initState() {
+    if (widget.model.image != null) {
+      file = File(widget.model.image);
+    }
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       leading: CircleAvatar(
         backgroundColor: Colors.white,
-        child: Image.asset(
-          "assets/images/bag.png",
-        ),
+        child: widget.model.image != null && !_isErrorImage
+            ? CircleAvatar(
+                backgroundImage: Image.file(file).image,
+                onBackgroundImageError: (object, stackTrace) {
+                  setState(() {
+                    _isErrorImage = true;
+                  });
+                },
+              )
+            : Image.asset(
+                "assets/images/bag.png",
+              ),
       ),
       title: Text("${widget.model.name} - ${widget.model.brand}"),
       subtitle: Text("""

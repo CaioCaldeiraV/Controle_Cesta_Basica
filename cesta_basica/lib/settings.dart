@@ -14,7 +14,7 @@ const String createClientTableScript =
 
 const String createProductTableScript =
     // ignore: lines_longer_than_80_chars
-    "CREATE TABLE products(id INTEGER PRIMARY KEY, name TEXT, value REAL, stock int, brand TEXT)";
+    "CREATE TABLE products(id INTEGER PRIMARY KEY, name TEXT, value REAL, stock int, brand TEXT, image TEXT)";
 
 const String createBasicBasketsTableScript =
     // ignore: lines_longer_than_80_chars

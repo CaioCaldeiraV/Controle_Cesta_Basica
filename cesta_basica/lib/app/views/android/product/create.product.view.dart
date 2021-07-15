@@ -25,9 +25,12 @@ class _CreateProductViewState extends State<CreateProductView> {
 
   void imageSelect() async {
     final image = await imagePicker.getImage(source: ImageSource.camera);
-    setState(() {
-      file = File(image.path);
-    });
+    if (image != null) {
+      setState(() {
+        widget.model.image = image.path;
+        file = File(image.path);
+      });
+    }
   }
 
   void onSubmit() {
@@ -142,6 +145,14 @@ Produto: ${widget.model.name}\nMarca: ${widget.model.brand}\nEste produto foi ed
   }
 
   @override
+  void initState() {
+    if (widget.model.id != 0 && widget.model.image != null) {
+      file = File(widget.model.image);
+    }
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var _value = MoneyMaskedTextController(
       leftSymbol: 'R\$ ',
@@ -219,16 +230,69 @@ Produto: ${widget.model.name}\nMarca: ${widget.model.brand}\nEste produto foi ed
                 height: MediaQuery.of(context).size.width / 2 + 5,
                 width: MediaQuery.of(context).size.width / 2 + 5,
                 child: CircleAvatar(
-                  backgroundColor:
-                      Theme.of(context).primaryColor.withOpacity(0.4),
+                  backgroundColor: file == null
+                      ? Colors.transparent
+                      : Theme.of(context).primaryColor.withOpacity(0.4),
                   child: Container(
                     height: MediaQuery.of(context).size.width / 2,
                     width: MediaQuery.of(context).size.width / 2,
                     child: GestureDetector(
-                      onTap: () {
-                        imageSelect();
+                      onTap: () async {
+                        if (widget.model.image == null) {
+                          imageSelect();
+                        } else {
+                          var addPhoto = false;
+                          await showDialog(
+                            context: context,
+                            builder: (ctx) => AlertDialog(
+                              actions: <Widget>[
+                                ElevatedButton(
+                                  onPressed: () {
+                                    addPhoto = false;
+                                    setState(() {
+                                      widget.model.image = null;
+                                      file = null;
+                                    });
+                                    Navigator.of(context).pop();
+                                  },
+                                  style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                              Colors.red)),
+                                  child: Text(
+                                    'Remover Foto',
+                                    style: TextStyle(
+                                      color: Theme.of(context).accentColor,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    addPhoto = true;
+                                    Navigator.of(context).pop();
+                                  },
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(
+                                        Theme.of(context).primaryColor),
+                                  ),
+                                  child: Text(
+                                    'Modificar Foto',
+                                    style: TextStyle(
+                                      color: Theme.of(context).accentColor,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                          if (addPhoto) {
+                            imageSelect();
+                          }
+                        }
                       },
-                      child: file == null
+                      child: widget.model.image == null
                           ? CircleAvatar(
                               backgroundColor: Theme.of(context)
                                   .primaryColor
@@ -243,6 +307,11 @@ Produto: ${widget.model.name}\nMarca: ${widget.model.brand}\nEste produto foi ed
                             )
                           : CircleAvatar(
                               backgroundImage: Image.file(file).image,
+                              onBackgroundImageError: (object, stackTrace) {
+                                setState(() {
+                                  widget.model.image = null;
+                                });
+                              },
                               child: Center(
                                 child: Icon(
                                   Icons.add_a_photo,

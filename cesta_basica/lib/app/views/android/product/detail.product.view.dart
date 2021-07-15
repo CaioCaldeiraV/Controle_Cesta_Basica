@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cesta_basica/app/models/product.model.dart';
 import 'package:cesta_basica/app/repositories/product.repository.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +21,7 @@ class DetailProductView extends StatefulWidget {
 
 class _DetailProductViewState extends State<DetailProductView> {
   int _currentIndex;
+  bool _isErrorImage = false;
 
   Color getColor(int index) {
     if (index == _currentIndex) {
@@ -185,20 +188,47 @@ O produto ${widget.model.name} foi removido com sucesso.""",
           children: [
             Positioned(
               top: _screenHeigth * .005,
-              child: Center(
-                child: Text(
-                  "${widget.model.name} - ${widget.model.brand}",
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 3,
-                  style: TextStyle(
-                    color: Theme.of(context).accentColor,
-                    fontSize: 25,
+              child: Column(
+                children: [
+                  widget.model.image == null || _isErrorImage
+                      ? Container()
+                      : Container(
+                          height: _screenHeigth * 0.1 + 5,
+                          width: _screenHeigth * 0.1 + 5,
+                          child: CircleAvatar(
+                            backgroundColor: Colors.white,
+                            child: Container(
+                              height: _screenHeigth * 0.1,
+                              width: _screenHeigth * 0.1,
+                              child: CircleAvatar(
+                                backgroundImage: Image.file(
+                                  File(widget.model.image),
+                                ).image,
+                                onBackgroundImageError: (object, stackTrace) {
+                                  setState(() {
+                                    _isErrorImage = true;
+                                  });
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                  Text(
+                    "${widget.model.name} - ${widget.model.brand}",
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 3,
+                    style: TextStyle(
+                      color: Theme.of(context).accentColor,
+                      fontSize: 25,
+                    ),
                   ),
-                ),
+                ],
               ),
             ),
             Positioned(
-              top: _screenHeigth * .1,
+              top: widget.model.image == null || _isErrorImage
+                  ? _screenHeigth * .1
+                  : _screenHeigth * .2,
               child: Container(
                 height: _screenHeigth * 0.7,
                 child: SingleChildScrollView(
