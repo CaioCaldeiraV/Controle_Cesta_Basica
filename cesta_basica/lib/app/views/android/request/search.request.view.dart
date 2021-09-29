@@ -46,7 +46,7 @@ class _SearchRequestViewState extends State<SearchRequestView> {
             child: Icon(
               Icons.add,
               size: 30,
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
             ),
           ),
           onPressed: () {

@@ -7,11 +7,11 @@ class DrawerCestaBasica extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
+      iconColor: Colors.white,
+      textColor: Colors.white,
       title: Text(
         'Cestas Básicas',
-        style: TextStyle(
-          fontSize: 17,
-        ),
+        style: TextStyle(fontSize: 17),
       ),
       backgroundColor: Theme.of(context).primaryColor,
       leading: Icon(

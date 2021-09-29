@@ -55,7 +55,7 @@ class _DetailBasicBasketViewState extends State<DetailBasicBasketView> {
           title: Text(
             'Remover Cesta Básica',
             style: TextStyle(
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -64,7 +64,7 @@ class _DetailBasicBasketViewState extends State<DetailBasicBasketView> {
             """
 Você tem certeza que deseja deletar a cesta básica: ${widget.model.name}?""",
             style: TextStyle(
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
               fontSize: 14,
             ),
           ),
@@ -76,7 +76,7 @@ Você tem certeza que deseja deletar a cesta básica: ${widget.model.name}?""",
               child: Text(
                 'Não',
                 style: TextStyle(
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).colorScheme.secondary,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -90,7 +90,7 @@ Você tem certeza que deseja deletar a cesta básica: ${widget.model.name}?""",
                     title: Text(
                       'Cesta Básica Removida',
                       style: TextStyle(
-                        color: Theme.of(context).accentColor,
+                        color: Theme.of(context).colorScheme.secondary,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -98,7 +98,7 @@ Você tem certeza que deseja deletar a cesta básica: ${widget.model.name}?""",
                       """
 A cesta básica "${widget.model.name}" foi removida com sucesso.""",
                       style: TextStyle(
-                        color: Theme.of(context).accentColor,
+                        color: Theme.of(context).colorScheme.secondary,
                         fontSize: 14,
                       ),
                     ),
@@ -111,7 +111,7 @@ A cesta básica "${widget.model.name}" foi removida com sucesso.""",
                         child: Text(
                           'ok',
                           style: TextStyle(
-                            color: Theme.of(context).accentColor,
+                            color: Theme.of(context).colorScheme.secondary,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -129,7 +129,7 @@ A cesta básica "${widget.model.name}" foi removida com sucesso.""",
               child: Text(
                 'Sim',
                 style: TextStyle(
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).colorScheme.secondary,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -150,10 +150,11 @@ A cesta básica "${widget.model.name}" foi removida com sucesso.""",
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: IconThemeData(color: Theme.of(context).accentColor),
+        iconTheme:
+            IconThemeData(color: Theme.of(context).colorScheme.secondary),
         actions: [
           PopupMenuButton(
-            color: Theme.of(context).accentColor,
+            color: Theme.of(context).colorScheme.secondary,
             itemBuilder: (context) {
               return BasicBasketListPopUpMenu.choices.map((choice) {
                 return PopupMenuItem(
@@ -193,7 +194,7 @@ A cesta básica "${widget.model.name}" foi removida com sucesso.""",
                   overflow: TextOverflow.ellipsis,
                   maxLines: 3,
                   style: TextStyle(
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).colorScheme.secondary,
                     fontSize: 25,
                   ),
                 ),

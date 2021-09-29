@@ -1,3 +1,4 @@
+import 'package:cesta_basica/app/views/android/about_us/about.us.view.dart';
 import 'package:cesta_basica/app/views/android/home/widgets/drawer.widget.estoque.dart';
 import 'package:cesta_basica/app/views/android/home/widgets/drawer.widget.pagamento.dart';
 import 'package:cesta_basica/app/views/android/home/widgets/drawer.widget.pedido.dart';
@@ -6,6 +7,7 @@ import 'drawer.widget.cestabasica.dart';
 import 'drawer.widget.cliente.dart';
 import 'drawer.widget.produto.dart';
 import 'drawer.widget.relatorio.extrato.dart';
+import 'drawer_widget_entrega.dart';
 
 class HomeDrawer extends StatelessWidget {
   @override
@@ -70,8 +72,9 @@ class HomeDrawer extends StatelessWidget {
             ),
           ),
           DrawerPedido(),
-          DrawerEstoque(),
           DrawerPagamento(),
+          DrawerEntrega(),
+          DrawerEstoque(),
           Divider(),
           Padding(
             padding: const EdgeInsets.symmetric(
@@ -118,7 +121,14 @@ class HomeDrawer extends StatelessWidget {
                 fontSize: 17,
               ),
             ),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pop();
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => AboutUsView(),
+                ),
+              );
+            },
           ),
         ],
       ),

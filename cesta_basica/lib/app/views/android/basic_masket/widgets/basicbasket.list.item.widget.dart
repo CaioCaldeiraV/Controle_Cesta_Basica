@@ -81,7 +81,7 @@ Valor: R\$ ${formatCurrency.format(widget.model.value).substring(1)}""",
                     title: Text(
                       'Excluir Cesta Básica',
                       style: TextStyle(
-                        color: Theme.of(context).accentColor,
+                        color: Theme.of(context).colorScheme.secondary,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -90,7 +90,7 @@ Valor: R\$ ${formatCurrency.format(widget.model.value).substring(1)}""",
                       """
 Você tem certeza que deseja deletar a cesta básica: '${widget.model.name}'?""",
                       style: TextStyle(
-                        color: Theme.of(context).accentColor,
+                        color: Theme.of(context).colorScheme.secondary,
                         fontSize: 14,
                       ),
                     ),
@@ -102,7 +102,7 @@ Você tem certeza que deseja deletar a cesta básica: '${widget.model.name}'?"""
                         child: Text(
                           'Não',
                           style: TextStyle(
-                            color: Theme.of(context).accentColor,
+                            color: Theme.of(context).colorScheme.secondary,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -117,7 +117,8 @@ Você tem certeza que deseja deletar a cesta básica: '${widget.model.name}'?"""
                               title: Text(
                                 'Cesta Básica Removido',
                                 style: TextStyle(
-                                  color: Theme.of(context).accentColor,
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -125,7 +126,8 @@ Você tem certeza que deseja deletar a cesta básica: '${widget.model.name}'?"""
                                 """
 A cesta básica '${widget.model.name}' foi removida com sucesso.""",
                                 style: TextStyle(
-                                  color: Theme.of(context).accentColor,
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
                                   fontSize: 14,
                                 ),
                               ),
@@ -138,7 +140,9 @@ A cesta básica '${widget.model.name}' foi removida com sucesso.""",
                                   child: Text(
                                     'ok',
                                     style: TextStyle(
-                                      color: Theme.of(context).accentColor,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -155,7 +159,7 @@ A cesta básica '${widget.model.name}' foi removida com sucesso.""",
                         child: Text(
                           'Sim',
                           style: TextStyle(
-                            color: Theme.of(context).accentColor,
+                            color: Theme.of(context).colorScheme.secondary,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

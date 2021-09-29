@@ -46,7 +46,7 @@ class _SearchBasicBasketViewState extends State<SearchBasicBasketView> {
             child: Icon(
               Icons.add,
               size: 30,
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
             ),
           ),
           onPressed: () {

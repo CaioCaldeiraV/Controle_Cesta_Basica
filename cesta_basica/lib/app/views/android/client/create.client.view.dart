@@ -46,7 +46,7 @@ class _CreateClientViewState extends State<CreateClientView> {
           title: Text(
             'Cliente Cadastrado',
             style: TextStyle(
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -54,7 +54,7 @@ class _CreateClientViewState extends State<CreateClientView> {
             // ignore: prefer_interpolation_to_compose_strings
             "O cliente " + widget.model.name + ' foi cadastrado com sucesso.',
             style: TextStyle(
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
               fontSize: 14,
             ),
           ),
@@ -67,7 +67,7 @@ class _CreateClientViewState extends State<CreateClientView> {
               child: Text(
                 'ok',
                 style: TextStyle(
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).colorScheme.secondary,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -90,7 +90,7 @@ class _CreateClientViewState extends State<CreateClientView> {
           title: Text(
             'Cliente Atualizado',
             style: TextStyle(
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -98,7 +98,7 @@ class _CreateClientViewState extends State<CreateClientView> {
             // ignore: prefer_interpolation_to_compose_strings
             "O cliente " + widget.model.name + ' foi editado com sucesso.',
             style: TextStyle(
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
               fontSize: 14,
             ),
           ),
@@ -111,7 +111,7 @@ class _CreateClientViewState extends State<CreateClientView> {
               child: Text(
                 'ok',
                 style: TextStyle(
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).colorScheme.secondary,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -177,7 +177,8 @@ class _CreateClientViewState extends State<CreateClientView> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Theme.of(context).accentColor),
+        iconTheme:
+            IconThemeData(color: Theme.of(context).colorScheme.secondary),
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -194,7 +195,7 @@ class _CreateClientViewState extends State<CreateClientView> {
         title: Text(
           'Controle Cestas Básicas',
           style: TextStyle(
-            color: Theme.of(context).accentColor,
+            color: Theme.of(context).colorScheme.secondary,
           ),
         ),
       ),
@@ -636,7 +637,7 @@ class _CreateClientViewState extends State<CreateClientView> {
                     child: Text(
                       widget.model.id == 0 ? "CADASTRAR" : "ATUALIZAR",
                       style: TextStyle(
-                        color: Theme.of(context).accentColor,
+                        color: Theme.of(context).colorScheme.secondary,
                         fontWeight: FontWeight.bold,
                         fontSize: 17,
                       ),

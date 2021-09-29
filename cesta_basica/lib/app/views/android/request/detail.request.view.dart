@@ -43,7 +43,8 @@ class _DetailProductViewState extends State<DetailRequestView> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: IconThemeData(color: Theme.of(context).accentColor),
+        iconTheme:
+            IconThemeData(color: Theme.of(context).colorScheme.secondary),
         actions: [],
       ),
       backgroundColor: Colors.green,
@@ -70,7 +71,7 @@ class _DetailProductViewState extends State<DetailRequestView> {
                   overflow: TextOverflow.ellipsis,
                   maxLines: 3,
                   style: TextStyle(
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).colorScheme.secondary,
                     fontSize: 25,
                   ),
                 ),

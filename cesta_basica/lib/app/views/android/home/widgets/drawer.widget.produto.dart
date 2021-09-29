@@ -1,5 +1,5 @@
-import 'package:cesta_basica/app/views/android/product/create.product.view.dart';
 import 'package:cesta_basica/app/models/product.model.dart';
+import 'package:cesta_basica/app/views/android/product/create.product.view.dart';
 import 'package:cesta_basica/app/views/android/product/search.product.view.dart';
 import 'package:flutter/material.dart';
 
@@ -7,6 +7,8 @@ class DrawerProduto extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
+      iconColor: Colors.white,
+      textColor: Colors.white,
       title: Text(
         'Produtos',
         style: TextStyle(

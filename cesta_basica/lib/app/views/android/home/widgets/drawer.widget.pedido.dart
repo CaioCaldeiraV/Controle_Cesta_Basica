@@ -7,6 +7,8 @@ class DrawerPedido extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
+      iconColor: Colors.white,
+      textColor: Colors.white,
       title: Text(
         'Pedidos',
         style: TextStyle(

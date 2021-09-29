@@ -33,7 +33,8 @@ class _CreateBasicBasketViewState extends State<CreateBasicBasketView> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Theme.of(context).accentColor),
+        iconTheme:
+            IconThemeData(color: Theme.of(context).colorScheme.secondary),
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -50,7 +51,7 @@ class _CreateBasicBasketViewState extends State<CreateBasicBasketView> {
         title: Text(
           'Controle Cestas Básicas',
           style: TextStyle(
-            color: Theme.of(context).accentColor,
+            color: Theme.of(context).colorScheme.secondary,
           ),
         ),
       ),
@@ -156,7 +157,7 @@ class _CreateBasicBasketViewState extends State<CreateBasicBasketView> {
                           child: Icon(
                             Icons.arrow_forward,
                             size: 30,
-                            color: Theme.of(context).accentColor,
+                            color: Theme.of(context).colorScheme.secondary,
                           ),
                         ),
                         onPressed: _onSubmit,

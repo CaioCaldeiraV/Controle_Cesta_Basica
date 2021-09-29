@@ -66,11 +66,11 @@ class RequestCardDetailWidget extends StatelessWidget {
                           style: TextStyle(
                               fontSize: 22,
                               fontWeight: FontWeight.bold,
-                              color: Theme.of(context).accentColor),
+                              color: Theme.of(context).colorScheme.secondary),
                         ),
                         Icon(
                           Icons.info,
-                          color: Theme.of(context).accentColor,
+                          color: Theme.of(context).colorScheme.secondary,
                         ),
                       ],
                     ),
@@ -227,7 +227,7 @@ Valor Total:\n    - R\$ ${formatCurrency.format(model.totalValue).substring(1)}"
                         ),
                         Icon(
                           Icons.shop_two,
-                          color: Theme.of(context).accentColor,
+                          color: Theme.of(context).colorScheme.secondary,
                         )
                       ],
                     ),
@@ -359,7 +359,7 @@ Data de Nascimento: ${snapshot.data.dateOfBirth.replaceAll(' ', '')}""",
                         ),
                         Icon(
                           Icons.shopping_bag,
-                          color: Theme.of(context).accentColor,
+                          color: Theme.of(context).colorScheme.secondary,
                         )
                       ],
                     ),

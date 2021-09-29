@@ -4,6 +4,6 @@ ThemeData appTheme() {
   return ThemeData(
     brightness: Brightness.light,
     primaryColor: Colors.cyan,
-    accentColor: Colors.white,
+    colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.white),
   );
 }

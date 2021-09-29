@@ -10,7 +10,7 @@ const String debtsTableName = "debts";
 
 const String createClientTableScript =
     // ignore: lines_longer_than_80_chars
-    "CREATE TABLE clients(id INTEGER PRIMARY KEY, name TEXT, rg TEXT UNIQUE, cpf TEXT UNIQUE, gender TEXT, dateOfBirth TEXT, phone TEXT, state TEXT, city TEXT, neighborhood TEXT, street TEXT, number int)";
+    "CREATE TABLE clients(id INTEGER PRIMARY KEY, name TEXT, rg TEXT, cpf TEXT UNIQUE, gender TEXT, dateOfBirth TEXT, phone TEXT, state TEXT, city TEXT, neighborhood TEXT, street TEXT, number int)";
 
 const String createProductTableScript =
     // ignore: lines_longer_than_80_chars

@@ -54,7 +54,7 @@ class _CreateProductViewState extends State<CreateProductView> {
           title: Text(
             'Produto Cadastrado',
             style: TextStyle(
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -75,7 +75,7 @@ Produto: ${widget.model.name}\nMarca: ${widget.model.brand}\nEste produto foi ca
               child: Text(
                 'ok',
                 style: TextStyle(
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).colorScheme.secondary,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -97,7 +97,7 @@ Produto: ${widget.model.name}\nMarca: ${widget.model.brand}\nEste produto foi ca
           title: Text(
             'Produto Atualizado',
             style: TextStyle(
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -118,7 +118,7 @@ Produto: ${widget.model.name}\nMarca: ${widget.model.brand}\nEste produto foi ed
               child: Text(
                 'ok',
                 style: TextStyle(
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).colorScheme.secondary,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -162,7 +162,8 @@ Produto: ${widget.model.name}\nMarca: ${widget.model.brand}\nEste produto foi ed
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Theme.of(context).accentColor),
+        iconTheme:
+            IconThemeData(color: Theme.of(context).colorScheme.secondary),
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -179,7 +180,7 @@ Produto: ${widget.model.name}\nMarca: ${widget.model.brand}\nEste produto foi ed
         title: Text(
           'Controle Cestas Básicas',
           style: TextStyle(
-            color: Theme.of(context).accentColor,
+            color: Theme.of(context).colorScheme.secondary,
           ),
         ),
       ),
@@ -262,7 +263,9 @@ Produto: ${widget.model.name}\nMarca: ${widget.model.brand}\nEste produto foi ed
                                   child: Text(
                                     'Remover Foto',
                                     style: TextStyle(
-                                      color: Theme.of(context).accentColor,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -279,7 +282,9 @@ Produto: ${widget.model.name}\nMarca: ${widget.model.brand}\nEste produto foi ed
                                   child: Text(
                                     'Modificar Foto',
                                     style: TextStyle(
-                                      color: Theme.of(context).accentColor,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -447,7 +452,7 @@ Produto: ${widget.model.name}\nMarca: ${widget.model.brand}\nEste produto foi ed
                     child: Text(
                       widget.model.id == 0 ? "CADASTRAR" : "ATUALIZAR",
                       style: TextStyle(
-                        color: Theme.of(context).accentColor,
+                        color: Theme.of(context).colorScheme.secondary,
                         fontWeight: FontWeight.bold,
                         fontSize: 17,
                       ),

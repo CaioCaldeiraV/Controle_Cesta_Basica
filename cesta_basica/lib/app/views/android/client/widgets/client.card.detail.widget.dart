@@ -50,11 +50,11 @@ class ClientCardDetailWidget extends StatelessWidget {
                           style: TextStyle(
                               fontSize: 22,
                               fontWeight: FontWeight.bold,
-                              color: Theme.of(context).accentColor),
+                              color: Theme.of(context).colorScheme.secondary),
                         ),
                         Icon(
                           Icons.info,
-                          color: Theme.of(context).accentColor,
+                          color: Theme.of(context).colorScheme.secondary,
                         ),
                       ],
                     ),
@@ -157,7 +157,7 @@ Data de Nascimento: ${model.dateOfBirth.replaceAll(' ', '')}""",
                         ),
                         Icon(
                           Icons.shop_two,
-                          color: Theme.of(context).accentColor,
+                          color: Theme.of(context).colorScheme.secondary,
                         )
                       ],
                     ),
@@ -214,7 +214,7 @@ Data de Nascimento: ${model.dateOfBirth.replaceAll(' ', '')}""",
                         ),
                         Icon(
                           Icons.money_off,
-                          color: Theme.of(context).accentColor,
+                          color: Theme.of(context).colorScheme.secondary,
                         )
                       ],
                     ),

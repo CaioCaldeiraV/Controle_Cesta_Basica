@@ -93,7 +93,7 @@ class _LoginViewState extends State<LoginView> {
                       child: Text(
                         'ENTRAR',
                         style: TextStyle(
-                          color: Theme.of(context).accentColor,
+                          color: Theme.of(context).colorScheme.secondary,
                           fontWeight: FontWeight.bold,
                           fontSize: 17,
                         ),

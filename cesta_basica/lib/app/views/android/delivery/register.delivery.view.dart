@@ -1,31 +1,30 @@
 import 'package:cesta_basica/app/controllers/client/client.controller.dart';
-import 'package:cesta_basica/app/controllers/request/request.controller.dart';
+import 'package:cesta_basica/app/controllers/delivery/delivery.controller.dart';
 import 'package:cesta_basica/app/models/request.model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:intl/intl.dart';
 
-import 'createsteptwo.request.view.dart';
-
-class CreateRequestView extends StatefulWidget {
-  final RequestModel model;
-
-  const CreateRequestView({Key key, this.model}) : super(key: key);
+class RegisterDeliveryView extends StatefulWidget {
+  const RegisterDeliveryView({Key key}) : super(key: key);
 
   @override
-  _CreateRequestViewState createState() => _CreateRequestViewState();
+  _RegisterDeliveryViewState createState() => _RegisterDeliveryViewState();
 }
 
-class _CreateRequestViewState extends State<CreateRequestView> {
+class _RegisterDeliveryViewState extends State<RegisterDeliveryView> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final ClientController controller = ClientController();
-  final RequestController controllerRequest = RequestController();
   final textController = TextEditingController();
+  final DeliveryController controllerDelivery = DeliveryController();
+  RequestModel dropdownValue;
+  final formatCurrency = NumberFormat.simpleCurrency();
+  String nameClientSelected;
+  bool firstTimeDropDown = true;
 
   @override
   void initState() {
-    if (widget.model.id != 0) {
-      controllerRequest.toggleSelected(widget.model.clientsId);
-    }
+    controllerDelivery.streamRequests.sink.add([]);
     super.initState();
   }
 
@@ -56,81 +55,6 @@ class _CreateRequestViewState extends State<CreateRequestView> {
           ),
         ),
       ),
-      floatingActionButton: SizedBox(
-        width: 65,
-        height: 65,
-        child: FloatingActionButton(
-          heroTag: "btn1",
-          child: Container(
-            width: 65,
-            height: 65,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  Colors.green,
-                  Theme.of(context).primaryColor,
-                ],
-              ),
-            ),
-            child: Icon(
-              Icons.arrow_forward,
-              size: 30,
-              color: Theme.of(context).colorScheme.secondary,
-            ),
-          ),
-          onPressed: () {
-            if (widget.model.clientsId == null) {
-              showDialog(
-                context: context,
-                builder: (ctx) => AlertDialog(
-                  title: Text(
-                    'Selecione um Cliente',
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.secondary,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  backgroundColor: Colors.red,
-                  content: Text(
-                    """
-Por favor, selecione um cliente para prosseguir com o pedido""",
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.secondary,
-                      fontSize: 14,
-                    ),
-                  ),
-                  actions: <Widget>[
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Text(
-                        'Ok',
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.secondary,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            } else {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => CreateTwo(
-                    model: widget.model,
-                    controller: controllerRequest,
-                  ),
-                ),
-              );
-            }
-          },
-        ),
-      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -139,41 +63,45 @@ Por favor, selecione um cliente para prosseguir com o pedido""",
               Container(
                 width: MediaQuery.of(context).size.width,
                 height: 150,
-                child: Stack(children: [
-                  Center(
-                    child: Image.asset(
-                      "assets/images/painting.png",
-                      fit: BoxFit.contain,
+                child: Stack(
+                  children: [
+                    Center(
+                      child: Image.asset(
+                        "assets/images/painting.png",
+                        fit: BoxFit.contain,
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(30.0),
-                    child: Center(
-                      child: RichText(
+                    Padding(
+                      padding: const EdgeInsets.all(30.0),
+                      child: Center(
+                        child: RichText(
                           text: TextSpan(
-                              text: "Primeira Etapa:\n",
-                              style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.bold),
-                              children: [
-                            TextSpan(
-                              text: """
-Selecione o Cliente.""",
-                              style: TextStyle(
+                            text: "Registrar entrega:\n",
+                            style: TextStyle(
                                 color: Theme.of(context).primaryColor,
-                                fontSize: 15,
-                              ),
-                            )
-                          ])),
-                    ),
-                  )
-                ]),
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold),
+                            children: [
+                              TextSpan(
+                                text: """
+Selecione o cliente e o pedido desejado.""",
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontSize: 15,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
               Container(
                 width: MediaQuery.of(context).size.width,
-                height:
-                    MediaQuery.of(context).size.height - (300 + kToolbarHeight),
+                height: MediaQuery.of(context).size.height * 0.9 -
+                    (300 + kToolbarHeight),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(10),
@@ -258,6 +186,7 @@ Selecione o Cliente.""",
                                 ),
                                 onPressed: () {
                                   if (controller.showSearch) {
+                                    textController.text = "";
                                     controller.getClients();
                                   }
                                   controller.toggleSearch();
@@ -270,7 +199,7 @@ Selecione o Cliente.""",
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height -
+                      height: MediaQuery.of(context).size.height * 0.9 -
                           (340 + kToolbarHeight),
                       padding: EdgeInsets.symmetric(vertical: 5),
                       color: Colors.grey[200],
@@ -313,7 +242,7 @@ Selecione o Cliente.""",
                                       return Observer(
                                         builder: (_) {
                                           return Container(
-                                            color: controllerRequest.selected
+                                            color: controllerDelivery.selected
                                                     .contains(controller
                                                         .clients[i].id)
                                                 ? Colors.cyan[300]
@@ -336,7 +265,7 @@ Selecione o Cliente.""",
                                               subtitle: Text(
                                                   // ignore: lines_longer_than_80_chars
                                                   "${controller.clients[i].state.substring(0, 2)} - ${controller.clients[i].city}"),
-                                              trailing: controllerRequest
+                                              trailing: controllerDelivery
                                                       .selected
                                                       .contains(controller
                                                           .clients[i].id)
@@ -347,14 +276,17 @@ Selecione o Cliente.""",
                                                     )
                                                   : null,
                                               onTap: () {
-                                                if (!controllerRequest.selected
+                                                if (!controllerDelivery.selected
                                                     .contains(controller
                                                         .clients[i].id)) {
-                                                  widget.model.clientsId =
-                                                      controller.clients[i].id;
-                                                  controllerRequest
+                                                  controllerDelivery
                                                       .toggleSelected(controller
                                                           .clients[i].id);
+                                                  // ignore: lines_longer_than_80_chars
+                                                  nameClientSelected =
+                                                      controller
+                                                          .clients[i].name;
+                                                  firstTimeDropDown = true;
                                                 }
                                               },
                                             ),
@@ -425,6 +357,181 @@ Selecione o Cliente.""",
                       ),
                     ),
                   ],
+                ),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.025,
+              ),
+              StreamBuilder<List<RequestModel>>(
+                  stream: controllerDelivery.streamRequests.stream,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      if (snapshot.data.isNotEmpty && firstTimeDropDown) {
+                        dropdownValue = snapshot.data[0];
+                        firstTimeDropDown = false;
+                      }
+                      return Container(
+                        width: MediaQuery.of(context).size.width,
+                        child: Card(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 8),
+                            child: DropdownButton(
+                              isExpanded: true,
+                              onChanged: (newValue) {
+                                setState(() {
+                                  dropdownValue = newValue;
+                                });
+                              },
+                              items:
+                                  snapshot.data.map<DropdownMenuItem>((value) {
+                                return DropdownMenuItem(
+                                  value: value,
+                                  child: Text(
+                                      // ignore: lines_longer_than_80_chars
+                                      "Valor do Pedido: R\$ ${formatCurrency.format(value.totalValue).substring(1)}\nData presvista para entrega: ${value.deliveryDate.replaceAll(' ', '')}"),
+                                );
+                              }).toList(),
+                              value: dropdownValue,
+                            ),
+                          ),
+                        ),
+                      );
+                    } else {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  }),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.025,
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  if (dropdownValue != null) {
+                    controllerDelivery
+                        .registerDelivery(dropdownValue)
+                        .then((value) async {
+                      if (value) {
+                        await showDialog(
+                          context: context,
+                          builder: (ctx) => AlertDialog(
+                            title: Text(
+                              'Entrega registrada',
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.secondary,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            content: Text(
+                              // ignore: lines_longer_than_80_chars
+                              "A entrega do do cliente $nameClientSelected foi registrada com sucesso.",
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.secondary,
+                                fontSize: 14,
+                              ),
+                            ),
+                            backgroundColor: Colors.green,
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text(
+                                  'ok',
+                                  style: TextStyle(
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                        Navigator.of(context).pop();
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            backgroundColor: Colors.red,
+                            content: Text(
+                                // ignore: lines_longer_than_80_chars
+                                'Falha ao registrar entrega do cliente $nameClientSelected.'),
+                          ),
+                        );
+                      }
+                    });
+                  } else {
+                    await showDialog(
+                      context: context,
+                      builder: (ctx) => AlertDialog(
+                        title: Text(
+                          'Por favor selecione um pedido!',
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.secondary,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        backgroundColor: Colors.red,
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text(
+                              'ok',
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.secondary,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+                },
+                style: ButtonStyle(
+                  padding: MaterialStateProperty.all(EdgeInsets.all(0)),
+                  shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(45.0),
+                    ),
+                  ),
+                ),
+                child: Container(
+                  height: 48,
+                  width: MediaQuery.of(context).size.width / 1.2,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                      colors: <Color>[
+                        Colors.green,
+                        Theme.of(context).primaryColor,
+                      ],
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(45),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black38,
+                        blurRadius: 7,
+                        offset: Offset(-2.0, 4.0),
+                      ),
+                    ],
+                  ),
+                  child: Center(
+                    child: Text(
+                      "REGISTRAR ENTREGA",
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.secondary,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 17,
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ],

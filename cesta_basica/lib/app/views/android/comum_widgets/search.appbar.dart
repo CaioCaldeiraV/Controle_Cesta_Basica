@@ -36,7 +36,7 @@ class SearchAppbar extends StatelessWidget {
           ),
         ),
       ),
-      iconTheme: IconThemeData(color: Theme.of(context).accentColor),
+      iconTheme: IconThemeData(color: Theme.of(context).colorScheme.secondary),
       leading: Observer(builder: (_) {
         if (choose == 0) {
           return !controllerClient.showSearch
@@ -76,17 +76,17 @@ class SearchAppbar extends StatelessWidget {
                   autofocus: true,
                   textCapitalization: TextCapitalization.words,
                   style: TextStyle(
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).colorScheme.secondary,
                   ),
-                  cursorColor: Theme.of(context).accentColor,
+                  cursorColor: Theme.of(context).colorScheme.secondary,
                   decoration: InputDecoration(
                     icon: Icon(
                       Icons.search,
-                      color: Theme.of(context).accentColor,
+                      color: Theme.of(context).colorScheme.secondary,
                     ),
                     labelText: 'Pesquisar Clientes',
                     labelStyle: TextStyle(
-                      color: Theme.of(context).accentColor,
+                      color: Theme.of(context).colorScheme.secondary,
                     ),
                   ),
                   onChanged: controllerClient.search,
@@ -94,7 +94,7 @@ class SearchAppbar extends StatelessWidget {
               : Text(
                   'Clientes',
                   style: TextStyle(
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).colorScheme.secondary,
                   ),
                 );
         } else if (choose == 1) {
@@ -103,17 +103,17 @@ class SearchAppbar extends StatelessWidget {
                   autofocus: true,
                   textCapitalization: TextCapitalization.words,
                   style: TextStyle(
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).colorScheme.secondary,
                   ),
-                  cursorColor: Theme.of(context).accentColor,
+                  cursorColor: Theme.of(context).colorScheme.secondary,
                   decoration: InputDecoration(
                     icon: Icon(
                       Icons.search,
-                      color: Theme.of(context).accentColor,
+                      color: Theme.of(context).colorScheme.secondary,
                     ),
                     labelText: 'Pesquisar Produtos',
                     labelStyle: TextStyle(
-                      color: Theme.of(context).accentColor,
+                      color: Theme.of(context).colorScheme.secondary,
                     ),
                   ),
                   onChanged: controllerProduct.search,
@@ -121,7 +121,7 @@ class SearchAppbar extends StatelessWidget {
               : Text(
                   'Produtos',
                   style: TextStyle(
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).colorScheme.secondary,
                   ),
                 );
         } else if (choose == 2) {
@@ -130,17 +130,17 @@ class SearchAppbar extends StatelessWidget {
                   autofocus: true,
                   textCapitalization: TextCapitalization.words,
                   style: TextStyle(
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).colorScheme.secondary,
                   ),
-                  cursorColor: Theme.of(context).accentColor,
+                  cursorColor: Theme.of(context).colorScheme.secondary,
                   decoration: InputDecoration(
                     icon: Icon(
                       Icons.search,
-                      color: Theme.of(context).accentColor,
+                      color: Theme.of(context).colorScheme.secondary,
                     ),
                     labelText: 'Pesquisar Cestas Básicas',
                     labelStyle: TextStyle(
-                      color: Theme.of(context).accentColor,
+                      color: Theme.of(context).colorScheme.secondary,
                     ),
                   ),
                   onChanged: controllerBasicBasket.search,
@@ -148,7 +148,7 @@ class SearchAppbar extends StatelessWidget {
               : Text(
                   'Cestas Básicas',
                   style: TextStyle(
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).colorScheme.secondary,
                   ),
                 );
         } else {
@@ -157,17 +157,17 @@ class SearchAppbar extends StatelessWidget {
                   autofocus: true,
                   textCapitalization: TextCapitalization.words,
                   style: TextStyle(
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).colorScheme.secondary,
                   ),
-                  cursorColor: Theme.of(context).accentColor,
+                  cursorColor: Theme.of(context).colorScheme.secondary,
                   decoration: InputDecoration(
                     icon: Icon(
                       Icons.search,
-                      color: Theme.of(context).accentColor,
+                      color: Theme.of(context).colorScheme.secondary,
                     ),
                     labelText: 'Pesquisar pedido por nome do cliente',
                     labelStyle: TextStyle(
-                      color: Theme.of(context).accentColor,
+                      color: Theme.of(context).colorScheme.secondary,
                     ),
                   ),
                   onChanged: controllerRequest.search,
@@ -175,7 +175,7 @@ class SearchAppbar extends StatelessWidget {
               : Text(
                   'Pedidos',
                   style: TextStyle(
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).colorScheme.secondary,
                   ),
                 );
         }

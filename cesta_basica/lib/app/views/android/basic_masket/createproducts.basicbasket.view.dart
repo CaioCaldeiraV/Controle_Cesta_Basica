@@ -40,7 +40,8 @@ class _CreateProductsBasicMasketViewState
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Theme.of(context).accentColor),
+        iconTheme:
+            IconThemeData(color: Theme.of(context).colorScheme.secondary),
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -57,7 +58,7 @@ class _CreateProductsBasicMasketViewState
         title: Text(
           'Controle Cestas Básicas',
           style: TextStyle(
-            color: Theme.of(context).accentColor,
+            color: Theme.of(context).colorScheme.secondary,
           ),
         ),
       ),
@@ -83,7 +84,7 @@ class _CreateProductsBasicMasketViewState
             child: Icon(
               Icons.arrow_forward,
               size: 30,
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
             ),
           ),
           onPressed: () {
@@ -183,20 +184,23 @@ Seleção dos Produtos que compõe a Cesta Básica.""",
                                             textCapitalization:
                                                 TextCapitalization.words,
                                             style: TextStyle(
-                                              color:
-                                                  Theme.of(context).accentColor,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .secondary,
                                             ),
                                             cursorColor: Colors.white,
                                             decoration: InputDecoration(
                                               icon: Icon(
                                                 Icons.search,
                                                 color: Theme.of(context)
-                                                    .accentColor,
+                                                    .colorScheme
+                                                    .secondary,
                                               ),
                                               hintText: 'Pesquisar Produtos',
                                               hintStyle: TextStyle(
                                                 color: Theme.of(context)
-                                                    .accentColor,
+                                                    .colorScheme
+                                                    .secondary,
                                                 fontSize: 12,
                                               ),
                                             ),
@@ -206,8 +210,9 @@ Seleção dos Produtos que compõe a Cesta Básica.""",
                                       : Text(
                                           "Lista de Produtos",
                                           style: TextStyle(
-                                            color:
-                                                Theme.of(context).accentColor,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .secondary,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 18,
                                           ),
@@ -219,7 +224,9 @@ Seleção dos Produtos que compõe a Cesta Básica.""",
                                       controller.showSearch
                                           ? Icons.close
                                           : Icons.search,
-                                      color: Theme.of(context).accentColor,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
                                     ),
                                     onPressed: () {
                                       if (controller.showSearch) {
@@ -413,7 +420,7 @@ Seleção dos Produtos que compõe a Cesta Básica.""",
                           child: Icon(
                             Icons.shopping_bag,
                             size: 30,
-                            color: Theme.of(context).accentColor,
+                            color: Theme.of(context).colorScheme.secondary,
                           ),
                         ),
                         onPressed: () {

@@ -45,7 +45,7 @@ class _CreateValueBasicBasketViewState
           title: Text(
             'Cesta Básica Cadastrada',
             style: TextStyle(
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -53,7 +53,7 @@ class _CreateValueBasicBasketViewState
             """
 A Cesta básica '${widget.model.name}' foi cadastrada com sucesso.""",
             style: TextStyle(
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
               fontSize: 14,
             ),
           ),
@@ -66,7 +66,7 @@ A Cesta básica '${widget.model.name}' foi cadastrada com sucesso.""",
               child: Text(
                 'ok',
                 style: TextStyle(
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).colorScheme.secondary,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -92,7 +92,7 @@ A Cesta básica '${widget.model.name}' foi cadastrada com sucesso.""",
           title: Text(
             'Cesta Básica Editada',
             style: TextStyle(
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -100,7 +100,7 @@ A Cesta básica '${widget.model.name}' foi cadastrada com sucesso.""",
             """
 A Cesta básica '${widget.model.name}' foi editada com sucesso.""",
             style: TextStyle(
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
               fontSize: 14,
             ),
           ),
@@ -113,7 +113,7 @@ A Cesta básica '${widget.model.name}' foi editada com sucesso.""",
               child: Text(
                 'ok',
                 style: TextStyle(
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).colorScheme.secondary,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -151,7 +151,8 @@ A Cesta básica '${widget.model.name}' foi editada com sucesso.""",
       key: _scaffoldKey,
       backgroundColor: Colors.white,
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Theme.of(context).accentColor),
+        iconTheme:
+            IconThemeData(color: Theme.of(context).colorScheme.secondary),
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -168,7 +169,7 @@ A Cesta básica '${widget.model.name}' foi editada com sucesso.""",
         title: Text(
           'Controle Cestas Básicas',
           style: TextStyle(
-            color: Theme.of(context).accentColor,
+            color: Theme.of(context).colorScheme.secondary,
           ),
         ),
       ),
@@ -304,7 +305,7 @@ A Cesta básica '${widget.model.name}' foi editada com sucesso.""",
                           child: Icon(
                             Icons.add,
                             size: 30,
-                            color: Theme.of(context).accentColor,
+                            color: Theme.of(context).colorScheme.secondary,
                           ),
                         ),
                         onPressed: _onSubmit,

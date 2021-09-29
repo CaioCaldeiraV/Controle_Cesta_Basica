@@ -60,7 +60,7 @@ class _DetailClientViewState extends State<DetailClientView> {
           title: Text(
             'Excluir Cliente',
             style: TextStyle(
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -69,7 +69,7 @@ class _DetailClientViewState extends State<DetailClientView> {
             """
 Você tem certeza que deseja deletar o cliente: ${widget.model.name}?""",
             style: TextStyle(
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
               fontSize: 14,
             ),
           ),
@@ -81,7 +81,7 @@ Você tem certeza que deseja deletar o cliente: ${widget.model.name}?""",
               child: Text(
                 'Não',
                 style: TextStyle(
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).colorScheme.secondary,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -95,7 +95,7 @@ Você tem certeza que deseja deletar o cliente: ${widget.model.name}?""",
                     title: Text(
                       'Cliente Removido',
                       style: TextStyle(
-                        color: Theme.of(context).accentColor,
+                        color: Theme.of(context).colorScheme.secondary,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -103,7 +103,7 @@ Você tem certeza que deseja deletar o cliente: ${widget.model.name}?""",
                       """
 O cliente ${widget.model.name} foi removido com sucesso.""",
                       style: TextStyle(
-                        color: Theme.of(context).accentColor,
+                        color: Theme.of(context).colorScheme.secondary,
                         fontSize: 14,
                       ),
                     ),
@@ -116,7 +116,7 @@ O cliente ${widget.model.name} foi removido com sucesso.""",
                         child: Text(
                           'ok',
                           style: TextStyle(
-                            color: Theme.of(context).accentColor,
+                            color: Theme.of(context).colorScheme.secondary,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -134,7 +134,7 @@ O cliente ${widget.model.name} foi removido com sucesso.""",
               child: Text(
                 'Sim',
                 style: TextStyle(
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).colorScheme.secondary,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -155,10 +155,11 @@ O cliente ${widget.model.name} foi removido com sucesso.""",
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: IconThemeData(color: Theme.of(context).accentColor),
+        iconTheme:
+            IconThemeData(color: Theme.of(context).colorScheme.secondary),
         actions: [
           PopupMenuButton(
-            color: Theme.of(context).accentColor,
+            color: Theme.of(context).colorScheme.secondary,
             itemBuilder: (context) {
               return ClientListPopUpMenuButton.choices.map((choice) {
                 return PopupMenuItem(
@@ -200,7 +201,7 @@ O cliente ${widget.model.name} foi removido com sucesso.""",
                       widget.model.gender == "Masculino"
                           ? "assets/images/profilepicture.png"
                           : "assets/images/profilepicturefemale.png",
-                      color: Theme.of(context).accentColor,
+                      color: Theme.of(context).colorScheme.secondary,
                       scale: widget.model.gender == "Masculino" ? 9 : 11.1,
                     ),
                   ),
@@ -212,7 +213,7 @@ O cliente ${widget.model.name} foi removido com sucesso.""",
                     overflow: TextOverflow.ellipsis,
                     maxLines: 3,
                     style: TextStyle(
-                      color: Theme.of(context).accentColor,
+                      color: Theme.of(context).colorScheme.secondary,
                       fontSize: 25,
                     ),
                   ),
@@ -301,7 +302,7 @@ O cliente ${widget.model.name} foi removido com sucesso.""",
                           child: Text(
                             "Provém de pngtree.com",
                             style: TextStyle(
-                                color: Theme.of(context).accentColor,
+                                color: Theme.of(context).colorScheme.secondary,
                                 fontSize: 6),
                           ),
                         ),
@@ -340,7 +341,7 @@ O cliente ${widget.model.name} foi removido com sucesso.""",
                           child: Text(
                             "Provém de pngtree.com",
                             style: TextStyle(
-                                color: Theme.of(context).accentColor,
+                                color: Theme.of(context).colorScheme.secondary,
                                 fontSize: 6),
                           ),
                         ),
@@ -361,7 +362,7 @@ O cliente ${widget.model.name} foi removido com sucesso.""",
                     icon: Icon(
                       Icons.phone,
                       size: 30,
-                      color: Theme.of(context).accentColor,
+                      color: Theme.of(context).colorScheme.secondary,
                     ),
                     onPressed: () async {
                       if (await canLaunch("tel: ${widget.model.phone}")) {
@@ -373,7 +374,7 @@ O cliente ${widget.model.name} foi removido com sucesso.""",
                             title: Text(
                               'Erro',
                               style: TextStyle(
-                                color: Theme.of(context).accentColor,
+                                color: Theme.of(context).colorScheme.secondary,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -381,7 +382,7 @@ O cliente ${widget.model.name} foi removido com sucesso.""",
                               """
 Não foi possível localizar o aplicativo para ligações ou número inválido.""",
                               style: TextStyle(
-                                color: Theme.of(context).accentColor,
+                                color: Theme.of(context).colorScheme.secondary,
                                 fontSize: 14,
                               ),
                             ),
@@ -394,7 +395,8 @@ Não foi possível localizar o aplicativo para ligações ou número inválido."
                                 child: Text(
                                   'ok',
                                   style: TextStyle(
-                                    color: Theme.of(context).accentColor,
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -409,7 +411,7 @@ Não foi possível localizar o aplicativo para ligações ou número inválido."
                     icon: Icon(
                       Icons.message,
                       size: 30,
-                      color: Theme.of(context).accentColor,
+                      color: Theme.of(context).colorScheme.secondary,
                     ),
                     onPressed: () async {
                       if (await canLaunch("sms: ${widget.model.phone}")) {
@@ -421,7 +423,7 @@ Não foi possível localizar o aplicativo para ligações ou número inválido."
                             title: Text(
                               'Erro',
                               style: TextStyle(
-                                color: Theme.of(context).accentColor,
+                                color: Theme.of(context).colorScheme.secondary,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -429,7 +431,7 @@ Não foi possível localizar o aplicativo para ligações ou número inválido."
                               """
 Não foi possível localizar o aplicativo de mensagens ou número inválido.""",
                               style: TextStyle(
-                                color: Theme.of(context).accentColor,
+                                color: Theme.of(context).colorScheme.secondary,
                                 fontSize: 14,
                               ),
                             ),
@@ -442,7 +444,8 @@ Não foi possível localizar o aplicativo de mensagens ou número inválido.""",
                                 child: Text(
                                   'ok',
                                   style: TextStyle(
-                                    color: Theme.of(context).accentColor,
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -455,7 +458,7 @@ Não foi possível localizar o aplicativo de mensagens ou número inválido.""",
                   ),
                   IconButton(
                     icon: Image.asset('assets/images/wpp.png',
-                        color: Theme.of(context).accentColor),
+                        color: Theme.of(context).colorScheme.secondary),
                     onPressed: () async {
                       if (await canLaunch(
                           "https://wa.me/55${widget.model.phone.replaceAll('(', '').replaceAll(')', '').replaceAll(' ', '')}")) {
@@ -468,7 +471,7 @@ Não foi possível localizar o aplicativo de mensagens ou número inválido.""",
                             title: Text(
                               'Erro',
                               style: TextStyle(
-                                color: Theme.of(context).accentColor,
+                                color: Theme.of(context).colorScheme.secondary,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -476,7 +479,7 @@ Não foi possível localizar o aplicativo de mensagens ou número inválido.""",
                               """
 Não foi possível localizaar o whatsapp ou o número do cliente é inválido.""",
                               style: TextStyle(
-                                color: Theme.of(context).accentColor,
+                                color: Theme.of(context).colorScheme.secondary,
                                 fontSize: 14,
                               ),
                             ),
@@ -489,7 +492,8 @@ Não foi possível localizaar o whatsapp ou o número do cliente é inválido.""
                                 child: Text(
                                   'ok',
                                   style: TextStyle(
-                                    color: Theme.of(context).accentColor,
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),

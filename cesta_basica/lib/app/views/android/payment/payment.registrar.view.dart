@@ -33,7 +33,8 @@ class _PaymentRegistrarViewState extends State<PaymentRegistrarView> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Theme.of(context).accentColor),
+        iconTheme:
+            IconThemeData(color: Theme.of(context).colorScheme.secondary),
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -50,7 +51,7 @@ class _PaymentRegistrarViewState extends State<PaymentRegistrarView> {
         title: Text(
           'Controle Cestas Básicas',
           style: TextStyle(
-            color: Theme.of(context).accentColor,
+            color: Theme.of(context).colorScheme.secondary,
           ),
         ),
       ),
@@ -135,20 +136,24 @@ Selecione o cliente e a parcela desejada.""",
                                         textCapitalization:
                                             TextCapitalization.words,
                                         style: TextStyle(
-                                          color: Theme.of(context).accentColor,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .secondary,
                                         ),
                                         keyboardType: TextInputType.name,
                                         cursorColor: Colors.white,
                                         decoration: InputDecoration(
                                           icon: Icon(
                                             Icons.search,
-                                            color:
-                                                Theme.of(context).accentColor,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .secondary,
                                           ),
                                           hintText: 'Pesquisar Clientes',
                                           hintStyle: TextStyle(
-                                            color:
-                                                Theme.of(context).accentColor,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .secondary,
                                             fontSize: 12,
                                           ),
                                         ),
@@ -158,7 +163,9 @@ Selecione o cliente e a parcela desejada.""",
                                   : Text(
                                       "Lista de Clientes",
                                       style: TextStyle(
-                                        color: Theme.of(context).accentColor,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 18,
                                       ),
@@ -170,7 +177,8 @@ Selecione o cliente e a parcela desejada.""",
                                   controller.showSearch
                                       ? Icons.close
                                       : Icons.search,
-                                  color: Theme.of(context).accentColor,
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
                                 ),
                                 onPressed: () {
                                   if (controller.showSearch) {
@@ -407,7 +415,7 @@ Selecione o cliente e a parcela desejada.""",
                             title: Text(
                               'Pagamento registrado',
                               style: TextStyle(
-                                color: Theme.of(context).accentColor,
+                                color: Theme.of(context).colorScheme.secondary,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -415,7 +423,7 @@ Selecione o cliente e a parcela desejada.""",
                               // ignore: lines_longer_than_80_chars
                               "O pagamento no valor de R\$${formatCurrency.format(dropdownValue.value).substring(1)} do cliente $nameClientSelected foi registrado com sucesso.",
                               style: TextStyle(
-                                color: Theme.of(context).accentColor,
+                                color: Theme.of(context).colorScheme.secondary,
                                 fontSize: 14,
                               ),
                             ),
@@ -428,7 +436,8 @@ Selecione o cliente e a parcela desejada.""",
                                 child: Text(
                                   'ok',
                                   style: TextStyle(
-                                    color: Theme.of(context).accentColor,
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -448,40 +457,72 @@ Selecione o cliente e a parcela desejada.""",
                         );
                       }
                     });
+                  } else {
+                    await showDialog(
+                      context: context,
+                      builder: (ctx) => AlertDialog(
+                        title: Text(
+                          'Por favor selecione uma parcela!',
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.secondary,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        backgroundColor: Colors.red,
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text(
+                              'ok',
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.secondary,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
                   }
                 },
                 style: ButtonStyle(
-                    padding: MaterialStateProperty.all(EdgeInsets.all(0)),
-                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                  padding: MaterialStateProperty.all(EdgeInsets.all(0)),
+                  shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(45.0),
-                    ))),
+                    ),
+                  ),
+                ),
                 child: Container(
                   height: 48,
                   width: MediaQuery.of(context).size.width / 1.2,
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                        colors: <Color>[
-                          Colors.green,
-                          Theme.of(context).primaryColor,
-                        ],
+                    gradient: LinearGradient(
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                      colors: <Color>[
+                        Colors.green,
+                        Theme.of(context).primaryColor,
+                      ],
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(45),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black38,
+                        blurRadius: 7,
+                        offset: Offset(-2.0, 4.0),
                       ),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(45),
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black38,
-                          blurRadius: 7,
-                          offset: Offset(-2.0, 4.0),
-                        )
-                      ]),
+                    ],
+                  ),
                   child: Center(
                     child: Text(
                       "REGISTRAR PAGAMENTO",
                       style: TextStyle(
-                        color: Theme.of(context).accentColor,
+                        color: Theme.of(context).colorScheme.secondary,
                         fontWeight: FontWeight.bold,
                         fontSize: 17,
                       ),

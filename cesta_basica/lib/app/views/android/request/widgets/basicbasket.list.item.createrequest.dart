@@ -75,7 +75,7 @@ Valor: R\$ ${formatCurrency.format(widget.modelBasicBasket.value).substring(1)}"
               child: IconButton(
                 icon: Icon(
                   Icons.remove,
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).colorScheme.secondary,
                   size: 18,
                 ),
                 onPressed: () {
@@ -115,7 +115,7 @@ Valor: R\$ ${formatCurrency.format(widget.modelBasicBasket.value).substring(1)}"
               child: IconButton(
                 icon: Icon(
                   Icons.add,
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).colorScheme.secondary,
                   size: 18,
                 ),
                 onPressed: () {

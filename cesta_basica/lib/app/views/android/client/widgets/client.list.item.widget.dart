@@ -74,7 +74,7 @@ class _ClientListItemState extends State<ClientListItem> {
                     title: Text(
                       'Excluir Cliente',
                       style: TextStyle(
-                        color: Theme.of(context).accentColor,
+                        color: Theme.of(context).colorScheme.secondary,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -83,7 +83,7 @@ class _ClientListItemState extends State<ClientListItem> {
                       """
 Você tem certeza que deseja deletar o cliente: ${widget.model.name}?""",
                       style: TextStyle(
-                        color: Theme.of(context).accentColor,
+                        color: Theme.of(context).colorScheme.secondary,
                         fontSize: 14,
                       ),
                     ),
@@ -95,7 +95,7 @@ Você tem certeza que deseja deletar o cliente: ${widget.model.name}?""",
                         child: Text(
                           'Não',
                           style: TextStyle(
-                            color: Theme.of(context).accentColor,
+                            color: Theme.of(context).colorScheme.secondary,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -110,7 +110,8 @@ Você tem certeza que deseja deletar o cliente: ${widget.model.name}?""",
                               title: Text(
                                 'Cliente Removido',
                                 style: TextStyle(
-                                  color: Theme.of(context).accentColor,
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -118,7 +119,8 @@ Você tem certeza que deseja deletar o cliente: ${widget.model.name}?""",
                                 """
 O cliente ${widget.model.name} foi removido com sucesso.""",
                                 style: TextStyle(
-                                  color: Theme.of(context).accentColor,
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
                                   fontSize: 14,
                                 ),
                               ),
@@ -131,7 +133,9 @@ O cliente ${widget.model.name} foi removido com sucesso.""",
                                   child: Text(
                                     'ok',
                                     style: TextStyle(
-                                      color: Theme.of(context).accentColor,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -147,7 +151,7 @@ O cliente ${widget.model.name} foi removido com sucesso.""",
                         child: Text(
                           'Sim',
                           style: TextStyle(
-                            color: Theme.of(context).accentColor,
+                            color: Theme.of(context).colorScheme.secondary,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

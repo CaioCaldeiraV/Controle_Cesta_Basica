@@ -50,7 +50,7 @@ class _SearchClientViewState extends State<SearchClientView> {
             child: Icon(
               Icons.add,
               size: 30,
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
             ),
           ),
           onPressed: () {

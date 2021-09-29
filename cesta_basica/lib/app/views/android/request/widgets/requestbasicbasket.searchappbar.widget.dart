@@ -25,7 +25,7 @@ class RequestBasicBasketSearchAppBar extends StatelessWidget {
           ),
         ),
       ),
-      iconTheme: IconThemeData(color: Theme.of(context).accentColor),
+      iconTheme: IconThemeData(color: Theme.of(context).colorScheme.secondary),
       leading: Observer(
         builder: (_) => !controller.showSearch
             ? IconButton(
@@ -42,17 +42,17 @@ class RequestBasicBasketSearchAppBar extends StatelessWidget {
                 autofocus: true,
                 textCapitalization: TextCapitalization.words,
                 style: TextStyle(
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).colorScheme.secondary,
                 ),
                 cursorColor: Colors.white,
                 decoration: InputDecoration(
                   icon: Icon(
                     Icons.search,
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).colorScheme.secondary,
                   ),
                   labelText: 'Pesquisar Cestas Básicas',
                   labelStyle: TextStyle(
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).colorScheme.secondary,
                   ),
                 ),
                 onChanged: controller.search,
@@ -60,7 +60,7 @@ class RequestBasicBasketSearchAppBar extends StatelessWidget {
             : Text(
                 'Cestas Básicas',
                 style: TextStyle(
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).colorScheme.secondary,
                 ),
               ),
       ),

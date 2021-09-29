@@ -1,31 +1,31 @@
 import 'package:cesta_basica/app/controllers/client/client.controller.dart';
-import 'package:cesta_basica/app/controllers/request/request.controller.dart';
-import 'package:cesta_basica/app/models/request.model.dart';
+import 'package:cesta_basica/app/controllers/payment/payment.controller.dart';
+import 'package:cesta_basica/app/models/installments.model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:intl/intl.dart';
+import 'widgets/list.payments.widget.dart';
 
-import 'createsteptwo.request.view.dart';
-
-class CreateRequestView extends StatefulWidget {
-  final RequestModel model;
-
-  const CreateRequestView({Key key, this.model}) : super(key: key);
+class PaymentSearchView extends StatefulWidget {
+  const PaymentSearchView({Key key}) : super(key: key);
 
   @override
-  _CreateRequestViewState createState() => _CreateRequestViewState();
+  _PaymentSearchViewState createState() => _PaymentSearchViewState();
 }
 
-class _CreateRequestViewState extends State<CreateRequestView> {
+class _PaymentSearchViewState extends State<PaymentSearchView> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final ClientController controller = ClientController();
-  final RequestController controllerRequest = RequestController();
   final textController = TextEditingController();
+  final PaymentController controllerPayment = PaymentController();
+  InstallmentsModel dropdownValue;
+  final formatCurrency = NumberFormat.simpleCurrency();
+  String nameClientSelected;
+  bool firstTimeDropDown = true;
 
   @override
   void initState() {
-    if (widget.model.id != 0) {
-      controllerRequest.toggleSelected(widget.model.clientsId);
-    }
+    controllerPayment.streamParcelas.sink.add([]);
     super.initState();
   }
 
@@ -56,81 +56,6 @@ class _CreateRequestViewState extends State<CreateRequestView> {
           ),
         ),
       ),
-      floatingActionButton: SizedBox(
-        width: 65,
-        height: 65,
-        child: FloatingActionButton(
-          heroTag: "btn1",
-          child: Container(
-            width: 65,
-            height: 65,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  Colors.green,
-                  Theme.of(context).primaryColor,
-                ],
-              ),
-            ),
-            child: Icon(
-              Icons.arrow_forward,
-              size: 30,
-              color: Theme.of(context).colorScheme.secondary,
-            ),
-          ),
-          onPressed: () {
-            if (widget.model.clientsId == null) {
-              showDialog(
-                context: context,
-                builder: (ctx) => AlertDialog(
-                  title: Text(
-                    'Selecione um Cliente',
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.secondary,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  backgroundColor: Colors.red,
-                  content: Text(
-                    """
-Por favor, selecione um cliente para prosseguir com o pedido""",
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.secondary,
-                      fontSize: 14,
-                    ),
-                  ),
-                  actions: <Widget>[
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Text(
-                        'Ok',
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.secondary,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            } else {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => CreateTwo(
-                    model: widget.model,
-                    controller: controllerRequest,
-                  ),
-                ),
-              );
-            }
-          },
-        ),
-      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -139,41 +64,44 @@ Por favor, selecione um cliente para prosseguir com o pedido""",
               Container(
                 width: MediaQuery.of(context).size.width,
                 height: 150,
-                child: Stack(children: [
-                  Center(
-                    child: Image.asset(
-                      "assets/images/painting.png",
-                      fit: BoxFit.contain,
+                child: Stack(
+                  children: [
+                    Center(
+                      child: Image.asset(
+                        "assets/images/painting.png",
+                        fit: BoxFit.contain,
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(30.0),
-                    child: Center(
-                      child: RichText(
+                    Padding(
+                      padding: const EdgeInsets.all(30.0),
+                      child: Center(
+                        child: RichText(
                           text: TextSpan(
-                              text: "Primeira Etapa:\n",
-                              style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.bold),
-                              children: [
-                            TextSpan(
-                              text: """
-Selecione o Cliente.""",
-                              style: TextStyle(
+                            text: "Buscar Parcelas :\n",
+                            style: TextStyle(
                                 color: Theme.of(context).primaryColor,
-                                fontSize: 15,
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold),
+                            children: [
+                              TextSpan(
+                                text: """
+Selecione o cliente e as parcelas refente a ele aparecerá.""",
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontSize: 15,
+                                ),
                               ),
-                            )
-                          ])),
-                    ),
-                  )
-                ]),
+                            ],
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
               Container(
                 width: MediaQuery.of(context).size.width,
-                height:
-                    MediaQuery.of(context).size.height - (300 + kToolbarHeight),
+                height: MediaQuery.of(context).size.height * 0.3 + 40,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(10),
@@ -258,6 +186,7 @@ Selecione o Cliente.""",
                                 ),
                                 onPressed: () {
                                   if (controller.showSearch) {
+                                    textController.text = "";
                                     controller.getClients();
                                   }
                                   controller.toggleSearch();
@@ -270,8 +199,7 @@ Selecione o Cliente.""",
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height -
-                          (340 + kToolbarHeight),
+                      height: MediaQuery.of(context).size.height * 0.3,
                       padding: EdgeInsets.symmetric(vertical: 5),
                       color: Colors.grey[200],
                       child: FutureBuilder(
@@ -313,7 +241,7 @@ Selecione o Cliente.""",
                                       return Observer(
                                         builder: (_) {
                                           return Container(
-                                            color: controllerRequest.selected
+                                            color: controllerPayment.selected
                                                     .contains(controller
                                                         .clients[i].id)
                                                 ? Colors.cyan[300]
@@ -336,7 +264,7 @@ Selecione o Cliente.""",
                                               subtitle: Text(
                                                   // ignore: lines_longer_than_80_chars
                                                   "${controller.clients[i].state.substring(0, 2)} - ${controller.clients[i].city}"),
-                                              trailing: controllerRequest
+                                              trailing: controllerPayment
                                                       .selected
                                                       .contains(controller
                                                           .clients[i].id)
@@ -347,14 +275,17 @@ Selecione o Cliente.""",
                                                     )
                                                   : null,
                                               onTap: () {
-                                                if (!controllerRequest.selected
+                                                if (!controllerPayment.selected
                                                     .contains(controller
                                                         .clients[i].id)) {
-                                                  widget.model.clientsId =
-                                                      controller.clients[i].id;
-                                                  controllerRequest
+                                                  controllerPayment
                                                       .toggleSelected(controller
                                                           .clients[i].id);
+                                                  // ignore: lines_longer_than_80_chars
+                                                  nameClientSelected =
+                                                      controller
+                                                          .clients[i].name;
+                                                  firstTimeDropDown = true;
                                                 }
                                               },
                                             ),
@@ -425,6 +356,64 @@ Selecione o Cliente.""",
                       ),
                     ),
                   ],
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height * 0.3,
+                child: Card(
+                  margin: EdgeInsets.zero,
+                  child: StreamBuilder<List<InstallmentsModel>>(
+                    stream: controllerPayment.streamParcelas.stream,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        // ignore: omit_local_variable_types
+                        double sumTotal = 0;
+                        for (var i = 0; i < snapshot.data.length; i++) {
+                          sumTotal = sumTotal + snapshot.data[i].value;
+                        }
+                        var listView = ListView.builder(
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (ctx, i) {
+                            return ListPaymentsWidget(
+                              model: snapshot.data[i],
+                            );
+                          },
+                        );
+                        return Column(
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width,
+                              height:
+                                  MediaQuery.of(context).size.height * 0.3 - 40,
+                              child: listView,
+                            ),
+                            Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: 40,
+                              color: Theme.of(context).primaryColor,
+                              child: Center(
+                                child: Text(
+                                  """
+Valor Total da Divida: R\$ ${formatCurrency.format(sumTotal).substring(1)}""",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      } else {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                    },
+                  ),
                 ),
               ),
             ],

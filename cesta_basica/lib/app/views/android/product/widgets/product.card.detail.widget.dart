@@ -53,11 +53,11 @@ class ProductCardDetailWidget extends StatelessWidget {
                           style: TextStyle(
                               fontSize: 22,
                               fontWeight: FontWeight.bold,
-                              color: Theme.of(context).accentColor),
+                              color: Theme.of(context).colorScheme.secondary),
                         ),
                         Icon(
                           Icons.info,
-                          color: Theme.of(context).accentColor,
+                          color: Theme.of(context).colorScheme.secondary,
                         ),
                       ],
                     ),
@@ -165,7 +165,7 @@ Preço: R\$ ${formatCurrency.format(model.value).substring(1)}""",
                         ),
                         Icon(
                           Icons.shop_two,
-                          color: Theme.of(context).accentColor,
+                          color: Theme.of(context).colorScheme.secondary,
                         )
                       ],
                     ),

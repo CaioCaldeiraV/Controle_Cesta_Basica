@@ -156,7 +156,7 @@ class _SearchCreateListBagViewState extends State<SearchCreateListBagView> {
                   // ignore: lines_longer_than_80_chars
                   "Custo Total: R\$ ${formatCurrency.format(widget.controller.totalCust).substring(1)}",
                   style: TextStyle(
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).colorScheme.secondary,
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
                   ),

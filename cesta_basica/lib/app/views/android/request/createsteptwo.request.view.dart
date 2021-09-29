@@ -37,7 +37,8 @@ class _CreateTwoState extends State<CreateTwo> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Theme.of(context).accentColor),
+        iconTheme:
+            IconThemeData(color: Theme.of(context).colorScheme.secondary),
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -54,7 +55,7 @@ class _CreateTwoState extends State<CreateTwo> {
         title: Text(
           'Controle Cestas Básicas',
           style: TextStyle(
-            color: Theme.of(context).accentColor,
+            color: Theme.of(context).colorScheme.secondary,
           ),
         ),
       ),
@@ -80,7 +81,7 @@ class _CreateTwoState extends State<CreateTwo> {
             child: Icon(
               Icons.arrow_forward,
               size: 30,
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
             ),
           ),
           onPressed: () {
@@ -91,7 +92,7 @@ class _CreateTwoState extends State<CreateTwo> {
                   title: Text(
                     'Selecione uma Cesta Básica',
                     style: TextStyle(
-                      color: Theme.of(context).accentColor,
+                      color: Theme.of(context).colorScheme.secondary,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -100,7 +101,7 @@ class _CreateTwoState extends State<CreateTwo> {
                     """
 Por favor, selecione pelo menos uma cesta básica para prosseguir com o pedido""",
                     style: TextStyle(
-                      color: Theme.of(context).accentColor,
+                      color: Theme.of(context).colorScheme.secondary,
                       fontSize: 14,
                     ),
                   ),
@@ -112,7 +113,7 @@ Por favor, selecione pelo menos uma cesta básica para prosseguir com o pedido""
                       child: Text(
                         'Ok',
                         style: TextStyle(
-                          color: Theme.of(context).accentColor,
+                          color: Theme.of(context).colorScheme.secondary,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -220,20 +221,23 @@ Seleção das Cestas Básicas que compõem o pedido.""",
                                                       TextCapitalization.words,
                                                   style: TextStyle(
                                                     color: Theme.of(context)
-                                                        .accentColor,
+                                                        .colorScheme
+                                                        .secondary,
                                                   ),
                                                   cursorColor: Colors.white,
                                                   decoration: InputDecoration(
                                                     icon: Icon(
                                                       Icons.search,
                                                       color: Theme.of(context)
-                                                          .accentColor,
+                                                          .colorScheme
+                                                          .secondary,
                                                     ),
                                                     hintText: """
 Pesquisar Cesta Básica""",
                                                     hintStyle: TextStyle(
                                                       color: Theme.of(context)
-                                                          .accentColor,
+                                                          .colorScheme
+                                                          .secondary,
                                                       fontSize: 12,
                                                     ),
                                                   ),
@@ -246,7 +250,8 @@ Pesquisar Cesta Básica""",
                                               "Lista de Cestas Básicas",
                                               style: TextStyle(
                                                 color: Theme.of(context)
-                                                    .accentColor,
+                                                    .colorScheme
+                                                    .secondary,
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 18,
                                               ),
@@ -258,7 +263,9 @@ Pesquisar Cesta Básica""",
                                       controllerBasicBasket.showSearch
                                           ? Icons.close
                                           : Icons.search,
-                                      color: Theme.of(context).accentColor,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
                                     ),
                                     onPressed: () async {
                                       if (controllerBasicBasket.showSearch) {
@@ -457,7 +464,7 @@ Pesquisar Cesta Básica""",
                           child: Icon(
                             Icons.shopping_bag,
                             size: 30,
-                            color: Theme.of(context).accentColor,
+                            color: Theme.of(context).colorScheme.secondary,
                           ),
                         ),
                         onPressed: () {

@@ -156,7 +156,7 @@ class _ListBagViewState extends State<ListBagView> {
                   // ignore: lines_longer_than_80_chars
                   "Valor Total: R\$ ${formatCurrency.format(widget.controller.totalValue).substring(1)}",
                   style: TextStyle(
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).colorScheme.secondary,
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
                   ),

@@ -95,7 +95,7 @@ class _CreateThreeState extends State<CreateThree> {
           title: Text(
             'Pedido Cadastrado',
             style: TextStyle(
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -103,7 +103,7 @@ class _CreateThreeState extends State<CreateThree> {
             """
 O Pedido foi cadastrada com sucesso.""",
             style: TextStyle(
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
               fontSize: 14,
             ),
           ),
@@ -116,7 +116,7 @@ O Pedido foi cadastrada com sucesso.""",
               child: Text(
                 'ok',
                 style: TextStyle(
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).colorScheme.secondary,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -244,7 +244,7 @@ O Pedido foi cadastrada com sucesso.""",
           title: Text(
             'Pedido Editado',
             style: TextStyle(
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -252,7 +252,7 @@ O Pedido foi cadastrada com sucesso.""",
             """
 O Pedido foi editada com sucesso.""",
             style: TextStyle(
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
               fontSize: 14,
             ),
           ),
@@ -265,7 +265,7 @@ O Pedido foi editada com sucesso.""",
               child: Text(
                 'ok',
                 style: TextStyle(
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).colorScheme.secondary,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -292,7 +292,7 @@ O Pedido foi editada com sucesso.""",
         title: Text(
           'Ops! Algo deu errado',
           style: TextStyle(
-            color: Theme.of(context).accentColor,
+            color: Theme.of(context).colorScheme.secondary,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -300,7 +300,7 @@ O Pedido foi editada com sucesso.""",
           """
 Ocorreu um erro ao cadastrar o pedido no sistema.""",
           style: TextStyle(
-            color: Theme.of(context).accentColor,
+            color: Theme.of(context).colorScheme.secondary,
             fontSize: 14,
           ),
         ),
@@ -313,7 +313,7 @@ Ocorreu um erro ao cadastrar o pedido no sistema.""",
             child: Text(
               'ok',
               style: TextStyle(
-                color: Theme.of(context).accentColor,
+                color: Theme.of(context).colorScheme.secondary,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -331,7 +331,7 @@ Ocorreu um erro ao cadastrar o pedido no sistema.""",
         title: Text(
           'Ops! Algo deu errado',
           style: TextStyle(
-            color: Theme.of(context).accentColor,
+            color: Theme.of(context).colorScheme.secondary,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -339,7 +339,7 @@ Ocorreu um erro ao cadastrar o pedido no sistema.""",
           """
 Uma ou mais cesta básicas selecionadas não possui estoque suficiente de produtos que a compõem.""",
           style: TextStyle(
-            color: Theme.of(context).accentColor,
+            color: Theme.of(context).colorScheme.secondary,
             fontSize: 14,
           ),
         ),
@@ -352,7 +352,7 @@ Uma ou mais cesta básicas selecionadas não possui estoque suficiente de produt
             child: Text(
               'ok',
               style: TextStyle(
-                color: Theme.of(context).accentColor,
+                color: Theme.of(context).colorScheme.secondary,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -390,7 +390,8 @@ Uma ou mais cesta básicas selecionadas não possui estoque suficiente de produt
       key: _scaffoldKey,
       backgroundColor: Colors.white,
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Theme.of(context).accentColor),
+        iconTheme:
+            IconThemeData(color: Theme.of(context).colorScheme.secondary),
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -407,7 +408,7 @@ Uma ou mais cesta básicas selecionadas não possui estoque suficiente de produt
         title: Text(
           'Controle Cestas Básicas',
           style: TextStyle(
-            color: Theme.of(context).accentColor,
+            color: Theme.of(context).colorScheme.secondary,
           ),
         ),
       ),
@@ -422,7 +423,7 @@ Uma ou mais cesta básicas selecionadas não possui estoque suficiente de produt
               end: Alignment.bottomRight,
               colors: [
                 Colors.white,
-                Theme.of(context).accentColor,
+                Theme.of(context).colorScheme.secondary,
               ],
             ),
           ),

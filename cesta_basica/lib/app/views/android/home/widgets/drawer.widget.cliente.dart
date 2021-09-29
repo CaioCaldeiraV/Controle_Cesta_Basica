@@ -7,6 +7,8 @@ class DrawerCliente extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
+      iconColor: Colors.white,
+      textColor: Colors.white,
       title: Text(
         'Clientes',
         style: TextStyle(

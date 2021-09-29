@@ -1,10 +1,13 @@
 import 'package:cesta_basica/app/views/android/payment/payment.registrar.view.dart';
+import 'package:cesta_basica/app/views/android/payment/search.payment.view.dart';
 import 'package:flutter/material.dart';
 
 class DrawerPagamento extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
+      iconColor: Colors.white,
+      textColor: Colors.white,
       title: Text(
         'Pagamentos',
         style: TextStyle(
@@ -67,7 +70,14 @@ class DrawerPagamento extends StatelessWidget {
                 fontSize: 15,
               ),
             ),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PaymentSearchView(),
+                ),
+              );
+            },
           ),
         ),
       ],

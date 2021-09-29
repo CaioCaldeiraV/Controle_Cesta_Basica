@@ -7,7 +7,7 @@ class ClientCardPreferWidget extends StatelessWidget {
       height: 250,
       width: MediaQuery.of(context).size.width * 0.9,
       decoration: BoxDecoration(
-        color: Theme.of(context).accentColor,
+        color: Theme.of(context).colorScheme.secondary,
         borderRadius: BorderRadius.circular(5),
       ),
       child: Column(
@@ -36,14 +36,14 @@ class ClientCardPreferWidget extends StatelessWidget {
                 children: [
                   Icon(
                     Icons.shopping_cart,
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).colorScheme.secondary,
                   ),
                   Text(
                     "Preferências",
                     style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
-                        color: Theme.of(context).accentColor),
+                        color: Theme.of(context).colorScheme.secondary),
                   ),
                 ],
               ),

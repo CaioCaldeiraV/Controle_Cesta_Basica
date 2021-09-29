@@ -60,7 +60,7 @@ class _BuyStockViewState extends State<BuyStockView> {
           title: Text(
             'Compra registrada',
             style: TextStyle(
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -68,7 +68,7 @@ class _BuyStockViewState extends State<BuyStockView> {
             // ignore: prefer_interpolation_to_compose_strings
             "Os valores e estoque deste produtos foram ajustados com sucesso.",
             style: TextStyle(
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
               fontSize: 14,
             ),
           ),
@@ -81,7 +81,7 @@ class _BuyStockViewState extends State<BuyStockView> {
               child: Text(
                 'ok',
                 style: TextStyle(
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).colorScheme.secondary,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -119,7 +119,8 @@ class _BuyStockViewState extends State<BuyStockView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Theme.of(context).accentColor),
+        iconTheme:
+            IconThemeData(color: Theme.of(context).colorScheme.secondary),
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -136,7 +137,7 @@ class _BuyStockViewState extends State<BuyStockView> {
         title: Text(
           'Controle Cestas Básicas',
           style: TextStyle(
-            color: Theme.of(context).accentColor,
+            color: Theme.of(context).colorScheme.secondary,
           ),
         ),
       ),
@@ -331,7 +332,7 @@ class _BuyStockViewState extends State<BuyStockView> {
                     child: Text(
                       "REGISTRAR",
                       style: TextStyle(
-                        color: Theme.of(context).accentColor,
+                        color: Theme.of(context).colorScheme.secondary,
                         fontWeight: FontWeight.bold,
                         fontSize: 17,
                       ),

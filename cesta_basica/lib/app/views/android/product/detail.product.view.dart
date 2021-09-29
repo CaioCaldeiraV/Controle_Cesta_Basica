@@ -56,7 +56,7 @@ class _DetailProductViewState extends State<DetailProductView> {
           title: Text(
             'Excluir Produto',
             style: TextStyle(
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -65,7 +65,7 @@ class _DetailProductViewState extends State<DetailProductView> {
             """
 Você tem certeza que deseja deletar:\nProduto: ${widget.model.name}\nMarca: ${widget.model.brand}?""",
             style: TextStyle(
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
               fontSize: 14,
             ),
           ),
@@ -77,7 +77,7 @@ Você tem certeza que deseja deletar:\nProduto: ${widget.model.name}\nMarca: ${w
               child: Text(
                 'Não',
                 style: TextStyle(
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).colorScheme.secondary,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -91,7 +91,7 @@ Você tem certeza que deseja deletar:\nProduto: ${widget.model.name}\nMarca: ${w
                     title: Text(
                       'Produto Removido',
                       style: TextStyle(
-                        color: Theme.of(context).accentColor,
+                        color: Theme.of(context).colorScheme.secondary,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -112,7 +112,7 @@ O produto ${widget.model.name} foi removido com sucesso.""",
                         child: Text(
                           'ok',
                           style: TextStyle(
-                            color: Theme.of(context).accentColor,
+                            color: Theme.of(context).colorScheme.secondary,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -130,7 +130,7 @@ O produto ${widget.model.name} foi removido com sucesso.""",
               child: Text(
                 'Sim',
                 style: TextStyle(
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).colorScheme.secondary,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -151,7 +151,8 @@ O produto ${widget.model.name} foi removido com sucesso.""",
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: IconThemeData(color: Theme.of(context).accentColor),
+        iconTheme:
+            IconThemeData(color: Theme.of(context).colorScheme.secondary),
         actions: [
           PopupMenuButton(
             color: Colors.white,
@@ -218,7 +219,7 @@ O produto ${widget.model.name} foi removido com sucesso.""",
                     overflow: TextOverflow.ellipsis,
                     maxLines: 3,
                     style: TextStyle(
-                      color: Theme.of(context).accentColor,
+                      color: Theme.of(context).colorScheme.secondary,
                       fontSize: 25,
                     ),
                   ),

@@ -1,6 +1,6 @@
 import 'package:cesta_basica/app/controllers/basicbasket/basicbasketproduct.controller.dart';
-import 'package:cesta_basica/app/models/basicbasketproduct.model.dart';
 import 'package:cesta_basica/app/models/basicbasket.model.dart';
+import 'package:cesta_basica/app/models/basicbasketproduct.model.dart';
 import 'package:cesta_basica/app/models/product.model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -63,7 +63,7 @@ Estoque: ${modelProduct.stock}\nPreço: R\$ ${formatCurrency.format(modelProduct
               child: IconButton(
                 icon: Icon(
                   Icons.remove,
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).colorScheme.secondary,
                   size: 18,
                 ),
                 onPressed: () {
@@ -102,7 +102,7 @@ Estoque: ${modelProduct.stock}\nPreço: R\$ ${formatCurrency.format(modelProduct
               child: IconButton(
                 icon: Icon(
                   Icons.add,
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).colorScheme.secondary,
                   size: 18,
                 ),
                 onPressed: () {

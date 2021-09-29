@@ -30,7 +30,7 @@ class _RequestListItemState extends State<RequestListItem> {
             size: 35,
           )),
       title: Text("${widget.clientName}"),
-      subtitle: Text("${widget.model.statusDelivery}"),
+      subtitle: Text("Status da Entrega: ${widget.model.statusDelivery}"),
       onTap: () {
         Navigator.push(
             context,
@@ -70,7 +70,7 @@ class _RequestListItemState extends State<RequestListItem> {
                     title: Text(
                       'Excluir Pedido',
                       style: TextStyle(
-                        color: Theme.of(context).accentColor,
+                        color: Theme.of(context).colorScheme.secondary,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -79,7 +79,7 @@ class _RequestListItemState extends State<RequestListItem> {
                       """
 Você tem certeza que deseja deletar o pedido do: ${widget.clientName}?""",
                       style: TextStyle(
-                        color: Theme.of(context).accentColor,
+                        color: Theme.of(context).colorScheme.secondary,
                         fontSize: 14,
                       ),
                     ),
@@ -91,7 +91,7 @@ Você tem certeza que deseja deletar o pedido do: ${widget.clientName}?""",
                         child: Text(
                           'Não',
                           style: TextStyle(
-                            color: Theme.of(context).accentColor,
+                            color: Theme.of(context).colorScheme.secondary,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -106,7 +106,8 @@ Você tem certeza que deseja deletar o pedido do: ${widget.clientName}?""",
                               title: Text(
                                 'Pedido Removido',
                                 style: TextStyle(
-                                  color: Theme.of(context).accentColor,
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -114,7 +115,8 @@ Você tem certeza que deseja deletar o pedido do: ${widget.clientName}?""",
                                 """
 O pedido do cliente "${widget.clientName}" foi removido com sucesso.""",
                                 style: TextStyle(
-                                  color: Theme.of(context).accentColor,
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
                                   fontSize: 14,
                                 ),
                               ),
@@ -127,7 +129,9 @@ O pedido do cliente "${widget.clientName}" foi removido com sucesso.""",
                                   child: Text(
                                     'ok',
                                     style: TextStyle(
-                                      color: Theme.of(context).accentColor,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -143,7 +147,7 @@ O pedido do cliente "${widget.clientName}" foi removido com sucesso.""",
                         child: Text(
                           'Sim',
                           style: TextStyle(
-                            color: Theme.of(context).accentColor,
+                            color: Theme.of(context).colorScheme.secondary,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
