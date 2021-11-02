@@ -1,3 +1,4 @@
+import 'package:cesta_basica/app/views/android/report/sales.statement.view.dart';
 import 'package:flutter/material.dart';
 
 class DrawerRelatorioExtrato extends StatelessWidget {
@@ -62,6 +63,36 @@ class DrawerRelatorioExtrato extends StatelessWidget {
               ),
             ),
             onTap: () {},
+          ),
+        ),
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.cyan[100],
+          ),
+          child: ListTile(
+            contentPadding: EdgeInsets.only(
+              left: 35,
+            ),
+            leading: Icon(
+              Icons.assessment_sharp,
+              color: Colors.black,
+              size: 25,
+            ),
+            title: Text(
+              'Relatórios Gerais',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 15,
+              ),
+            ),
+            onTap: () {
+              Navigator.of(context).pop();
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => SalesStatementView(),
+                ),
+              );
+            },
           ),
         ),
       ],

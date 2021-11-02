@@ -28,7 +28,12 @@ class ListPaymentsWidget extends StatelessWidget {
               "${model.status}",
               style: TextStyle(color: Colors.green),
             ),
-      trailing: Text("${model.datePayment}"),
+      trailing: Column(
+        children: [
+          Text("${model.datePayment}"),
+          Text("Pedido Nº ${model.debtsId}"),
+        ],
+      ),
     );
   }
 }

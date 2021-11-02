@@ -1,4 +1,5 @@
 import 'package:cesta_basica/app/views/android/stock/buy.stock.view.dart';
+import 'package:cesta_basica/app/views/android/stock/withdrawal.stock.view.dart';
 import 'package:flutter/material.dart';
 
 class DrawerEstoque extends StatelessWidget {
@@ -39,7 +40,14 @@ class DrawerEstoque extends StatelessWidget {
                 fontSize: 15,
               ),
             ),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => WithdrawalStockView(),
+                ),
+              );
+            },
           ),
         ),
         Container(

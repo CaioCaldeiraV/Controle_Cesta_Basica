@@ -3,14 +3,13 @@ import 'package:cesta_basica/app/models/product.model.dart';
 import 'package:cesta_basica/app/repositories/product.repository.dart';
 import 'package:cesta_basica/app/views/android/client/widgets/client.linear.gradient.mask.widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_masked_text/flutter_masked_text.dart';
 
-class BuyStockView extends StatefulWidget {
+class WithdrawalStockView extends StatefulWidget {
   @override
-  _BuyStockViewState createState() => _BuyStockViewState();
+  _WithdrawalStockViewState createState() => _WithdrawalStockViewState();
 }
 
-class _BuyStockViewState extends State<BuyStockView> {
+class _WithdrawalStockViewState extends State<WithdrawalStockView> {
   ProductModel model = ProductModel(name: "Selecione...");
   double value;
   int quantidade;
@@ -19,14 +18,9 @@ class _BuyStockViewState extends State<BuyStockView> {
   BuyStockController controller = BuyStockController();
   ProductRepository repository = ProductRepository();
   TextEditingController quantity = TextEditingController();
-  var _value = MoneyMaskedTextController();
 
   @override
   void initState() {
-    _value = MoneyMaskedTextController(
-      leftSymbol: 'R\$ ',
-      initialValue: value == null ? 0 : value,
-    );
     controller.listProducts().then((value) {
       dropdownValue = model;
       value.add(model);
@@ -49,16 +43,24 @@ class _BuyStockViewState extends State<BuyStockView> {
       return;
     }
     _formKey.currentState.save();
-    dropdownValue.value =
-        ((dropdownValue.stock * dropdownValue.value) + (quantidade * value)) /
-            (quantidade + dropdownValue.stock);
-    dropdownValue.stock = dropdownValue.stock + quantidade;
+    if (dropdownValue.stock < quantidade) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.red,
+          content: Text(
+              // ignore: lines_longer_than_80_chars
+              'Há somente ${dropdownValue.stock} unidades de ${dropdownValue.name} em estoque!'),
+        ),
+      );
+      return;
+    }
+    dropdownValue.stock = dropdownValue.stock - quantidade;
     repository.update(dropdownValue).then((_) async {
       await showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
           title: Text(
-            'Compra registrada',
+            'Retirada registrada',
             style: TextStyle(
               color: Theme.of(context).colorScheme.secondary,
               fontWeight: FontWeight.bold,
@@ -66,7 +68,7 @@ class _BuyStockViewState extends State<BuyStockView> {
           ),
           content: Text(
             // ignore: prefer_interpolation_to_compose_strings
-            "Os valores e estoque deste produtos foram ajustados com sucesso.",
+            "O estoque deste produto foi ajustado com sucesso.",
             style: TextStyle(
               color: Theme.of(context).colorScheme.secondary,
               fontSize: 14,
@@ -99,10 +101,6 @@ class _BuyStockViewState extends State<BuyStockView> {
     setState(() {
       dropdownValue = model;
       quantity.clear();
-      _value = MoneyMaskedTextController(
-        leftSymbol: 'R\$ ',
-        initialValue: 0,
-      );
     });
   }
 
@@ -172,7 +170,7 @@ class _BuyStockViewState extends State<BuyStockView> {
                   ),
                   SizedBox(width: 20),
                   Text(
-                    "Registrar Compra\n de Produto",
+                    "Registrar Retirada\n de Produto",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 22,
@@ -242,7 +240,7 @@ class _BuyStockViewState extends State<BuyStockView> {
                     },
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
-                      labelText: 'Quantidade Comprada',
+                      labelText: 'Quantidade',
                       icon: Icon(
                         Icons.shopping_cart_outlined,
                         size: 30,
@@ -263,43 +261,6 @@ class _BuyStockViewState extends State<BuyStockView> {
               ),
               SizedBox(
                 height: 20,
-              ),
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 3),
-                  child: TextFormField(
-                    controller: _value,
-                    keyboardType: TextInputType.number,
-                    textCapitalization: TextCapitalization.words,
-                    onSaved: (newValue) => value = double.parse(
-                            newValue.replaceAll(RegExp('[^0-9]'), "")) /
-                        100,
-                    onChanged: (newValue) => value = double.parse(
-                            newValue.replaceAll(RegExp('[^0-9]'), "")) /
-                        100,
-                    decoration: InputDecoration(
-                      labelText: 'Valor unitário',
-                      icon: Icon(
-                        Icons.monetization_on,
-                        size: 30,
-                      ),
-                      hintText: 'Digite o Valor do Produto',
-                    ),
-                    validator: (value) {
-                      if (double.parse(value
-                              .substring(3)
-                              .replaceAll(".", "")
-                              .replaceAll(",", ".")) <=
-                          0) {
-                        return 'Informe o valor unitário';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 40,
               ),
               ElevatedButton(
                 onPressed: onSubmit,
@@ -332,7 +293,7 @@ class _BuyStockViewState extends State<BuyStockView> {
                       ]),
                   child: Center(
                     child: Text(
-                      "REGISTRAR",
+                      "REGISTRAR RETIRADA",
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.secondary,
                         fontWeight: FontWeight.bold,

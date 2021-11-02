@@ -35,13 +35,12 @@ class InstallmentsRepository {
   }
 
   Future<List<InstallmentsModel>> searchDebtsIdWithStatus(int id) async {
-    var status = "Pendente";
     try {
       final db = await dbr.getDatabase();
       final maps = await db.query(
         installmentTableName,
-        where: "debtsId = ? and status = ?",
-        whereArgs: [id, status],
+        where: "debtsId = ?",
+        whereArgs: [id],
       );
       return List.generate(maps.length, (i) {
         return InstallmentsModel.fromMap(maps[i]);
