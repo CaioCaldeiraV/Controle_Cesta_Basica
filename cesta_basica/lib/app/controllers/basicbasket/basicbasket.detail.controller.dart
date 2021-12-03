@@ -3,12 +3,13 @@ import 'package:cesta_basica/app/repositories/basicbasket.product.repository.dar
 import 'package:cesta_basica/app/repositories/product.repository.dart';
 
 class BasicBasketDetailController {
-  final BasicBasketProductRepository repository =
-      BasicBasketProductRepository();
-  final ProductRepository repositoryProduct = ProductRepository();
+  final BasicBasketProductRepository repository;
+  final ProductRepository repositoryProduct;
 
   List<ProductModel> listProducts;
   List<int> amount;
+
+  BasicBasketDetailController(this.repository, this.repositoryProduct);
 
   Future<void> carregaListProducts(int id) async {
     listProducts = <ProductModel>[];

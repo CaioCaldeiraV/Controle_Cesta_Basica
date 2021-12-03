@@ -1,4 +1,5 @@
-import 'package:cesta_basica/app/views/android/login/login.view.dart';
+import 'package:cesta_basica/app/views/android/home/home.view.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -11,13 +12,15 @@ class _SplashViewState extends State<SplashView> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(
-      Duration(seconds: 2),
-      () => Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => LoginView(),
-          )),
+    Firebase.initializeApp().whenComplete(
+      () => Future.delayed(
+        Duration(milliseconds: 1500),
+        () => Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => HomeView(),
+            )),
+      ),
     );
   }
 

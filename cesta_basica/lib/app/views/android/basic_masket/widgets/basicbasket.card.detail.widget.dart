@@ -1,5 +1,7 @@
 import 'package:cesta_basica/app/controllers/basicbasket/basicbasket.detail.controller.dart';
 import 'package:cesta_basica/app/models/basicbasket.model.dart';
+import 'package:cesta_basica/app/repositories/basicbasket.product.repository.dart';
+import 'package:cesta_basica/app/repositories/product.repository.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -10,7 +12,8 @@ class BasicBasketCardDetailWidget extends StatelessWidget {
       : super(key: key);
 
   final formatCurrency = NumberFormat.simpleCurrency();
-  final controller = BasicBasketDetailController();
+  final controller = BasicBasketDetailController(
+      BasicBasketProductRepository(), ProductRepository());
 
   @override
   Widget build(BuildContext context) {

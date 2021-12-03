@@ -1,4 +1,4 @@
-package com.example.cesta_basica
+package br.com.caio.controlecb
 
 import io.flutter.embedding.android.FlutterActivity
 
